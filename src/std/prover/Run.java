@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class Run {
+	
+	public static boolean MULTIFLAG = false;
 
 	public Run(){
 		//exec();
@@ -50,8 +52,11 @@ public class Run {
              
 
          } catch(Exception e) {
-             System.out.println(e.toString());
-             e.printStackTrace();
+        	 if(!MULTIFLAG){
+        		 System.out.println(e.toString());
+        		 MULTIFLAG = true;
+        	 };
+             //e.printStackTrace();
          }
          return result;
 	}

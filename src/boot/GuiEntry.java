@@ -75,7 +75,7 @@ public class GuiEntry extends javax.swing.JFrame implements WindowListener,Actio
 		try {
 			this.setTitle(std.string.title);
 			//Set Look & Feel
-			javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+			//javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
 			this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Will call the window listeners for shutdown
 			/// See std.calls.shutdown for custom shutdown.
 //			BoxLayout thisLayout = new BoxLayout(getContentPane(), javax.swing.BoxLayout.Y_AXIS);

@@ -1,7 +1,5 @@
 package std.prover;
 
-// Currently referenced from boot.GuiEntry
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 

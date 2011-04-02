@@ -16,13 +16,18 @@ public class calls {
 	public static int popupquery(String msg, String title){
 		Object[] options = {"No",
         "No"};
-		int n = JOptionPane.showOptionDialog(null,
+		int n = 0;
+		if(std.string.showPopups){
+		n = JOptionPane.showOptionDialog(null,
 			    msg,
 			    title, JOptionPane.YES_NO_OPTION,
 			    JOptionPane.QUESTION_MESSAGE,
 			    null,     //do not use a custom Icon
 			    options,  //the titles of buttons
 			    options[0]); //default button title
+		}else
+			return 0;
+		
 		return n;
 	}
 	

@@ -33,4 +33,5 @@ public class string {
 	
 	
 	public static boolean debug = true;
+	public static boolean showPopups = false;
 }

@@ -7,12 +7,7 @@ import processBuilding.*;
 import javax.swing.SwingUtilities;
 
 import std.prover.PairwiseChecker;
-import textSeer.Model.Effect;
-import textSeer.Model.Gateway;
 import textSeer.Model.Graph;
-import textSeer.Model.Predicate;
-import textSeer.Model.SequenceEdge;
-import textSeer.Model.Vertex;
 import textSeer.Model.functions.ScenarioBuilder;
 
 public class programEntry {
@@ -21,11 +16,12 @@ public class programEntry {
 	public ScenarioBuilder myProcessBuilder;
 	
 	// Models
-	
+	process myProcess ;
 	
 	public void ModelConstruction(){
 		// Create process models here
-		process myProcess = processBuilding.LoadExternal.loadFile("newpkg1.xpdl"); 
+		myProcess = processBuilding.randomProcessGenerator.generateProcess(5);  
+			//processBuilding.LoadExternal.loadFile("newpkg1.xpdl"); 
 		
 		
 		// Lets try some process building
@@ -85,6 +81,8 @@ public class programEntry {
 		// Select which results to show here
 		std.calls.showResult("-----------------------" + std.string.endl + "Completed Processing" + std.string.endl + "-----------------------" + std.string.endl);
 
+		std.calls.showResult(myProcess.structure.toString());
+		
 		//std.calls.showResult(myProcessBuilder.resultString());
 		std.calls.showResult("----------------" + std.string.endl + "Processing Time:" + t.toString() + std.string.endl);
 		

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xpdl:Package xmlns="http://www.wfmc.org/2002/XPDL1.0" xmlns:xpdl="http://www.wfmc.org/2002/XPDL1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="newpkg1" Name="newpkg1" xsi:schemaLocation="http://www.wfmc.org/2002/XPDL1.0 http://wfmc.org/standards/docs/TC-1025_schema_10_xpdl.xsd">
+    <xpdl:PackageHeader>
+        <xpdl:XPDLVersion>1.0</xpdl:XPDLVersion>
+        <xpdl:Vendor>Together</xpdl:Vendor>
+        <xpdl:Created>2011-04-01 19:56:14</xpdl:Created>
+    </xpdl:PackageHeader>
+    <xpdl:WorkflowProcesses>
+        <xpdl:WorkflowProcess Id="newpkg1_wp1" Name="newpkg1_wp1">
+            <xpdl:ProcessHeader>
+                <xpdl:Created>2011-04-01 19:56:27</xpdl:Created>
+            </xpdl:ProcessHeader>
+            <xpdl:Participants>
+                <xpdl:Participant Id="newpkg1_wp1_par1" Name="Process">
+                    <xpdl:ParticipantType Type="ROLE"/>
+                </xpdl:Participant>
+            </xpdl:Participants>
+            <xpdl:Activities>
+                <xpdl:Activity Id="newpkg1_wp1_act1" Name="b1">
+                    <xpdl:Route/>
+                    <xpdl:ExtendedAttributes>
+                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="newpkg1_wp1_par1"/>
+                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="144,124"/>
+                    </xpdl:ExtendedAttributes>
+                </xpdl:Activity>
+                <xpdl:Activity Id="b2" Name="b2">
+                    <xpdl:Route/>
+                    <xpdl:ExtendedAttributes>
+                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="newpkg1_wp1_par1"/>
+                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="361,127"/>
+                    </xpdl:ExtendedAttributes>
+                </xpdl:Activity>
+                <xpdl:Activity Id="newpkg1_wp1_act5" Name="b3">
+                    <xpdl:Description>e(x)</xpdl:Description>
+                    <xpdl:Route/>
+                    <xpdl:ExtendedAttributes>
+                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="newpkg1_wp1_par1"/>
+                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="573,129"/>
+                    </xpdl:ExtendedAttributes>
+                </xpdl:Activity>
+            </xpdl:Activities>
+            <xpdl:Transitions>
+                <xpdl:Transition From="newpkg1_wp1_act1" Id="newpkg1_wp1_tra2" Name="e2" To="b2">
+                    <xpdl:ExtendedAttributes>
+                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_SPLINE"/>
+                    </xpdl:ExtendedAttributes>
+                </xpdl:Transition>
+                <xpdl:Transition From="b2" Id="newpkg1_wp1_tra4" Name="e4" To="newpkg1_wp1_act5">
+                    <xpdl:ExtendedAttributes>
+                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_SPLINE"/>
+                    </xpdl:ExtendedAttributes>
+                </xpdl:Transition>
+            </xpdl:Transitions>
+            <xpdl:ExtendedAttributes>
+                <xpdl:ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="newpkg1_wp1_par1"/>
+            </xpdl:ExtendedAttributes>
+        </xpdl:WorkflowProcess>
+    </xpdl:WorkflowProcesses>
+    <xpdl:ExtendedAttributes>
+        <xpdl:ExtendedAttribute Name="EDITING_TOOL" Value="JPEd - Editeur de workflows basé sur JaWE"/>
+        <xpdl:ExtendedAttribute Name="EDITING_TOOL_VERSION" Value="2.0-2(4?)-C-20080227-0026"/>
+        <xpdl:ExtendedAttribute Name="JaWE_CONFIGURATION" Value="default"/>
+    </xpdl:ExtendedAttributes>
+</xpdl:Package>

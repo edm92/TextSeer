@@ -18,8 +18,11 @@
 package boot;
 
 import gui.HelpFrame;
+import gui.SeerTrayIcon;
+import gui.Splash;
 import gui.results;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -85,6 +88,11 @@ public class GuiEntry extends javax.swing.JFrame implements WindowListener,Actio
 //			getContentPane().setLayout(thisLayout);
 			this.setIconImage(new ImageIcon(std.objects.iconFile).getImage());
 			this.addComponentListener(this);
+			
+			SeerTrayIcon.createAndShowGUI();
+			
+			
+			
 
 			fc = new JFileChooser(std.string.filePath);
 			

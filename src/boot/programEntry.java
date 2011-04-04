@@ -1,5 +1,10 @@
 package boot;
 
+import gui.Splash;
+
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import processBuilding.*;
 
 // Don't forget to configure std.strings for your system (will need to implement config file in the future).
@@ -122,12 +127,62 @@ public class programEntry {
 	}
 	
 	
+	class ProcessingThread implements Runnable {
+
+		Thread runner;
+		public ProcessingThread() {
+		}
+		public ProcessingThread(String threadName) {
+			runner = new Thread(this, threadName); // (1) Create a new thread.
+			
+			//runner.start(); // (2) Start the thread.
+		}
+		public void run() {
+			//Display info about this particular thread
+			//System.out.println(Thread.currentThread());
+			ModelConstruction();
+			Process();
+			ShowResults();
+		}
+	}
+	
 	
 	
 	public void TextSeer(){
-		ModelConstruction();
-		Process();
-		ShowResults();
+		
+
+		Thread thread2 = null;
+		//Start the threads
+		
+
+		
+		try {
+			boolean t2IsAlive = true;
+			thread2 = new Thread(new ProcessingThread(), "thread2");
+			thread2.start();
+			
+			do {
+				
+				if (t2IsAlive && !thread2.isAlive()) 
+				{
+					t2IsAlive = false;
+					
+					//System.out.println("Finished Processing.");
+					
+				}else{
+					//System.out.println("Processing Model.");
+					
+				}
+				
+				Thread.sleep(100);
+
+			} while (t2IsAlive );
+			
+			
+			
+		} catch (Exception e) {
+		}
+		
 	}
 
 	
@@ -146,17 +201,30 @@ public class programEntry {
  * Boot up the gui display
  */	
 	private programEntry thisEntry;
-	
+	static Splash mywindow = new Splash();
 	public programEntry(){
 		thisEntry = this;
 		//std.calls.display("Welcome to Text Seer");
+		 // make the frame half the height and width
+	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	    int y = (screenSize.height/2) - (430/2);
+	    int x = (screenSize.width/2) - (500/2);
+	   
+		
+		mywindow.setLocation(x, y);
+		mywindow.setSize( new Dimension( 500, 430 ) );
+		mywindow.setVisible( true );
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				std.calls.init();
 				inst = new GuiEntry(thisEntry);
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
+				
 				TextSeer();
+				//closeProcessingSplash();
+				mywindow.close();
 			}
 		});
 	}

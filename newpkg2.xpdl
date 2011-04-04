@@ -18,24 +18,45 @@
             <xpdl:Activities>
                 <xpdl:Activity Id="newpkg1_wp1_act1" Name="b1">
                     <xpdl:Route/>
+                    <xpdl:TransitionRestrictions>
+                        <xpdl:TransitionRestriction>
+                            <xpdl:Split Type="XOR">
+                                <xpdl:TransitionRefs>
+                                    <xpdl:TransitionRef Id="newpkg1_wp1_tra2"/>
+                                    <xpdl:TransitionRef Id="newpkg1_wp1_tra1"/>
+                                </xpdl:TransitionRefs>
+                            </xpdl:Split>
+                        </xpdl:TransitionRestriction>
+                    </xpdl:TransitionRestrictions>
                     <xpdl:ExtendedAttributes>
                         <xpdl:ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="newpkg1_wp1_par1"/>
-                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="144,124"/>
+                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="177,15"/>
                     </xpdl:ExtendedAttributes>
                 </xpdl:Activity>
                 <xpdl:Activity Id="b2" Name="b2">
                     <xpdl:Route/>
                     <xpdl:ExtendedAttributes>
                         <xpdl:ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="newpkg1_wp1_par1"/>
-                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="361,127"/>
+                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="304,15"/>
                     </xpdl:ExtendedAttributes>
                 </xpdl:Activity>
-                <xpdl:Activity Id="newpkg1_wp1_act5" Name="b3">
-                    <xpdl:Description>e(x)</xpdl:Description>
+                <xpdl:Activity Id="newpkg1_wp1_act5" Name="b4">
+                    <xpdl:Route/>
+                    <xpdl:TransitionRestrictions>
+                        <xpdl:TransitionRestriction>
+                            <xpdl:Join Type="XOR"/>
+                        </xpdl:TransitionRestriction>
+                    </xpdl:TransitionRestrictions>
+                    <xpdl:ExtendedAttributes>
+                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="newpkg1_wp1_par1"/>
+                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="431,15"/>
+                    </xpdl:ExtendedAttributes>
+                </xpdl:Activity>
+                <xpdl:Activity Id="newpkg1_wp1_act2" Name="b3">
                     <xpdl:Route/>
                     <xpdl:ExtendedAttributes>
                         <xpdl:ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="newpkg1_wp1_par1"/>
-                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="573,129"/>
+                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="307,98"/>
                     </xpdl:ExtendedAttributes>
                 </xpdl:Activity>
             </xpdl:Activities>
@@ -45,7 +66,17 @@
                         <xpdl:ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_SPLINE"/>
                     </xpdl:ExtendedAttributes>
                 </xpdl:Transition>
-                <xpdl:Transition From="b2" Id="newpkg1_wp1_tra4" Name="e4" To="newpkg1_wp1_act5">
+                <xpdl:Transition From="b2" Id="newpkg1_wp1_tra4" Name="e5" To="newpkg1_wp1_act5">
+                    <xpdl:ExtendedAttributes>
+                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_SPLINE"/>
+                    </xpdl:ExtendedAttributes>
+                </xpdl:Transition>
+                <xpdl:Transition From="newpkg1_wp1_act1" Id="newpkg1_wp1_tra1" Name="e3" To="newpkg1_wp1_act2">
+                    <xpdl:ExtendedAttributes>
+                        <xpdl:ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_SPLINE"/>
+                    </xpdl:ExtendedAttributes>
+                </xpdl:Transition>
+                <xpdl:Transition From="newpkg1_wp1_act2" Id="newpkg1_wp1_tra3" Name="e4" To="newpkg1_wp1_act5">
                     <xpdl:ExtendedAttributes>
                         <xpdl:ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_SPLINE"/>
                     </xpdl:ExtendedAttributes>
@@ -53,6 +84,8 @@
             </xpdl:Transitions>
             <xpdl:ExtendedAttributes>
                 <xpdl:ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="newpkg1_wp1_par1"/>
+                <xpdl:ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=newpkg1_wp1_par1,CONNECTING_ACTIVITY_ID=newpkg1_wp1_act1,X_OFFSET=75,Y_OFFSET=26,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <xpdl:ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=newpkg1_wp1_par1,CONNECTING_ACTIVITY_ID=newpkg1_wp1_act5,X_OFFSET=584,Y_OFFSET=26,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </xpdl:ExtendedAttributes>
         </xpdl:WorkflowProcess>
     </xpdl:WorkflowProcesses>

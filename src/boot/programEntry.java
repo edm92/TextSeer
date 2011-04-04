@@ -4,6 +4,7 @@ import gui.Splash;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.LinkedList;
 
 import processBuilding.*;
 
@@ -104,8 +105,25 @@ public class programEntry {
 		t.start();
 		// Do your experiments here
 		
-		ScenarioBuilder newProcessScenario = processBuilding.composition.SeqComp.SeqCompEff(myProcess.endEffectScenarios, myProcess2);
-		for(Graph g: newProcessScenario.processEffects){
+		process compProcess= new process();
+		
+		LinkedList<Graph> Scenarios = 
+			processBuilding.composition.Make.ParCompEff(myProcess.endEffectScenarios, myProcess2.endEffectScenarios);
+		
+		
+		for(Graph great : Scenarios){
+				//std.calls.showResult("Trying Scenario: " + ScenarioBuilder.graphString(g));
+				PairwiseChecker scenarioChecker = new PairwiseChecker(great);
+				if(scenarioChecker.isConsistent){
+					//ScenarioBuilder.redoGraph(great);
+					compProcess.endEffectScenarios.add(great);
+					//std.calls.showResult("Consistent:" + ScenarioBuilder.graphString(great));
+					
+				}else{
+					//std.calls.showResult("Inconsistent Scenario: " + ScenarioBuilder.graphString(great));
+				}
+		}
+		for(Graph g: compProcess.endEffectScenarios){
 			std.calls.showResult(ScenarioBuilder.graphString(g));
 			std.calls.showResult("CE:" + ScenarioBuilder.cummulativeEffect(g));
 		}

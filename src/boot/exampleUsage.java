@@ -1,5 +1,7 @@
 package boot;
 
+import java.util.LinkedList;
+
 import processBuilding.process;
 import std.prover.PairwiseChecker;
 import textSeer.Model.Graph;
@@ -117,7 +119,7 @@ public class exampleUsage {
 	}
 	
 	/***
-	 * Self explanitory
+	 * Self show output
 	 */
 	
 	public void _ShowResults(){
@@ -207,5 +209,44 @@ public class exampleUsage {
 		
 	}
 	
+	
+	/**
+	 * Testing out the sequence functions
+	 * 
+	 */
+	public void ___Process(){
+		
+		// First start the timer
+		t = new std.Timer();
+		t.reset();
+		t.start();
+		// Do your experiments here
+		
+		process compProcess= new process();
+		
+		LinkedList<Graph> Scenarios = 
+			processBuilding.composition.Make.SeqCompEff(myProcess.endEffectScenarios, myProcess2.endEffectScenarios);
+		
+		
+		for(Graph great : Scenarios){
+				//std.calls.showResult("Trying Scenario: " + ScenarioBuilder.graphString(g));
+				PairwiseChecker scenarioChecker = new PairwiseChecker(great);
+				if(scenarioChecker.isConsistent){
+					//ScenarioBuilder.redoGraph(great);
+					compProcess.endEffectScenarios.add(great);
+					//std.calls.showResult("Consistent:" + ScenarioBuilder.graphString(great));
+					
+				}else{
+					//std.calls.showResult("Inconsistent Scenario: " + ScenarioBuilder.graphString(great));
+				}
+		}
+		for(Graph g: compProcess.endEffectScenarios){
+			std.calls.showResult(ScenarioBuilder.graphString(g));
+			std.calls.showResult("CE:" + ScenarioBuilder.cummulativeEffect(g));
+		}
+		
+		// Stop the timer when finished to ensure experiment results are timed
+		t.end();
+	}
 
 }

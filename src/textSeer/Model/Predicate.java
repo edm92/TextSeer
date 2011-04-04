@@ -31,10 +31,12 @@ public class Predicate {
 	  id = ++totalPredicates;
 	  name = newName;
 	  value = myValue;
+
   }
   
   public String generateName() {
-	  return "Predicate" + id; 
+
+	  return "Predicate" + totalPredicates; 
   }
 
 

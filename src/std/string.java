@@ -15,7 +15,7 @@ public class string {
 	public static String prover9Input = prover9Path + "in.txt";
 	public static String prover9Output = prover9Path + "out.txt";
 	public static String prover9MaxTime = "1";
-	
+	public static String knowledgeBase = "knowledge.dat";
 	public static String prover9ExecString = prover9Binary + " -f " + prover9Input; // + " > " + prover9Output;
 	
 	public static String homeWeb = "http://www.dlab.uow.edu.au/textseer/";
@@ -31,7 +31,11 @@ public class string {
 	public static String visted = "VISITED";
 	public static String not_visited = "NOT";
 	
+	public static String openFile = "newpkg1.xpdl";
+	public static String filePath = "e:" + path + "workspace" + path + "XPDL_Loader" + path;
 	
 	public static boolean debug = true;
 	public static boolean showPopups = false;
+	
+	
 }

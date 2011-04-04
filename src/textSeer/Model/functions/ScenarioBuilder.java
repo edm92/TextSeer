@@ -1,5 +1,6 @@
 package textSeer.Model.functions;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import textSeer.Model.Gateway;
@@ -169,15 +170,46 @@ public class ScenarioBuilder {
 		
 		return returnResult;
 	}
+	
+	public static String cummulativeEffect(Graph g){
+		String returnResult = "";
+		//returnResult += std.string.endl + "";
+		for(Vertex v: g.allNodes){
+			returnResult += (v.IE==null || v.IE.toValue().length() < 3?"":(v.IE.toValue()+" & "));
+		}
+		
+		if(returnResult.length() > 3){
+			returnResult = returnResult.substring(0, returnResult.length()-3);
+		}
+		
+		return returnResult;
+	}
 
+	public static void redoGraph(Graph g){
+		
+		LinkedList<Vertex> mine = (LinkedList<Vertex>) g.allNodes;
+		LinkedList<Vertex> replacement = new LinkedList<Vertex>();
+		Iterator<Vertex> i = mine.descendingIterator();
+		while(i.hasNext()){
+			Vertex n = i.next();
+			
+			replacement.add(n);
+					
+		}
+		g.allNodes = replacement;
+	}
 	
 	public static String graphString(Graph g){
 		String returnResult = "";
-		returnResult += std.string.endl + "Scenario: ";
+		
+		
 		for(Vertex v: g.allNodes){
-			returnResult += v.name + "["+(v.IE==null?"":v.IE.toValue())+"] ";
+			returnResult +=  v.name + "["+(v.IE==null?"":v.IE.toValue())+"] -> ";
 		}
 		
+		if(returnResult.length() > "-> ".length()) returnResult = returnResult.substring(0, returnResult.length()-"-> ".length());
+		//returnResult = new StringBuffer(returnResult).reverse().toString();
+		returnResult = std.string.endl + "Scenario: " + returnResult;
 		return returnResult;
 	}
 	

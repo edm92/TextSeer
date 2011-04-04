@@ -8,6 +8,13 @@ import textSeer.Model.Vertex;
 import textSeer.Model.functions.ScenarioBuilder;
 
 public class PairwiseChecker {
+	public static String SOURCEFILE = std.string.endl + "Error in: std.prover.PairwiseChecker.java" + std.string.endl;
+	public static boolean DEBUG = false; // std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.display(msg + SOURCEFILE);
+	}
+	
 	public boolean isConsistent = false;
 	
 	public PairwiseChecker(Graph g){
@@ -39,13 +46,17 @@ public class PairwiseChecker {
 				std.prover.makeInput.createInput(g, spare);
 				if(std.prover.Run.exec()){
 					//reverse.allNodes.add(spare);
+					if(v == null) continue;
+					if(spare == null) continue;
+					if(v.IE == null) continue;
+					if(spare.IE == null) continue;
 					if(v.IE.toValue().compareTo(spare.IE.toValue()) != 0)
 					badNodes.add(spare);
 				}
 				
 			}
 			for(Vertex d:badNodes){
-				std.calls.display("Return is " + std.calls.popupquery("Found an inconsistent node:" + std.string.endl +
+				debug("Return is " + std.calls.popupquery("Found an inconsistent node:" + std.string.endl +
 						"New node:" + d.name + std.string.endl +
 						"  with effects: " + d.IE.toValue() + std.string.endl +
 						"It is conflicting with " + ScenarioBuilder.graphString(reverse) + std.string.endl +

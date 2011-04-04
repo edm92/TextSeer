@@ -67,6 +67,8 @@ public class calls {
 		string.prover9Output = std.Property.getProperty("prover9TempPath") + std.Property.getProperty("prover9Output");
 		string.prover9ExecString = string.prover9Binary + " -f " + string.prover9Input;
 		string.prover9MaxTime = std.Property.getProperty("prover9maxTime");
+		string.filePath = std.Property.getProperty("filePath");
+		string.knowledgeBase = std.Property.getProperty("knowledge");
 	}
 	
 	public static long makeMarker(int Cmarker){

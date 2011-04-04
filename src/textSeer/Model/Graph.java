@@ -61,7 +61,7 @@ public class Graph {
   }
 
   public String generateName() {
-	  return "Process" + ID; 
+	  return "Process" + totalProcesses; 
   }
 
   public void copy( Graph in) {

@@ -4,3 +4,7 @@ prover9TempPath = e:\\prover9\\
 prover9Input = in.txt
 prover9Output = out.txt
 prover9maxTime = 2
+
+filePath = e:\\workspace\\XPDL_Loader\\
+
+knowledge = knowledge.dat

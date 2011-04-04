@@ -17,27 +17,64 @@ public class programEntry {
 	
 	// Models
 	process myProcess ;
+	process myProcess2 ;
 	
 	public void ModelConstruction(){
 		// Create process models here
-		myProcess = processBuilding.randomProcessGenerator.generateProcess(5);  
-			//processBuilding.LoadExternal.loadFile("newpkg1.xpdl"); 
+		//myProcess = processBuilding.randomProcessGenerator.generateProcess(5);  
+		myProcess = processBuilding.LoadExternal.loadFile(std.string.openFile);// myProcess.name = "P1";
+		myProcess2 = processBuilding.LoadExternal.loadFile("newpkg2.xpdl"); //myProcess2.name = "P2";
 		
+		std.calls.showResult("Loading process models and figuring out end effect scenarios");
 		
 		// Lets try some process building
+		
+		// Process 1
+		std.calls.showResult("#################################");
 		myProcessBuilder = new ScenarioBuilder(myProcess.structure);
 		myProcessBuilder.BuildScenarioLabels();	// this will build all scenario labels.
 		for(Graph g: myProcessBuilder.parentEffects){
 			//std.calls.showResult("Trying Scenario: " + ScenarioBuilder.graphString(g));
 			PairwiseChecker scenarioChecker = new PairwiseChecker(g);
 			if(scenarioChecker.isConsistent){
-				myProcessBuilder.processEffects.add(g);
+				ScenarioBuilder.redoGraph(g);
+				myProcessBuilder.processEffects.add(g);				
+				myProcess.endEffectScenarios.add(g);
 			}else{
-				std.calls.showResult("Inconsistent Scenario (need to implement Acc for this): " + ScenarioBuilder.graphString(g));
+				std.calls.showResult("Inconsistent Scenario: " + ScenarioBuilder.graphString(g));
 			}
 		}
 		
+		std.calls.showResult("Process " + myProcess.name + " has the following consistent end effect scenarios" + std.string.endl);
+		
+		for(Graph g: myProcessBuilder.processEffects){
+			std.calls.showResult(ScenarioBuilder.graphString(g));
+			std.calls.showResult("CE:" + ScenarioBuilder.cummulativeEffect(g));
+		}
+		
 
+		std.calls.showResult("#################################");
+		// Process 2
+		myProcessBuilder = new ScenarioBuilder(myProcess2.structure);
+		myProcessBuilder.BuildScenarioLabels();	// this will build all scenario labels.
+		for(Graph g: myProcessBuilder.parentEffects){
+			//std.calls.showResult("Trying Scenario: " + ScenarioBuilder.graphString(g));
+			PairwiseChecker scenarioChecker = new PairwiseChecker(g);
+			if(scenarioChecker.isConsistent){
+				ScenarioBuilder.redoGraph(g);
+				myProcessBuilder.processEffects.add(g);				
+				myProcess2.endEffectScenarios.add(g);
+			}else{
+				std.calls.showResult("Inconsistent Scenario: " + ScenarioBuilder.graphString(g));
+			}
+		}
+		
+		std.calls.showResult("Process " + myProcess2.name + " has the following consistent end effect scenarios" + std.string.endl);
+		
+		for(Graph g: myProcessBuilder.processEffects){
+			std.calls.showResult(ScenarioBuilder.graphString(g));
+			std.calls.showResult("CE:" + ScenarioBuilder.cummulativeEffect(g));
+		}
 		
 		std.calls.showResult("-----------------------" + std.string.endl + "Starting Processing" + std.string.endl + "-----------------------" + std.string.endl);
 	}
@@ -49,11 +86,7 @@ public class programEntry {
 		t.start();
 		// First start the timer 
 		
-		std.calls.showResult("Process has the following consistent end effect scenarios" + std.string.endl);
 		
-		for(Graph g: myProcessBuilder.processEffects){
-			std.calls.showResult(ScenarioBuilder.graphString(g));
-		}
 		
 		// Run Prover9
 		//std.calls.showResult("Running Prover9 on process to check consistency over process scenarios:");
@@ -81,7 +114,7 @@ public class programEntry {
 		// Select which results to show here
 		std.calls.showResult("-----------------------" + std.string.endl + "Completed Processing" + std.string.endl + "-----------------------" + std.string.endl);
 
-		std.calls.showResult(myProcess.structure.toString());
+		//std.calls.showResult(myProcess.structure.toString());
 		
 		//std.calls.showResult(myProcessBuilder.resultString());
 		std.calls.showResult("----------------" + std.string.endl + "Processing Time:" + t.toString() + std.string.endl);

@@ -29,6 +29,8 @@ import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.*;
 
@@ -64,6 +66,7 @@ public class GuiEntry extends javax.swing.JFrame implements WindowListener,Actio
 	public static results myResults;
 	private programEntry parent;
 
+	JFileChooser fc;
 	
 	public GuiEntry(programEntry myParent) {
 		super();
@@ -83,6 +86,9 @@ public class GuiEntry extends javax.swing.JFrame implements WindowListener,Actio
 			this.setIconImage(new ImageIcon(std.objects.iconFile).getImage());
 			this.addComponentListener(this);
 
+			fc = new JFileChooser(std.string.filePath);
+			
+			//((JFrame) fc//.setIconImage(new ImageIcon(std.objects.iconFile).getImage());
 			GridBagLayout myResultsLayout = new GridBagLayout();
 			getContentPane().setLayout(myResultsLayout);
 			GridBagConstraints c = new GridBagConstraints();
@@ -186,8 +192,8 @@ public class GuiEntry extends javax.swing.JFrame implements WindowListener,Actio
 			clearButton.addActionListener(this);
 			jToolBar1.add(clearButton);
 			
-			JButton runProver = new JButton("Prover");
-			runProver.setActionCommand("RunProver");
+			JButton runProver = new JButton("Open File");
+			runProver.setActionCommand("OpenFile");
 			runProver.addActionListener(this);
 			jToolBar1.add(runProver);
 			
@@ -195,6 +201,14 @@ public class GuiEntry extends javax.swing.JFrame implements WindowListener,Actio
 			reStart.setActionCommand("Restart");
 			reStart.addActionListener(this);
 			jToolBar1.add(reStart);
+			
+			JButton rules = new JButton("Show Rules");
+			rules.setActionCommand("showRules");
+			rules.addActionListener(this);
+			jToolBar1.add(rules);
+			
+			
+			
 			
 			toolBox.add(jToolBar1);
 			add(toolBox, c);
@@ -279,29 +293,53 @@ public class GuiEntry extends javax.swing.JFrame implements WindowListener,Actio
 		if ("Restart".equals(e.getActionCommand())) {
 			parent.TextSeer();
 		}
+		if ("showRules".equals(e.getActionCommand())) {
+			std.calls.showResult("Knowledge base rules used computing consistency:");
+			std.calls.showResult(std.prover.KnowledgeBase.getKnowledgeBase() + std.string.endl);
+		}
 		
-		if ("RunProver".equals(e.getActionCommand())) {
+		
+		
+		if ("OpenFile".equals(e.getActionCommand())) {
 			/*
 			 * Need to automate the following example
 			 */
-			String backup = std.string.prover9Input;
-            std.calls.showResult("Running Prover 9 within TextSeer" + std.string.endl);
-            std.calls.showResult("example KB: c -> ~(a ^ b)" + std.string.endl);
-            std.calls.showResult("first check: (a ^ b) is consistent" + std.string.endl);
-            std.prover.Run.exec();
-            //std.calls.display("Done 1 ;" + std.string.prover9Input);
+//			String backup = std.string.prover9Input;
+//            std.calls.showResult("Running Prover 9 within TextSeer" + std.string.endl);
+//            std.calls.showResult("example KB: c -> ~(a ^ b)" + std.string.endl);
+//            std.calls.showResult("first check: (a ^ b) is consistent" + std.string.endl);
+//            std.prover.Run.exec();
+//            //std.calls.display("Done 1 ;" + std.string.prover9Input);
+//            
+//            std.calls.showResult("second check: (a ^ b) ^ c is consistent" + std.string.endl);
+//            std.string.prover9Input = std.string.prover9Path + "in2.txt";
+//            std.string.prover9ExecString = std.string.prover9Binary + " -f " + std.string.prover9Input;
+//            std.Timer t = new std.Timer();
+//            t.reset(); t.start();
+//            std.prover.Run.exec();
+//            t.end();
+//            std.calls.showResult("Prover9 completed run in: " + t.toString() + std.string.endl);
             
-            std.calls.showResult("second check: (a ^ b) ^ c is consistent" + std.string.endl);
-            std.string.prover9Input = std.string.prover9Path + "in2.txt";
-            std.string.prover9ExecString = std.string.prover9Binary + " -f " + std.string.prover9Input;
-            std.Timer t = new std.Timer();
-            t.reset(); t.start();
-            std.prover.Run.exec();
-            t.end();
-            std.calls.showResult("Prover9 completed run in: " + t.toString() + std.string.endl);
-            
-            std.string.prover9Input = backup;
-            std.string.prover9ExecString = std.string.prover9Binary + " -f " + std.string.prover9Input;
+//            std.string.prover9Input = backup;
+//            std.string.prover9ExecString = std.string.prover9Binary + " -f " + std.string.prover9Input;
+
+			int returnVal = fc.showOpenDialog(this);
+
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+                //This is where a real application would open the file.
+                try {
+					std.calls.showResult("Opening: " + file.getCanonicalPath() + "." + std.string.endl);
+					std.string.openFile = file.getCanonicalPath();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+               
+            } else {
+            	std.calls.showResult("Open command cancelled by user." + std.string.endl);
+            }
+            //log.setCaretPosition(log.getDocument().getLength());
 			
 		}
 		

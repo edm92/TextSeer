@@ -247,7 +247,7 @@ public class Splash extends JDialog{
 	public void close()
 	{
 		setVisible( false );
-		dispose();
+		//dispose();
 	}
 	
 	// Test

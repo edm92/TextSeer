@@ -31,8 +31,11 @@ public class calls {
 		return n;
 	}
 	
+	public static boolean print(String displayDetails){
+		return showResult(displayDetails);
+	}
+	
 	public static boolean showResult(String displayDetails){
-		
 		gui.results.resultsArea.append("\n" + displayDetails);
         
         
@@ -69,6 +72,8 @@ public class calls {
 		string.prover9MaxTime = std.Property.getProperty("prover9maxTime");
 		string.filePath = std.Property.getProperty("filePath");
 		string.knowledgeBase = std.Property.getProperty("knowledge");
+		processBuilding.randomProcessGenerator.CREATE_RANDOM_RANGE();
+		//System.out.println(processBuilding.randomProcessGenerator.RANDOM_RANGE[1]);
 	}
 	
 	public static long makeMarker(int Cmarker){

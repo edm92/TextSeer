@@ -19,10 +19,7 @@ package boot;
 
 import gui.HelpFrame;
 import gui.SeerTrayIcon;
-import gui.Splash;
 import gui.results;
-
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -191,6 +188,7 @@ public class GuiEntry extends javax.swing.JFrame implements WindowListener,Actio
 				}
 				
 			}
+			
 			Box toolBox =  Box.createVerticalBox();
 			jToolBar1 = new JToolBar(JToolBar.VERTICAL);
 			jToolBar1.setFloatable(false);
@@ -205,6 +203,7 @@ public class GuiEntry extends javax.swing.JFrame implements WindowListener,Actio
 			runProver.addActionListener(this);
 			jToolBar1.add(runProver);
 			
+
 			JButton reStart = new JButton("Restart");
 			reStart.setActionCommand("Restart");
 			reStart.addActionListener(this);
@@ -214,9 +213,6 @@ public class GuiEntry extends javax.swing.JFrame implements WindowListener,Actio
 			rules.setActionCommand("showRules");
 			rules.addActionListener(this);
 			jToolBar1.add(rules);
-			
-			
-			
 			
 			toolBox.add(jToolBar1);
 			add(toolBox, c);

@@ -126,7 +126,7 @@ public class ScenarioBuilder {
 					List<Graph> subResults = ProcessNode(v,g);				
 					mergeList(subResults, results);
 				}else{	// Fall off the edge
-					debug("Should get here in ProcessNode");
+					debug("Should not get here in ProcessNode");
 					return new LinkedList<Graph>();
 				}
 			}

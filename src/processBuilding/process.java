@@ -14,6 +14,7 @@ public class process {
 	}
 	
 	
+	
 	public static int totalProcesses = 0;
 	public List<Graph> endEffectScenarios;
 	public String name;

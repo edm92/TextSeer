@@ -26,6 +26,12 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class Property {
+	public static String SOURCEFILE = std.string.endl + "Error in: std.Property.java" + std.string.endl;
+	public static boolean DEBUG = std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
 
 	public static String getProperty(String propertyName){
 		Properties props = new Properties();

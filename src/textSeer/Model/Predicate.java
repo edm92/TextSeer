@@ -24,6 +24,12 @@ package textSeer.Model;
 
 
 public class Predicate {
+	public static String SOURCEFILE = std.string.endl + "Error in: textSeer.Model.Predicate.java" + std.string.endl;
+	public static boolean DEBUG = std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
 
   public static int totalPredicates=0;
 

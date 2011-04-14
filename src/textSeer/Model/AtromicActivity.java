@@ -22,6 +22,12 @@
 package textSeer.Model;
 
 public class AtromicActivity extends Activity {
+	public static String SOURCEFILE = std.string.endl + "Error in: textSeer.Model.AtomicActivity.java" + std.string.endl;
+	public static boolean DEBUG = std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
 	
 	// If you want to have these classes you should implement them
 	public AtromicActivity(Graph parent){

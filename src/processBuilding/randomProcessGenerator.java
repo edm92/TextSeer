@@ -33,6 +33,15 @@ import textSeer.Model.Vertex;
 
 
 public class randomProcessGenerator {
+	public static String SOURCEFILE = std.string.endl + "Error in: processBuilding.randomProcessGenerator.java" + std.string.endl;
+	public static boolean DEBUG = std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
+
+	
+	
 	public static int MAX_RANDOM_PREDICATES = 5;
 	public static int MAX_RANDOM_PREDICATE_RANGE = 5;
 	public static String RANDOM_RANGE[] = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",

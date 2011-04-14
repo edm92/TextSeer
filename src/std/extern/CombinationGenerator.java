@@ -35,6 +35,12 @@ while (x.hasMore ()) {
 import java.math.BigInteger;
 
 public class CombinationGenerator {
+	public static String SOURCEFILE = std.string.endl + "Error in: std.extern.CombinationGenerator.java" + std.string.endl;
+	public static boolean DEBUG = std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
 
 private int[] a;
 private int n;

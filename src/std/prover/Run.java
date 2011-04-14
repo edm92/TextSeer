@@ -29,7 +29,7 @@ public class Run {
 	public static boolean DEBUG = false; // std.string.debug;	// Hopefully true when you edit :P
 	public static void debug(String msg){
 		if(DEBUG)
-			std.calls.display(msg + SOURCEFILE);
+			std.calls.debug_(msg + SOURCEFILE);
 	}
 	
 	

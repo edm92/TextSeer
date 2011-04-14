@@ -27,6 +27,13 @@ import java.util.List;
 import java.util.TreeMap;
 
 public class Vertex {
+	
+	public static String SOURCEFILE = std.string.endl + "Error in: textSeer.Model.Vertex.java" + std.string.endl;
+	public static boolean DEBUG = std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
 
   public long marker = 1;	// used for xor splits in breath first search
   public TreeMap<Integer, String> visited;	// Graph ID 

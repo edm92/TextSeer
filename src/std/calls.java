@@ -31,6 +31,13 @@ import javax.swing.JOptionPane;
 import textSeer.Model.Vertex;
 
 public class calls {
+	public static String SOURCEFILE = std.string.endl + "Error in: std.calls.java" + std.string.endl;
+	public static boolean DEBUG = std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
+
 
 	//public static int currentMarker = 0;
 	
@@ -72,7 +79,7 @@ public class calls {
 		return true;
 	}
 	
-	public static boolean debug(String displayDetails){
+	public static boolean debug_(String displayDetails){
 		
 		String threadName = Thread.currentThread().getName();
         System.out.format("%s: %s%n", threadName, displayDetails);
@@ -85,6 +92,7 @@ public class calls {
 	}
 	
 	public static void init(){
+		// Load default strings
 		string.prover9Path = std.Property.getProperty("prover9Path");
 		string.prover9Binary = string.prover9Path + std.Property.getProperty("prover9Binary");
 		string.prover9Input = std.Property.getProperty("prover9TempPath") + std.Property.getProperty("prover9Input");
@@ -93,8 +101,12 @@ public class calls {
 		string.prover9MaxTime = std.Property.getProperty("prover9maxTime");
 		string.filePath = std.Property.getProperty("filePath");
 		string.knowledgeBase = std.Property.getProperty("knowledge");
+		string.database = std.Property.getProperty("database");
 		processBuilding.randomProcessGenerator.CREATE_RANDOM_RANGE();
 		//System.out.println(processBuilding.randomProcessGenerator.RANDOM_RANGE[1]);
+		
+		// Boot DB
+		
 	}
 	
 	public static long makeMarker(int Cmarker){

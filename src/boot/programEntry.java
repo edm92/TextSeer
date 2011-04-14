@@ -34,10 +34,9 @@ import javax.swing.SwingUtilities;
 
 //import std.prover.PairwiseChecker;
 //import textSeer.Model.Graph;
-import std.extern.CombinationGenerator;
+
 import std.prover.PairwiseChecker;
 import textSeer.Model.Graph;
-import textSeer.Model.functions.ScenarioBuilder;
 
 /***
  * For Examples see exampleUsage.java
@@ -46,114 +45,122 @@ import textSeer.Model.functions.ScenarioBuilder;
  */
 
 public class programEntry {
+	public static String SOURCEFILE = std.string.endl + "Error in: boot.programEntry.java" + std.string.endl;
+	public static boolean DEBUG = true; //std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
+	
+	
 	public GuiEntry inst;
 	public std.Timer t;
 	public ScenarioBuilder myProcessBuilder;
 	
 	// Models
-	process[] myProcess ;
+	process myProcess ;
 	process myProcess2 ;
 	
 	/***
 	 * First construct your models here. Then fill in the Processing function for 
 	 * experiments. Finally use the showResults function to display your output.
 	 */
-	
+
 	
 	public void ModelConstruction(){
+		// Create process models here
+		//myProcess = processBuilding.randomProcessGenerator.generateProcess(5,5);  
+		//myProcess = processBuilding.LoadExternal.loadFile("newpkg1.xpdl");// myProcess.name = "P1";
+		//myProcess2 = processBuilding.LoadExternal.loadFile("newpkg2.xpdl"); //myProcess2.name = "P2";
+		LinkedList<Graph> processes = (LinkedList<Graph>) std.DB.openGraph();
+		//debug("process size : " + processes.size());
+		myProcess = new process();
+		myProcess.structure = processes.get(0);
+		myProcess2 = new process();
+		myProcess2.structure = processes.get(1);
+		
+		std.calls.showResult("Loading process models and figuring out end effect scenarios");
+		
+		// Lets try some process building
+		
+		// Process 1
+		std.calls.showResult("#################################");
+		myProcessBuilder = new ScenarioBuilder(myProcess.structure);
+		myProcessBuilder.BuildScenarioLabels();	// this will build all scenario labels.
+		for(Graph g: myProcessBuilder.parentEffects){
+			//std.calls.showResult("Trying Scenario: " + ScenarioBuilder.graphString(g));
+			PairwiseChecker scenarioChecker = new PairwiseChecker(g);
+			if(scenarioChecker.isConsistent){
+				ScenarioBuilder.redoGraph(g);
+				myProcessBuilder.processEffects.add(g);				
+				myProcess.endEffectScenarios.add(g);
+			}else{
+				std.calls.showResult("Inconsistent Scenario: " + ScenarioBuilder.graphString(g));
+			}
+		}
+		
+		std.calls.showResult("Process " + myProcess.name + " has the following consistent end effect scenarios" + std.string.endl);
+		
+		for(Graph g: myProcessBuilder.processEffects){
+			std.calls.showResult(ScenarioBuilder.graphString(g));
+			std.calls.showResult("CE:" + ScenarioBuilder.cummulativeEffect(g));
+		}
 		
 
-		
+//		std.calls.showResult("#################################");
+//		// Process 2
+//		myProcessBuilder = new ScenarioBuilder(myProcess2.structure);
+//		myProcessBuilder.BuildScenarioLabels();	// this will build all scenario labels.
+//		for(Graph g: myProcessBuilder.parentEffects){
+//			//std.calls.showResult("Trying Scenario: " + ScenarioBuilder.graphString(g));
+//			PairwiseChecker scenarioChecker = new PairwiseChecker(g);
+//			if(scenarioChecker.isConsistent){
+//				ScenarioBuilder.redoGraph(g);
+//				myProcessBuilder.processEffects.add(g);				
+//				myProcess2.endEffectScenarios.add(g);
+//			}else{
+//				std.calls.showResult("Inconsistent Scenario: " + ScenarioBuilder.graphString(g));
+//			}
+//		}
+//		
+//		std.calls.showResult("Process " + myProcess2.name + " has the following consistent end effect scenarios" + std.string.endl);
+//		
+//		for(Graph g: myProcessBuilder.processEffects){
+//			std.calls.showResult(ScenarioBuilder.graphString(g));
+//			std.calls.showResult("CE:" + ScenarioBuilder.cummulativeEffect(g));
+//		}
+
+//		std.DB.saveGraph(myProcess.structure);
+//		std.DB.saveGraph(myProcess2.structure);
 		
 		std.calls.showResult("-----------------------" + std.string.endl + "Starting Processing" + std.string.endl + "-----------------------" + std.string.endl);
 	}
 
 	
-	long[][] times = new long[30][10]; 
+	
 	public void Process(){
-		
-		// First start the timer
+		// Do your experiments here
 		t = new std.Timer();
 		t.reset();
 		t.start();
-		// Do your experiments here
-		myProcess = new process[30*10];
-		int[] consistentScenes = new int[30*10]; 
-		long avgConsistentScenes=0;
-		long[] ComplexityScenes= new long[30];
-		long[] avgTasks = new long[30];
+		// First start the timer 
 		
-		for(int j = 0; j < 30; j++){
-			ComplexityScenes[j] = 0;
-			long myJduration = 0;
-			avgTasks[j] = 0;
-		for(int i = 0 ; i < 10; i++){
-			consistentScenes[(j*10) + i] = 0;
-			myProcess[(j*10) + i] = processBuilding.randomProcessGenerator.generateProcess(j+3,10);
-			avgTasks[j] += myProcess[(j*10) + i].structure.allNodes.size();
-			myProcessBuilder = new ScenarioBuilder(myProcess[(j*10) + i].structure);
-			myProcessBuilder.BuildScenarioLabels();	// this will build all scenario labels.
-			for(Graph g: myProcessBuilder.parentEffects){
-				//std.calls.showResult("Trying Scenario: " + ScenarioBuilder.graphString(g));
-				PairwiseChecker scenarioChecker = new PairwiseChecker(g);
-				if(scenarioChecker.isConsistent){
-					ScenarioBuilder.redoGraph(g);
-					myProcessBuilder.processEffects.add(g);				
-					myProcess[(j*10) + i].endEffectScenarios.add(g);
-				}else{
-					//std.calls.showResult("Inconsistent Scenario: " + ScenarioBuilder.graphString(g));
-				}
-			}
-			
-			//std.calls.showResult("Process " + myProcess[(j*15) + i].name + " has the following consistent end effect scenarios" + std.string.endl);
-			
-			for(Graph g: myProcessBuilder.processEffects){
-				//std.calls.showResult(ScenarioBuilder.graphString(g));
-				//std.calls.showResult("CE:" + ScenarioBuilder.cummulativeEffect(g));
-				consistentScenes[(j*10) + i] ++;
-				avgConsistentScenes++;
-				ComplexityScenes[j]++;
-			}
-			t.end();
-			times[j][i] = t.duration();
-			myJduration +=times[j][i];
-			t.reset();
-			t.start();
-			
-			//std.calls.display("Finished i = " + i + " - Consistent Scenarios = " + consistentScenes[(j*15) + i]);
-		}
-		t.reset();
-		t.start();
+		
+		
+		// Run Prover9
+		//std.calls.showResult("Running Prover9 on process to check consistency over process scenarios:");
+		
+		std.calls.showResult(myProcessBuilder.showOutput());
+		if(myProcessBuilder.parentEffects != null){
+			for(Graph g:myProcessBuilder.parentEffects){
+				std.calls.showResult("Trying Scenario: " + ScenarioBuilder.graphString(g));
+				std.prover.makeInput.createInput(g);				
+				if(std.prover.Run.exec()){
+					std.calls.showResult(std.string.prover9sucess + std.string.endl);
+				}else
+					std.calls.showResult(std.string.prover9failed + std.string.endl);
 
-			// Doing sequential 
-//		process[] complexProcess = new process[15];
-//		for(int i = 0; i <15; i++){			
-//			complexProcess[i] = myProcess[(j*15) + i];
-//		}
-//		int[] indices;
-//		CombinationGenerator x = new CombinationGenerator (complexProcess.length, 2);
-//
-//		while (x.hasMore ()) {
-//			process[] newProcesses1 = new process[2];  
-//			  indices = x.getNext ();
-//			  for (int i = 0; i < indices.length; i++) {
-//				  newProcesses1[i] = (complexProcess[indices[i]]);
-//			  }
-//			  combinate(newProcesses1[0], newProcesses1[1]);
-//			}
-//		std.calls.showResult("Break loop");
-//		t.end();
-//		CombinationTime[j] = t.duration();
-//		
-//		t.reset();
-//		t.start();
-		
-		
-
-		std.calls.display("Finished j = " + j + " - Consistent scenarios accross " +
-				"this complexity class:" + ComplexityScenes[j] + " Avg:" + 
-				ComplexityScenes[j]/10 + " time: " + myJduration + "ms" + " "
-						+"; avg Tasks: " + avgTasks[j] / 10);
+			}
 		}
 
 
@@ -189,14 +196,7 @@ public class programEntry {
 		// Select which results to show here
 		std.calls.showResult("-----------------------" + std.string.endl + "Completed Processing" + std.string.endl + "-----------------------" + std.string.endl);
 		long overTime = 0;
-		for(int j = 0; j < 15; j++){
-			long totalTime = 0;
-			for(long c: times[j]){
-				totalTime += c;
-			}
-			overTime += totalTime;
-			std.calls.showResult("Total running time for complexity at " + j +" number of tasks: " + totalTime + " ms, average process time is:" + totalTime/(30*10) + " ms");
-		}
+		
 		std.calls.showResult("Total overtime: " + overTime + " ms");
 		
 		//std.calls.showResult(myProcessBuilder.resultString());

@@ -23,6 +23,12 @@
 package textSeer.Model;
 
 public class SubProcess extends Graph {
+	public static String SOURCEFILE = std.string.endl + "Error in: textSeer.Model.SubProcess.java" + std.string.endl;
+	public static boolean DEBUG = std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
 
     public Vertex  myParentVertex;
 

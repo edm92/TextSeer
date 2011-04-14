@@ -24,18 +24,23 @@ package processBuilding.composition;
 import java.util.LinkedList;
 import java.util.List;
 
+import processBuilding.ScenarioBuilder;
 import processBuilding.process;
 
 import std.prover.PairwiseChecker;
-import textSeer.Model.Effect;
 import textSeer.Model.Gateway;
 import textSeer.Model.Graph;
-import textSeer.Model.Predicate;
 import textSeer.Model.SequenceEdge;
 import textSeer.Model.Vertex;
-import textSeer.Model.functions.ScenarioBuilder;
 
 public class Make {
+	public static String SOURCEFILE = std.string.endl + "Error in: processBuilding.composition.Make.java" + std.string.endl;
+	public static boolean DEBUG = std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
+
 	
 	
 	public static LinkedList<Graph> ParCompEff(List<Graph> endEffectScenarios,

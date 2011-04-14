@@ -22,6 +22,13 @@
 package std;
 
 public class objects {
+	public static String SOURCEFILE = std.string.endl + "Error in: std.objects.java" + std.string.endl;
+	public static boolean DEBUG = std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
+	
 	public static String iconFile = std.string.userDir + std.string.path + "Res" + std.string.path + "icon.png";
 	public static String trayiconFile = std.string.userDir + std.string.path + "Res" + std.string.path + "bulb.gif";
 	public static String splash = std.string.userDir + std.string.path + "Res" + std.string.path + "processing.jpg";

@@ -22,6 +22,12 @@
 package textSeer.Model;
 
 public class Gateway extends Vertex {
+	public static String SOURCEFILE = std.string.endl + "Error in: textSeer.Model.Gateway.java" + std.string.endl;
+	public static boolean DEBUG = std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
 	
 	// To test if gateway : 
 	// o.getClass().equals(Gateway.class)

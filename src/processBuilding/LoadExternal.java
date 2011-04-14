@@ -22,12 +22,21 @@ package processBuilding;
 
 // This module requires the xpdlLoader (will be added to git shortly), seperated from main due to dependencies.
 
-import xpdlLoader.OpenModel;
+//import xpdlLoader.OpenModel;
 
 
 public class LoadExternal {
+	public static String SOURCEFILE = std.string.endl + "Error in: processBuilding.LoadExternal.java" + std.string.endl;
+	public static boolean DEBUG = true;// std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
+	
 
 	public static process loadFile(String filename){
-		return OpenModel.readXPDL(filename);
+		debug("Not Loading " + std.string.filePath +  filename + " the external loader has been disabled");
+		return null;
+		//return OpenModel.readXPDL(std.string.filePath +  filename);
 	}
 }

@@ -22,6 +22,12 @@
 package std;
 
 public class type {
+	public static String SOURCEFILE = std.string.endl + "Error in: std.type.java" + std.string.endl;
+	public static boolean DEBUG = std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
 	
 	/* NODE BASICS */
 	

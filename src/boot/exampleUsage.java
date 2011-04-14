@@ -23,12 +23,20 @@ package boot;
 
 import java.util.LinkedList;
 
+import processBuilding.ScenarioBuilder;
 import processBuilding.process;
 import std.prover.PairwiseChecker;
 import textSeer.Model.Graph;
-import textSeer.Model.functions.ScenarioBuilder;
 
 public class exampleUsage {
+	public static String SOURCEFILE = std.string.endl + "Error in: boot.exampleUsage.java" + std.string.endl;
+	public static boolean DEBUG = std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
+	
+	
 	// Timer for timed output
 	public std.Timer t;
 	// ScenarioBuilder is used for generating scenario labels
@@ -46,6 +54,8 @@ public class exampleUsage {
 	
 	// This example will load two files
 	public void _FileLoading_ModelConstruction(){
+		
+		
 		// Create process models here
 		//myProcess = processBuilding.randomProcessGenerator.generateProcess(5);  
 		myProcess = processBuilding.LoadExternal.loadFile("newpkg1.xpdl");// myProcess.name = "P1";

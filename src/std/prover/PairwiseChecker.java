@@ -23,16 +23,17 @@ package std.prover;
 import java.util.LinkedList;
 import java.util.List;
 
+import processBuilding.ScenarioBuilder;
+
 import textSeer.Model.Graph;
 import textSeer.Model.Vertex;
-import textSeer.Model.functions.ScenarioBuilder;
 
 public class PairwiseChecker {
 	public static String SOURCEFILE = std.string.endl + "Error in: std.prover.PairwiseChecker.java" + std.string.endl;
 	public static boolean DEBUG = false; // std.string.debug;	// Hopefully true when you edit :P
 	public static void debug(String msg){
 		if(DEBUG)
-			std.calls.display(msg + SOURCEFILE);
+			std.calls.debug_(msg + SOURCEFILE);
 	}
 	
 	public boolean isConsistent = false;

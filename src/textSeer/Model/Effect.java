@@ -25,6 +25,12 @@ import java.util.Iterator;
 import java.util.TreeMap;
 
 public class Effect {
+	public static String SOURCEFILE = std.string.endl + "Error in: textSeer.Model.Effect.java" + std.string.endl;
+	public static boolean DEBUG = std.string.debug;	// Hopefully true when you edit :P
+	public static void debug(String msg){
+		if(DEBUG)
+			std.calls.debug_(msg + SOURCEFILE);
+	}
 
   public static int totalEffects = 0;;
 

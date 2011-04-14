@@ -8,3 +8,4 @@ prover9maxTime = 2
 filePath = e:\\workspace\\XPDL_Loader\\
 
 knowledge = knowledge.dat
+database = process.dat

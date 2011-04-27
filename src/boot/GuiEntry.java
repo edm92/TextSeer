@@ -53,6 +53,8 @@ import java.io.IOException;
 
 import javax.swing.*;
 
+import processBuilding.viewer.jungLayout;
+
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -239,6 +241,11 @@ public class GuiEntry extends javax.swing.JFrame implements WindowListener,Actio
 			rules.addActionListener(this);
 			jToolBar1.add(rules);
 			
+			JButton showProcessModel = new JButton("Show Model");
+			showProcessModel.setActionCommand("showProcess");
+			showProcessModel.addActionListener(this);
+			jToolBar1.add(showProcessModel);
+			
 			toolBox.add(jToolBar1);
 			add(toolBox, c);
 			add(myResults, c);
@@ -326,6 +333,14 @@ public class GuiEntry extends javax.swing.JFrame implements WindowListener,Actio
 			std.calls.showResult("Knowledge base rules used computing consistency:");
 			std.calls.showResult(std.prover.KnowledgeBase.getKnowledgeBase() + std.string.endl);
 		}
+		if ("showProcess".equals(e.getActionCommand())) {
+			// Add in process selector
+			
+			jungLayout myProcessVisual = new jungLayout(parent.myProcess);
+			myProcessVisual.loadGraph();
+		}
+		
+		
 		
 		
 		

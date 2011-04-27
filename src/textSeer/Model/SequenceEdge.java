@@ -77,6 +77,7 @@ public class SequenceEdge {
    */
   public void addSource(Vertex n){
 	  source = n;
+	  if(source != null)
 	  if(source.outEdges != null && !source.outEdges.contains(this))
 		  source.outEdges.add(this);
 	  if(target != null){
@@ -94,7 +95,7 @@ public class SequenceEdge {
 		  if(source.outNodes != null && !source.outNodes.contains(target))
 			  source.outNodes.add(target);
 	  }
-	  if(target.inEdges != null && !target.inEdges.contains(this))
+	  if(target != null && target.inEdges != null && !target.inEdges.contains(this))
 		  target.inEdges.add(this);
   }
   
@@ -103,9 +104,9 @@ public class SequenceEdge {
 		  if(source.outNodes != null && !source.outNodes.contains(target))
 			  source.outNodes.add(target);
 	  }
-	  if(target.inEdges != null && !target.inEdges.contains(this))
+	  if(target != null && target.inEdges != null && !target.inEdges.contains(this))
 		  target.inEdges.add(this);
-	  if(source.outEdges != null && !source.outEdges.contains(this))
+	  if(source != null && source.outEdges != null && !source.outEdges.contains(this))
 		  source.outEdges.add(this);
 	  if(target != null){
 		  if(target.inNodes != null && !target.inNodes.contains(source))

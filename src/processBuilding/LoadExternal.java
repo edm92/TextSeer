@@ -24,6 +24,8 @@ package processBuilding;
 
 //import xpdlLoader.OpenModel;
 
+// This is deprecated. See processBuilding.Parser for implementation of BPMN reader from Signavo files
+
 
 public class LoadExternal {
 	public static String SOURCEFILE = std.string.endl + "Error in: processBuilding.LoadExternal.java" + std.string.endl;

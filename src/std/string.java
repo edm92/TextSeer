@@ -44,7 +44,7 @@ public class string {
 	
 	public static String title = "TextSeer";
 	
-	public static String rightArrow =" > ";
+	public static String rightArrow =">";
 	
 	public static String propertyNotFound = "notFound";
 	public static String propertyFilename = "textseer.properties.dat";

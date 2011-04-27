@@ -190,9 +190,9 @@ public class Graph {
 	  String returnString = "";
 	  returnString += "Edges" + std.string.endl;
 	  for(SequenceEdge e:edges){
-		  returnString += (e.source == null ? "" : e.source.name + std.string.rightArrow) +  
+		  returnString += (e.source == null ? "" : e.source.name + " " + std.string.rightArrow) +  
 		  				e.name + 
-		  				(e.source == null ? "" : std.string.rightArrow + e.target.name)
+		  				(e.source == null ? std.string.rightArrow + "" : std.string.rightArrow + " " + e.target.name)
 		  				+ std.string.endl;
 	  }
 	  if(allNodes != null){

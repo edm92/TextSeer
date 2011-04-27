@@ -134,7 +134,10 @@ public class Vertex {
 	  if(inNodes != null){
 		  returnString += "\tInNodes: ";
 		  for(Vertex in:inNodes){
-			returnString += in.name + "(" + in.id + "), ";  
+			  if(in != null && in.name != null)
+				  returnString += in.name + "(" + in.id + "), ";  
+			  else
+				  if(in == null) returnString += "NAME BNUL";
 		  }
 		// Cut final comma ;) and add a new line
 		  returnString = returnString.substring(0, returnString.length()-2) + std.string.endl; 
@@ -142,7 +145,8 @@ public class Vertex {
 	  if(outNodes != null){
 		  returnString += "\tOutNodes: ";
 		  for(Vertex in:outNodes){
-			returnString += in.name + "(" + in.id + "), ";  
+			  if(in != null)
+				  returnString += in.name + "(" + in.id + "), ";  
 		  }
 		  // Cut final comma ;) and add a new line
 		  returnString = returnString.substring(0, returnString.length()-2) + std.string.endl; 

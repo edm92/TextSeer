@@ -38,7 +38,7 @@ public class Property {
 		String message = std.string.propertyNotFound;
         //try retrieve data from file
            try {
-           props.load(new FileInputStream("textseer.properties.dat"));
+           props.load(new FileInputStream(std.string.propertyFilename));
            message = props.getProperty(propertyName);
            }
            catch(IOException e)

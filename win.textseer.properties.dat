@@ -1,0 +1,11 @@
+prover9Path = e:\\prover9\\
+prover9Binary = bin\\prover9.exe
+prover9TempPath = e:\\prover9\\
+prover9Input = in.txt
+prover9Output = out.txt
+prover9maxTime = 2
+
+filePath = e:\\workspace\\XPDL_Loader\\
+
+knowledge = knowledge.dat
+database = process.dat

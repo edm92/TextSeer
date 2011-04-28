@@ -49,6 +49,7 @@ public class string {
 	public static String propertyNotFound = "notFound";
 	public static String propertyFilename = "textseer.properties.dat";
 	
+	
 	public static String database = "process.dat";
 	
 	public static String visted = "VISITED";

@@ -78,7 +78,7 @@ public class jungLayout {
 	    
 	Map<Graph<String,String>,Dimension> sizes = new HashMap<Graph<String,String>,Dimension>();
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	Class[] layoutClasses = new Class[]{CircleLayout.class,SpringLayout.class,FRLayout.class,KKLayout.class};
 	/**
 	 * the visual component and renderer for the graph
@@ -90,8 +90,8 @@ public class jungLayout {
 	Dimension subLayoutSize;
 	
 	PickedState<String> ps;
-	@SuppressWarnings("unchecked")
-	Class subLayoutType = CircleLayout.class;
+	@SuppressWarnings({ "rawtypes" })
+	Class<CircleLayout> subLayoutType = CircleLayout.class;
 
 	
 	public jungLayout(process viewme){
@@ -134,14 +134,15 @@ public class jungLayout {
         vv.setBackground(Color.white);
         
         // add a listener for ToolTips
-        vv.setVertexToolTipTransformer(new ToStringLabeller());
+        vv.setVertexToolTipTransformer(new ToStringLabeller<String>());
         
         /**
          * the regular graph mouse for the normal view
          */
-        vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
-        vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
-        final DefaultModalGraphMouse graphMouse = new DefaultModalGraphMouse();
+        vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller<String>());
+        vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller<String>());
+        @SuppressWarnings("rawtypes")
+		final DefaultModalGraphMouse graphMouse = new DefaultModalGraphMouse();
 
         vv.setGraphMouse(graphMouse);
         
@@ -179,7 +180,6 @@ public class jungLayout {
 			public void actionPerformed(ActionEvent e) {
 				uncluster();
 			}});
-        @SuppressWarnings("unchecked")
         JComboBox layoutTypeComboBox = new JComboBox(layoutClasses);
         layoutTypeComboBox.setRenderer(new DefaultListCellRenderer() {
 			private static final long serialVersionUID = 5958201577771114566L;
@@ -193,9 +193,10 @@ public class jungLayout {
         layoutTypeComboBox.setSelectedItem(FRLayout.class);
         layoutTypeComboBox.addItemListener(new ItemListener() {
 
+			@SuppressWarnings("rawtypes")
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
-					Class clazz = (Class)e.getItem();
+					Class<CircleLayout> clazz = (Class<CircleLayout>)e.getItem();
 					try {
 						Layout<String,String> layout = getLayoutFor(clazz, graph);
 						layout.setInitializer(vv.getGraphLayout());
@@ -220,9 +221,10 @@ public class jungLayout {
         });
         subLayoutTypeComboBox.addItemListener(new ItemListener() {
 
+			@SuppressWarnings("rawtypes")
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
-					subLayoutType = (Class)e.getItem();
+					subLayoutType = (Class<CircleLayout>)e.getItem();
 				}
 			}});
         
@@ -318,11 +320,11 @@ public class jungLayout {
     	component.setMaximumSize(d);
     }
     
-    @SuppressWarnings("unchecked")
-	private Layout getLayoutFor(Class layoutClass, Graph graph) throws Exception {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	private Layout<String, String> getLayoutFor(Class<CircleLayout> layoutClass, Graph<String, String> graph) throws Exception {
     	Object[] args = new Object[]{graph};
-    	Constructor constructor = layoutClass.getConstructor(new Class[] {Graph.class});
-    	return  (Layout)constructor.newInstance(args);
+    	Constructor<CircleLayout> constructor = layoutClass.getConstructor(new Class[] {Graph.class});
+    	return  constructor.newInstance(args);
     }
     
     private void clusterPicked() {

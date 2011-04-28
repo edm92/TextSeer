@@ -292,6 +292,7 @@ public class SigBPMNParser {
         }
 
         Result = new process();
+        Result.name = filename;
         // Print out the DOM tree
         OutputStreamWriter outWriter;
 		try {

@@ -2,88 +2,96 @@ package processBuilding.viewer;
 
 import processBuilding.process;
 import textSeer.Model.SequenceEdge;
+import textSeer.Model.Vertex;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.lang.reflect.Constructor;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
 
-import org.apache.commons.collections15.Factory;
-import org.apache.commons.collections15.functors.ConstantTransformer;
-
-import edu.uci.ics.jung.algorithms.layout.PolarPoint;
-import edu.uci.ics.jung.algorithms.layout.RadialTreeLayout;
-import edu.uci.ics.jung.algorithms.layout.TreeLayout;
-import edu.uci.ics.jung.graph.DirectedGraph;
-import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
-import edu.uci.ics.jung.graph.Forest;
-import edu.uci.ics.jung.graph.DelegateForest;
-import edu.uci.ics.jung.graph.DelegateTree;
-import edu.uci.ics.jung.graph.Tree;
+import edu.uci.ics.jung.algorithms.layout.AggregateLayout;
+import edu.uci.ics.jung.algorithms.layout.CircleLayout;
+import edu.uci.ics.jung.algorithms.layout.FRLayout;
+import edu.uci.ics.jung.algorithms.layout.KKLayout;
+import edu.uci.ics.jung.algorithms.layout.Layout;
+import edu.uci.ics.jung.algorithms.layout.SpringLayout;
+import edu.uci.ics.jung.graph.Graph;
+import edu.uci.ics.jung.graph.SparseMultigraph;
+import edu.uci.ics.jung.graph.util.Pair;
+import edu.uci.ics.jung.visualization.DefaultVisualizationModel;
 import edu.uci.ics.jung.visualization.GraphZoomScrollPane;
-import edu.uci.ics.jung.visualization.Layer;
-import edu.uci.ics.jung.visualization.VisualizationServer;
+import edu.uci.ics.jung.visualization.VisualizationModel;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.CrossoverScalingControl;
 import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
 import edu.uci.ics.jung.visualization.control.ModalGraphMouse;
 import edu.uci.ics.jung.visualization.control.ScalingControl;
-import edu.uci.ics.jung.visualization.decorators.EdgeShape;
+import edu.uci.ics.jung.visualization.decorators.PickableEdgePaintTransformer;
+import edu.uci.ics.jung.visualization.decorators.PickableVertexPaintTransformer;
 import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
-import edu.uci.ics.jung.visualization.layout.LayoutTransition;
-import edu.uci.ics.jung.visualization.util.Animator;
+import edu.uci.ics.jung.visualization.picking.PickedState;
 
 public class jungLayout {
 	process viewProc;
 	
-	JFrame viewingPane;
-	Forest<String,Integer> g;
-	final Factory<DirectedGraph<String,Integer>> graphFactory = 
-    	new Factory<DirectedGraph<String,Integer>>() {
-
-			public DirectedGraph<String, Integer> create() {
-				return new DirectedSparseMultigraph<String,Integer>();
-			}
-		};
-			
-	Factory<Tree<String,Integer>> treeFactory =
-		new Factory<Tree<String,Integer>> () {
-
-		public Tree<String,Integer> create() {
-			return new DelegateTree<String,Integer>(graphFactory);
-		}
-	};
+	String instructions =
+        "<html>"+
+        "Use the Layout combobox to select the "+
+        "<p>underlying layout."+
+        "<p>Use the SubLayout combobox to select "+
+        "<p>the type of layout for any clusters you create."+
+        "<p>To create clusters, use the mouse to select "+
+        "<p>multiple vertices, either by dragging a region, "+
+        "<p>or by shift-clicking on multiple vertices."+
+        "<p>After you select vertices, use the "+
+        "<p>Cluster Picked button to cluster them using the "+
+        "<p>layout and size specified in the Sublayout comboboxen."+
+        "<p>Use the Uncluster All button to remove all"+
+        "<p>clusters."+
+        "<p>You can drag the cluster with the mouse." +
+        "<p>Use the 'Picking'/'Transforming' combo-box to switch"+
+        "<p>between picking and transforming mode.</html>";
 	
-	Factory<Integer> edgeFactory = new Factory<Integer>() {
-		int i=0;
-		public Integer create() {
-			return i++;
-		}};
-    
-    Factory<String> vertexFactory = new Factory<String>() {
-    	int i=0;
-		public String create() {
-			return "V"+i++;
-		}};
+	JFrame viewingPane;
+	 Graph<String,String> graph;
+	    
+	Map<Graph<String,String>,Dimension> sizes = new HashMap<Graph<String,String>,Dimension>();
+	
+	@SuppressWarnings("unchecked")
+	Class[] layoutClasses = new Class[]{CircleLayout.class,SpringLayout.class,FRLayout.class,KKLayout.class};
+	/**
+	 * the visual component and renderer for the graph
+	 */
+	VisualizationViewer<String,String> vv;
+	
+	AggregateLayout<String,String> clusteringLayout;
+	
+	Dimension subLayoutSize;
+	
+	PickedState<String> ps;
+	@SuppressWarnings("unchecked")
+	Class subLayoutType = CircleLayout.class;
 
 	
 	public jungLayout(process viewme){
@@ -97,53 +105,54 @@ public class jungLayout {
 		viewingPane = new JFrame();
 	}
 	
-	TreeLayout<String,Integer> treeLayout;
-	   /**
-     * the visual component and renderer for the graph
-     */
-    VisualizationViewer<String,Integer> vv;
-    
-    VisualizationServer.Paintable rings;
-    
-    String root;
-    
-    RadialTreeLayout<String,Integer> radialLayout;
-	
 	@SuppressWarnings("unchecked")
 	public void loadGraph(){
 		
-		g = new DelegateForest<String,Integer>();
-		 for(SequenceEdge e: viewProc.structure.edges){
-				g.addVertex(e.source.id+e.source.name);
-				g.addEdge(edgeFactory.create(), e.source.id+e.source.name, e.target.id+e.target.name);
+		graph = new SparseMultigraph<String, String>();
+		
+		clusteringLayout = new AggregateLayout<String,String>(new FRLayout<String,String>(graph));
+		
+		for(Vertex v: viewProc.structure.allNodes){
+			graph.addVertex(v.id + v.name);
+		}
+        
+		for(SequenceEdge e: viewProc.structure.edges){
+				graph.addEdge(e.id+e.name,e.source.id+e.source.name,e.target.id+e.target.name);
+				//graph.addEdge(edgeFactory.create(), e.source.id+e.source.name, e.target.id+e.target.name);
 			}
 		
-		treeLayout = new TreeLayout<String,Integer>(g);
-        radialLayout = new RadialTreeLayout<String,Integer>(g);
-        radialLayout.setSize(new Dimension(600,600));
-       
+
+        Dimension preferredSize = new Dimension(600,600);
+        final VisualizationModel<String,String> visualizationModel = 
+            new DefaultVisualizationModel<String,String>(clusteringLayout, preferredSize);
+        vv =  new VisualizationViewer<String,String>(visualizationModel, preferredSize);
         
-        vv =  new VisualizationViewer<String,Integer>(treeLayout, new Dimension(600,600));
+        ps = vv.getPickedVertexState();
+        vv.getRenderContext().setEdgeDrawPaintTransformer(new PickableEdgePaintTransformer<String>(vv.getPickedEdgeState(), Color.black, Color.red));
+        vv.getRenderContext().setVertexFillPaintTransformer(new PickableVertexPaintTransformer<String>(vv.getPickedVertexState(), 
+                Color.red, Color.yellow));
         vv.setBackground(Color.white);
-        vv.getRenderContext().setEdgeShapeTransformer(new EdgeShape.Line());
-        vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+        
         // add a listener for ToolTips
         vv.setVertexToolTipTransformer(new ToStringLabeller());
-        vv.getRenderContext().setArrowFillPaintTransformer(new ConstantTransformer(Color.lightGray));
-        rings = new Rings();
-
-        //Container content = this.getRootPane();
-        GraphZoomScrollPane panel = new GraphZoomScrollPane(vv);
-        viewingPane.add(panel);
         
+        /**
+         * the regular graph mouse for the normal view
+         */
+        vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+        vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
         final DefaultModalGraphMouse graphMouse = new DefaultModalGraphMouse();
 
         vv.setGraphMouse(graphMouse);
         
+        //Container content = viewingPane.getContentPane();
+        GraphZoomScrollPane gzsp = new GraphZoomScrollPane(vv);
+        viewingPane.add(gzsp);
+        
         JComboBox modeBox = graphMouse.getModeComboBox();
         modeBox.addItemListener(graphMouse.getModeListener());
-        graphMouse.setMode(ModalGraphMouse.Mode.TRANSFORMING);
-
+        graphMouse.setMode(ModalGraphMouse.Mode.PICKING);
+        
         final ScalingControl scaler = new CrossoverScalingControl();
 
         JButton plus = new JButton("+");
@@ -159,83 +168,221 @@ public class jungLayout {
             }
         });
         
-        JToggleButton radial = new JToggleButton("Radial");
-        radial.addItemListener(new ItemListener() {
+        JButton cluster = new JButton("Cluster Picked");
+        cluster.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clusterPicked();
+			}});
+        
+        JButton uncluster = new JButton("UnCluster All");
+        uncluster.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				uncluster();
+			}});
+        @SuppressWarnings("unchecked")
+        JComboBox layoutTypeComboBox = new JComboBox(layoutClasses);
+        layoutTypeComboBox.setRenderer(new DefaultListCellRenderer() {
+			private static final long serialVersionUID = 5958201577771114566L;
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                String valueString = value.toString();
+                valueString = valueString.substring(valueString.lastIndexOf('.')+1);
+                return super.getListCellRendererComponent(list, valueString, index, isSelected,
+                        cellHasFocus);
+            }
+        });
+        layoutTypeComboBox.setSelectedItem(FRLayout.class);
+        layoutTypeComboBox.addItemListener(new ItemListener() {
 
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
-					
-					LayoutTransition<String,Integer> lt =
-						new LayoutTransition<String,Integer>(vv, treeLayout, radialLayout);
-					Animator animator = new Animator(lt);
-					animator.start();
-					vv.getRenderContext().getMultiLayerTransformer().setToIdentity();
-					vv.addPreRenderPaintable(rings);
-				} else {
-					LayoutTransition<String,Integer> lt =
-						new LayoutTransition<String,Integer>(vv, radialLayout, treeLayout);
-					Animator animator = new Animator(lt);
-					animator.start();
-					vv.getRenderContext().getMultiLayerTransformer().setToIdentity();
-					vv.removePreRenderPaintable(rings);
+					Class clazz = (Class)e.getItem();
+					try {
+						Layout<String,String> layout = getLayoutFor(clazz, graph);
+						layout.setInitializer(vv.getGraphLayout());
+						clusteringLayout.setDelegate(layout);
+						vv.setGraphLayout(clusteringLayout);
+					} catch(Exception ex) {
+						ex.printStackTrace();
+					}
 				}
-				vv.repaint();
 			}});
+        
+        JComboBox subLayoutTypeComboBox = new JComboBox(layoutClasses);
+        
+        subLayoutTypeComboBox.setRenderer(new DefaultListCellRenderer() {
+        	private static final long serialVersionUID = 5958201577771114566L;
+            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                String valueString = value.toString();
+                valueString = valueString.substring(valueString.lastIndexOf('.')+1);
+                return super.getListCellRendererComponent(list, valueString, index, isSelected,
+                        cellHasFocus);
+            }
+        });
+        subLayoutTypeComboBox.addItemListener(new ItemListener() {
 
-        JPanel scaleGrid = new JPanel(new GridLayout(1,0));
-        scaleGrid.setBorder(BorderFactory.createTitledBorder("Zoom"));
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					subLayoutType = (Class)e.getItem();
+				}
+			}});
+        
+        JComboBox subLayoutDimensionComboBox = 
+        	new JComboBox(new Dimension[]{
+        			new Dimension(75,75),
+        			new Dimension(100,100),
+        			new Dimension(150,150),
+        			new Dimension(200,200),
+        			new Dimension(250,250),
+        			new Dimension(300,300)
+        	}	
+        	);
+        subLayoutDimensionComboBox.setRenderer(new DefaultListCellRenderer() {
+        	private static final long serialVersionUID = 5958201577771114566L;
+            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                String valueString = value.toString();
+                valueString = valueString.substring(valueString.lastIndexOf('['));
+                valueString = valueString.replaceAll("idth", "");
+                valueString = valueString.replaceAll("eight","");
+                return super.getListCellRendererComponent(list, valueString, index, isSelected,
+                        cellHasFocus);
+            }
+        });
+        subLayoutDimensionComboBox.addItemListener(new ItemListener() {
 
-        JPanel controls = new JPanel();
-        scaleGrid.add(plus);
-        scaleGrid.add(minus);
-        controls.add(radial);
-        controls.add(scaleGrid);
-        controls.add(modeBox);
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					subLayoutSize = (Dimension)e.getItem();
+				}
+			}});
+        subLayoutDimensionComboBox.setSelectedIndex(1);
 
-        viewingPane.add(controls, BorderLayout.SOUTH);
+        JButton help = new JButton("Help");
+        help.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog((JComponent)e.getSource(), instructions, "Help", JOptionPane.PLAIN_MESSAGE);
+            }
+        });
+        Dimension space = new Dimension(20,20);
+        Box controls = Box.createVerticalBox();
+        controls.add(Box.createRigidArea(space));
+        
+        JPanel zoomControls = new JPanel(new GridLayout(1,2));
+        zoomControls.setBorder(BorderFactory.createTitledBorder("Zoom"));
+        zoomControls.add(plus);
+        zoomControls.add(minus);
+        heightConstrain(zoomControls);
+        controls.add(zoomControls);
+        controls.add(Box.createRigidArea(space));
+        
+        JPanel clusterControls = new JPanel(new GridLayout(0,1));
+        clusterControls.setBorder(BorderFactory.createTitledBorder("Clustering"));
+        clusterControls.add(cluster);
+        clusterControls.add(uncluster);
+        heightConstrain(clusterControls);
+        controls.add(clusterControls);
+        controls.add(Box.createRigidArea(space));
+        
+        JPanel layoutControls = new JPanel(new GridLayout(0,1));
+        layoutControls.setBorder(BorderFactory.createTitledBorder("Layout"));
+        layoutControls.add(layoutTypeComboBox);
+        heightConstrain(layoutControls);
+        controls.add(layoutControls);
+
+        JPanel subLayoutControls = new JPanel(new GridLayout(0,1));
+        subLayoutControls.setBorder(BorderFactory.createTitledBorder("SubLayout"));
+        subLayoutControls.add(subLayoutTypeComboBox);
+        subLayoutControls.add(subLayoutDimensionComboBox);
+        heightConstrain(subLayoutControls);
+        controls.add(subLayoutControls);
+        controls.add(Box.createRigidArea(space));
+        
+        JPanel modePanel = new JPanel(new GridLayout(1,1));
+        modePanel.setBorder(BorderFactory.createTitledBorder("Mouse Mode"));
+        modePanel.add(modeBox);
+        heightConstrain(modePanel);
+        controls.add(modePanel);
+        controls.add(Box.createRigidArea(space));
+
+        controls.add(help);
+        controls.add(Box.createVerticalGlue());
+        viewingPane.add(controls, BorderLayout.EAST);
         viewingPane.pack();
         viewingPane.setVisible(true);
-        
-
 		
     }
     
-    class Rings implements VisualizationServer.Paintable {
-    	
-    	Collection<Double> depths;
-    	
-    	public Rings() {
-    		depths = getDepths();
-    	}
-    	
-    	private Collection<Double> getDepths() {
-    		Set<Double> depths = new HashSet<Double>();
-    		Map<String,PolarPoint> polarLocations = radialLayout.getPolarLocations();
-    		for(String v : g.getVertices()) {
-    			PolarPoint pp = polarLocations.get(v);
-    			depths.add(pp.getRadius());
+
+    private void heightConstrain(Component component) {
+    	Dimension d = new Dimension(component.getMaximumSize().width,
+    			component.getMinimumSize().height);
+    	component.setMaximumSize(d);
+    }
+    
+    @SuppressWarnings("unchecked")
+	private Layout getLayoutFor(Class layoutClass, Graph graph) throws Exception {
+    	Object[] args = new Object[]{graph};
+    	Constructor constructor = layoutClass.getConstructor(new Class[] {Graph.class});
+    	return  (Layout)constructor.newInstance(args);
+    }
+    
+    private void clusterPicked() {
+    	cluster(true);
+    }
+    
+    private void uncluster() {
+    	cluster(false);
+    }
+
+    @SuppressWarnings("unchecked")
+	private void cluster(boolean state) {
+    	if(state == true) {
+    		// put the picked vertices into a new sublayout 
+    		Collection<String> picked = ps.getPicked();
+    		if(picked.size() > 1) {
+    			Point2D center = new Point2D.Double();
+    			double x = 0;
+    			double y = 0;
+    			for(String vertex : picked) {
+    				Point2D p = clusteringLayout.transform(vertex);
+    				x += p.getX();
+    				y += p.getY();
+    			}
+    			x /= picked.size();
+    			y /= picked.size();
+				center.setLocation(x,y);
+
+//    			String firstVertex = picked.iterator().next();
+//    			Point2D center = clusteringLayout.transform(firstVertex);
+    			Graph<String, String> subGraph;
+    			try {
+    				subGraph = graph.getClass().newInstance();
+    				for(String vertex : picked) {
+    					subGraph.addVertex(vertex);
+    					Collection<String> incidentEdges = graph.getIncidentEdges(vertex);
+    					for(String edge : incidentEdges) {
+    						Pair<String> endpoints = graph.getEndpoints(edge);
+    						if(picked.containsAll(endpoints)) {
+    							// put this edge into the subgraph
+    							subGraph.addEdge(edge, endpoints.getFirst(), endpoints.getSecond());
+    						}
+    					}
+    				}
+
+    				Layout<String,String> subLayout = getLayoutFor(subLayoutType, subGraph);
+    				subLayout.setInitializer(vv.getGraphLayout());
+    				subLayout.setSize(subLayoutSize);
+    				clusteringLayout.put(subLayout,center);
+    				vv.setGraphLayout(clusteringLayout);
+
+    			} catch (Exception e) {
+    				e.printStackTrace();
+    			}
     		}
-    		return depths;
+    	} else {
+    		// remove all sublayouts
+    		this.clusteringLayout.removeAll();
+    		vv.setGraphLayout(clusteringLayout);
     	}
-
-		public void paint(Graphics g) {
-			g.setColor(Color.lightGray);
-		
-			Graphics2D g2d = (Graphics2D)g;
-			Point2D center = radialLayout.getCenter();
-
-			Ellipse2D ellipse = new Ellipse2D.Double();
-			for(double d : depths) {
-				ellipse.setFrameFromDiagonal(center.getX()-d, center.getY()-d, 
-						center.getX()+d, center.getY()+d);
-				Shape shape = vv.getRenderContext().getMultiLayerTransformer().getTransformer(Layer.LAYOUT).transform(ellipse);
-				g2d.draw(shape);
-			}
-		}
-
-		public boolean useTransform() {
-			return true;
-		}
     }
 	
 	

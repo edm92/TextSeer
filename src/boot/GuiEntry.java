@@ -53,6 +53,7 @@ import java.io.IOException;
 
 import javax.swing.*;
 
+import processBuilding.process;
 import processBuilding.viewer.jungLayout;
 
 
@@ -335,9 +336,11 @@ public class GuiEntry extends javax.swing.JFrame implements WindowListener,Actio
 		}
 		if ("showProcess".equals(e.getActionCommand())) {
 			// Add in process selector
-			
-			jungLayout myProcessVisual = new jungLayout(parent.myProcess);
-			myProcessVisual.loadGraph();
+			process viewThis = gui.showProcesses.selectProcess();
+			if(viewThis != null){
+				jungLayout myProcessVisual = new jungLayout(viewThis);
+				myProcessVisual.loadGraph();
+			}
 		}
 		
 		

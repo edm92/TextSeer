@@ -1,5 +1,7 @@
 package m;
 
+import javax.swing.JOptionPane;
+
 public class E {
 	public static boolean writeConsole(String msg){
 		return std.calls.display(msg);
@@ -7,5 +9,11 @@ public class E {
 
 	public static boolean writeGUI(String msg){
 		return std.calls.showResult(msg);
+	}
+	
+	public static boolean writeMsg(String msg){
+		JOptionPane.showMessageDialog(null,
+				msg, "TextSeerAlert", JOptionPane.PLAIN_MESSAGE);
+		return true;
 	}
 }

@@ -24,6 +24,8 @@ import gui.Splash;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.LinkedList;
+
 import processBuilding.*;
 
 
@@ -51,8 +53,7 @@ public class programEntry {
 	public ScenarioBuilder myProcessBuilder;
 	
 	// Models
-	process myProcess ;
-	process myProcess2 ;
+	public static LinkedList<process> myprocesses; 
 	
 	/***
 	 * First construct your models here. Then fill in the Processing function for 
@@ -67,7 +68,15 @@ public class programEntry {
 		//myProcess2 = processBuilding.LoadExternal.loadFile("newpkg2.xpdl"); //myProcess2.name = "P2";
 		//LinkedList<Graph> processes = (LinkedList<Graph>) std.DB.openGraph();
 
+		process myProcess = processBuilding.Parser.SigBPMNParser.PARSEmain("FinancialReportProcess.bpmn20.xml");
+		myProcess.name = "FinancialReportProcess.bpmn20.xml";
+		myprocesses.push(myProcess);
+		
 		myProcess = processBuilding.Parser.SigBPMNParser.PARSEmain("VacationRequest.bpmn20.xml");
+		myProcess.name = "VacationRequest.bpmn20.xml";
+		myprocesses.push(myProcess);
+		
+		
 		
 		/////////////////////////////////////////////////////////
 		std.calls.showResult("-----------------------" + std.string.endl + "Starting Processing" + std.string.endl + "-----------------------" + std.string.endl);
@@ -94,7 +103,7 @@ public class programEntry {
 
 	public void ShowResults(){
 		// Select which results to show here
-		m.E.writeGUI(myProcess.structure.toString());
+		m.E.writeGUI(myprocesses.get(0).structure.toString());
 	}
 	
 	
@@ -120,7 +129,7 @@ public class programEntry {
 	
 	
 	public void TextSeer(){
-		
+		myprocesses = new LinkedList<process>();
 
 		Thread thread2 = null;
 		//Start the threads
@@ -183,6 +192,7 @@ public class programEntry {
 	private programEntry thisEntry;
 	
 	public programEntry(){
+		
 		thisEntry = this;
 		initSplash();
 		showSplash();

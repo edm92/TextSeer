@@ -3,6 +3,8 @@ package m;
 import javax.swing.JOptionPane;
 
 public class E {
+	public static String endl = std.string.endl;
+	
 	public static boolean writeConsole(String msg){
 		return std.calls.display(msg);
 	}

@@ -95,7 +95,7 @@ public class FileTypeCheck {
 			if(e.type.toLowerCase().compareTo("annotation") == 0){
 				elements.put(e.ID, e);
 				Effect v = new Effect();
-				v.addPredicate(new Predicate(e.annote, true));
+				v.addPredicate(new Predicate(e.annote.replace("&amp;", "&"), true));
 				effects.put(e.ID, v);
 			}else{
 				newElements.push(e);

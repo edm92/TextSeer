@@ -1,0 +1,11 @@
+prover9Path =/Applications/LADR-2009-11A/bin/
+prover9Binary = prover9
+prover9TempPath = /tmp/
+prover9Input = in.txt
+prover9Output = out.txt
+prover9maxTime = 2
+
+filePath = ~/textSeerWorkSpace/
+
+knowledge = knowledge.dat
+database = process.dat

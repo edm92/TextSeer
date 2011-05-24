@@ -26,7 +26,7 @@ import java.io.InputStreamReader;
 
 public class Run {
 	public static String SOURCEFILE = std.string.endl + "Error in: std.prover.Run.java" + std.string.endl;
-	public static boolean DEBUG = false; // std.string.debug;	// Hopefully true when you edit :P
+	public static boolean DEBUG = true; // std.string.debug;	// Hopefully true when you edit :P
 	public static void debug(String msg){
 		if(DEBUG)
 			std.calls.debug_(msg + SOURCEFILE);
@@ -41,12 +41,13 @@ public class Run {
 	
 	public static boolean exec(){
 		Boolean result = false;
+		//System.err.println(std.string.prover9ExecString);
 	     try {
 
              Runtime rt = Runtime.getRuntime();
              //Process pr = rt.exec("cmd /c dir");
              Process pr = rt.exec(std.string.prover9ExecString);
-             //std.calls.display(std.string.prover9ExecString);
+             
              BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 
              String line=null;
@@ -79,7 +80,8 @@ public class Run {
 
          } catch(Exception e) {
         	 if(!MULTIFLAG){
-        		 System.out.println(e.toString());
+        		 debug(e.toString());
+        		 //e.printStackTrace();
         		 MULTIFLAG = true;
         	 };
              //e.printStackTrace();

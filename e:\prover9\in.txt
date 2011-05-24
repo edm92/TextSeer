@@ -1,0 +1,10 @@
+assign(max_seconds, 2).
+formulas(sos).
+	 all x ( (a(x) & b(x)) -> -c(x) ).
+	 all x ( c(x) -> -(a(x) & b(x)) ).
+	 exists x (c(x)).
+	 exists x (a(x) & b(x)).
+end_of_list.
+formulas(goals).
+	 exists x (c(x) & a(x) & b(x)).
+end_of_list.

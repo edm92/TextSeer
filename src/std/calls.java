@@ -92,8 +92,16 @@ public class calls {
 	}
 	
 	public static void init(){
+
+		if(isWindows()) std.string.propertyFilename = "win." + std.string.propertyFilename;
+		if(isMac()) std.string.propertyFilename = "mac." + std.string.propertyFilename;
+		if(isUnix()) std.string.propertyFilename = "unix." + std.string.propertyFilename;
+		
+		//System.err.println("std.string.propertyFilename:" + std.string.propertyFilename);
 		// Load default strings
 		string.prover9Path = std.Property.getProperty("prover9Path");
+		//debug("string.prover9Path:" + string.prover9Path);
+		
 		string.prover9Binary = string.prover9Path + std.Property.getProperty("prover9Binary");
 		string.prover9Input = std.Property.getProperty("prover9TempPath") + std.Property.getProperty("prover9Input");
 		string.prover9Output = std.Property.getProperty("prover9TempPath") + std.Property.getProperty("prover9Output");
@@ -103,9 +111,13 @@ public class calls {
 		string.knowledgeBase = std.Property.getProperty("knowledge");
 		string.database = std.Property.getProperty("database");
 		processBuilding.randomProcessGenerator.CREATE_RANDOM_RANGE();
+		
+		
 		//System.out.println(processBuilding.randomProcessGenerator.RANDOM_RANGE[1]);
 		
 		// Boot DB
+		
+		// 
 		
 	}
 	
@@ -164,6 +176,30 @@ public class calls {
 		}
 		return null;
 		}
+	
+	public static boolean isWindows(){
+		 
+		String os = System.getProperty("os.name").toLowerCase();
+		//windows
+	    return (os.indexOf( "win" ) >= 0); 
+ 
+	}
+ 
+	public static boolean isMac(){
+ 
+		String os = System.getProperty("os.name").toLowerCase();
+		//Mac
+	    return (os.indexOf( "mac" ) >= 0); 
+ 
+	}
+ 
+	public static boolean isUnix(){
+ 
+		String os = System.getProperty("os.name").toLowerCase();
+		//linux or unix
+	    return (os.indexOf( "nix") >=0 || os.indexOf( "nux") >=0);
+ 
+	}
 
 	
 }

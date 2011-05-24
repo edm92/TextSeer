@@ -1,0 +1,7 @@
+assign(max_seconds, notFound).
+formulas(sos).
+	 exists x (a(x) & b(x)).
+end_of_list.
+formulas(goals).
+	 exists x (a(x) & b(x)).
+end_of_list.

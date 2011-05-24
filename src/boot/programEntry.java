@@ -137,6 +137,31 @@ public class programEntry {
 		t.start();
 		// First start the timer 
 		
+		process compProcess= new process();
+		
+		LinkedList<Graph> Scenarios = 
+			processBuilding.composition.Make.ParCompEff(myprocesses.get(0).endEffectScenarios, myprocesses.get(1).endEffectScenarios);
+		
+		
+		for(Graph great : Scenarios){
+				//std.calls.showResult("Trying Scenario: " + ScenarioBuilder.graphString(g));
+				PairwiseChecker scenarioChecker = new PairwiseChecker(great);
+				if(scenarioChecker.isConsistent){
+					//ScenarioBuilder.redoGraph(great);
+					compProcess.endEffectScenarios.add(great);
+					//std.calls.showResult("Consistent:" + ScenarioBuilder.graphString(great));
+					
+				}else{
+					//std.calls.showResult("Inconsistent Scenario: " + ScenarioBuilder.graphString(great));
+				}
+		}
+		for(Graph g: compProcess.endEffectScenarios){
+			std.calls.showResult(ScenarioBuilder.graphString(g));
+			std.calls.showResult("CE:" + ScenarioBuilder.cummulativeEffect(g));
+			process subprocess = new process();
+			subprocess.structure = g;
+			myprocesses.add(subprocess);
+		}
 		
         
 		
@@ -149,7 +174,7 @@ public class programEntry {
 
 	public void ShowResults(){
 		// Select which results to show here
-		m.E.writeGUI(myprocesses.get(0).structure.toString());
+		//m.E.writeGUI(myprocesses.get(0).structure.toString());
 	}
 	
 	

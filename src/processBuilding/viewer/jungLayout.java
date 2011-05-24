@@ -115,7 +115,14 @@ public class jungLayout {
 		for(Vertex v: viewProc.structure.allNodes){
 			graph.addVertex(v.id + v.name);
 		}
-        
+        if(viewProc.structure.edges.size() < 1){
+        	int k = 0;
+        	for(int l = 1; l < viewProc.structure.allNodes.size(); l++){
+        		graph.addEdge("gen"+k+l,viewProc.structure.allNodes.get(k).id+viewProc.structure.allNodes.get(k).name,
+        				viewProc.structure.allNodes.get(l).id+viewProc.structure.allNodes.get(l).name);
+        		k++;
+        	}
+        }else
 		for(SequenceEdge e: viewProc.structure.edges){
 				graph.addEdge(e.id+e.name,e.source.id+e.source.name,e.target.id+e.target.name);
 				//graph.addEdge(edgeFactory.create(), e.source.id+e.source.name, e.target.id+e.target.name);

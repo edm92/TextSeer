@@ -171,6 +171,12 @@ public class Graph {
 	  }
   }
   
+  public void ScenarioAddEdge(SequenceEdge v){
+	  if(v != null)
+		  if(!edges.contains(v))
+		  	edges.add(v);
+		  
+  }
   
   // Slow construction of process model ensures fastest search
   public void addEdge(SequenceEdge e) {

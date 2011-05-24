@@ -51,62 +51,64 @@ public class Make {
 		FixGraph(endEffectScenarios);
 		FixGraph(endEffectScenarios2);
 			
-		Graph g = new Graph();
-		Gateway gateOpen = new Gateway(g);
-		g.addNode(gateOpen);
-		gateOpen.type = Gateway.gatetype.AND; gateOpen.name = "ParallelProcess_" + gateOpen.name ; 
-		Gateway gateClose = new Gateway(g);
-		gateClose.type = Gateway.gatetype.AND;gateClose.name  = "ParallelProcess_" + gateClose.name ;
-		g.addNode(gateClose);
-		
-		makePara(endEffectScenarios,g,gateOpen,gateClose);
-		makePara(endEffectScenarios2,g,gateOpen,gateClose);
-		FixGraph(g);
-		
-		p.structure = g;
-		std.calls.display(g.toString());
-		
-		ScenarioBuilder myProcessBuilder = new ScenarioBuilder(p.structure);
-		myProcessBuilder.BuildScenarioLabels();	// this will build all scenario labels.
-		for(Graph great: myProcessBuilder.parentEffects){
-			//std.calls.showResult("Trying Scenario: " + ScenarioBuilder.graphString(g));
-			PairwiseChecker scenarioChecker = new PairwiseChecker(great);
-			if(scenarioChecker.isConsistent){
-				ScenarioBuilder.redoGraph(great);
-				myProcessBuilder.processEffects.add(great);				
-				p.endEffectScenarios.add(great);
-			}else{
-				//std.calls.showResult("Inconsistent Scenario: " + ScenarioBuilder.graphString(great));
+		for(Graph gg1: endEffectScenarios)
+			for(Graph gg2: endEffectScenarios2){
+				Graph g = new Graph();
+				Gateway gateOpen = new Gateway(g);
+				g.addNode(gateOpen);
+				gateOpen.type = Gateway.gatetype.AND; gateOpen.name = "ParallelProcess_" + gateOpen.name ; 
+				Gateway gateClose = new Gateway(g);
+				gateClose.type = Gateway.gatetype.AND;gateClose.name  = "ParallelProcessClose_" + gateClose.name ;
+				g.addNode(gateClose);
+				makePara(gg1,g,gateOpen,gateClose);
+				makePara(gg2,g,gateOpen,gateClose);
+				FixGraph(g);
+				
+				p.structure = g;
+				std.calls.display(g.toString());
+				
+//				ScenarioBuilder myProcessBuilder = new ScenarioBuilder(p.structure);
+//				myProcessBuilder.BuildScenarioLabels();	// this will build all scenario labels.
+//				for(Graph great: myProcessBuilder.parentEffects){
+//					//std.calls.showResult("Trying Scenario: " + ScenarioBuilder.graphString(g));
+//					PairwiseChecker scenarioChecker = new PairwiseChecker(great);
+//					if(scenarioChecker.isConsistent){
+//						ScenarioBuilder.redoGraph(great);
+//						myProcessBuilder.processEffects.add(great);				
+//						p.endEffectScenarios.add(great);
+//					}else{
+//						//std.calls.showResult("Inconsistent Scenario: " + ScenarioBuilder.graphString(great));
+//					}
+//				}
+//				
+//				for(Graph swap:p.endEffectScenarios){
+//					myScenarios.add(swap);
+//				}
 			}
-		}
+	return myScenarios;
 		
-		for(Graph swap:p.endEffectScenarios){
-			myScenarios.add(swap);
-		}
-		
-		return myScenarios;
 		
 	}
 	
-	public static void makePara(List<Graph> endEffectScenarios, Graph g, Vertex gateOpen, Vertex gateClose){
-		for(Graph p1 : endEffectScenarios){
+	public static void makePara(Graph p1, Graph g, Vertex gateOpen, Vertex gateClose){
+		
 			FixGraph(p1);
 			for(Vertex v:p1.startNodes){
 				SequenceEdge e1 = new SequenceEdge(g);
 				e1.addSource(gateOpen);
 				e1.addTarget(v);
 				e1.finalize();
-				g.addEdge(e1);
+				g.ScenarioAddEdge(e1);
 			}
 			for(Vertex v:p1.endNodes){
 				SequenceEdge e1 = new SequenceEdge(g);
 				e1.addSource(v);
 				e1.addTarget(gateClose);
 				e1.finalize();
-				g.addEdge(e1);
+				g.ScenarioAddEdge(e1);
 			}
 			g.finalize();
-		}
+		
 	}
 	
 	
@@ -118,8 +120,10 @@ public class Make {
 		FixGraph(endEffectScenarios);
 		FixGraph(endEffectScenarios2);
 			
-		
-		
+		/** TODO:
+		 *  This section needs to consider cases where there are multiple start and multiple end events
+		 */
+		int counter = 0;
 		for(Graph p1 : endEffectScenarios){
 			
 			for(Graph p2: endEffectScenarios2){
@@ -131,13 +135,28 @@ public class Make {
 					if(p2.startNodes.size() > 0 ){					
 						
 						newScenario.endNodes.get(0).outNodes.add(p2.startNodes.get(0));
+						SequenceEdge joinEdge = new SequenceEdge(newScenario);
+						joinEdge.name ="GenJoinEdge"+p1.ID + p2.ID + counter++;
+						// Dodgy hack, need to find out why the end and start nodes of this process are the same
+						joinEdge.addSource(p1.allNodes.get(p1.allNodes.size()-1));
+						
+						joinEdge.addTarget(p2.startNodes.get(0));
+						newScenario.ScenarioAddEdge(joinEdge);
 						//p2.startNodes.get(0).inNodes.add(newScenario.endNodes.get(0));
 						//p2.startNodes.remove(0);
 						newScenario.endNodes.remove(0);
+						int k = 0; int l = 1;
 						for(Vertex v : p2.allNodes){
 							//std.calls.showResult("Adding " + v.name);
-							
 							newScenario.ScenarioAddNode(v);
+							if(l < p2.allNodes.size()){							
+								SequenceEdge newGenEdge = new SequenceEdge(newScenario);
+				        		newGenEdge.addSource(p2.allNodes.get(k));
+				        		newGenEdge.addTarget(p2.allNodes.get(l));
+				        		newGenEdge.name = p2.ID + "MakeGenEdge" + k + l;
+				        		newScenario.ScenarioAddEdge(newGenEdge);
+				        		k++; l++;
+							};
 						}
 						myScenarios.add(newScenario);
 						//std.calls.showResult("Added " + ScenarioBuilder.graphString(newScenario));
@@ -176,7 +195,17 @@ public class Make {
 					p2.endNodes.add(v);
 				}
 			}
-		
+//			if(p2.edges.size() < 1){
+//	        	int k = 0;
+//	        	for(int l = 1; l < p2.allNodes.size(); l++){
+//	        		SequenceEdge newGenEdge = new SequenceEdge(p2);
+//	        		newGenEdge.addSource(p2.allNodes.get(k));
+//	        		newGenEdge.addTarget(p2.allNodes.get(l));
+//	        		newGenEdge.name = p2.ID + "MakeGenEdge" + k + l;
+//	        		p2.ScenarioAddEdge(newGenEdge);
+//	        		k++;
+//	        	}
+//	        	}
 	}
 
 }

@@ -100,7 +100,7 @@ public class programEntry {
 			m.E.writeGUI("CE:" + ScenarioBuilder.cummulativeEffect(g));
 		}
 		
-
+		
 		std.calls.showResult("#################################");
 		// Process 2
 		myProcessBuilder = new ScenarioBuilder(myprocesses.get(1).structure);
@@ -124,7 +124,7 @@ public class programEntry {
 			m.E.writeGUI("CE:" + ScenarioBuilder.cummulativeEffect(g));
 		}
 		
-		/////////////////////////////////////////////////////////
+//		/////////////////////////////////////////////////////////
 		m.E.writeGUI("-----------------------" + std.string.endl + "Starting Processing" + std.string.endl + "-----------------------" + std.string.endl);
 	}
 
@@ -156,7 +156,7 @@ public class programEntry {
 				}
 		}
 		for(Graph g: compProcess.endEffectScenarios){
-			std.calls.showResult(ScenarioBuilder.graphString(g));
+			//std.calls.showResult(ScenarioBuilder.graphString(g));
 			std.calls.showResult("CE:" + ScenarioBuilder.cummulativeEffect(g));
 			process subprocess = new process();
 			subprocess.structure = g;

@@ -24,10 +24,8 @@ package processBuilding.composition;
 import java.util.LinkedList;
 import java.util.List;
 
-import processBuilding.ScenarioBuilder;
 import processBuilding.process;
 
-import std.prover.PairwiseChecker;
 import textSeer.Model.Gateway;
 import textSeer.Model.Graph;
 import textSeer.Model.SequenceEdge;
@@ -50,22 +48,25 @@ public class Make {
 		
 		FixGraph(endEffectScenarios);
 		FixGraph(endEffectScenarios2);
-			
+		
+		Graph g = new Graph();
+		Gateway gateOpen = new Gateway(g);
+		g.ScenarioAddNode(gateOpen);
+		gateOpen.type = Gateway.gatetype.AND; gateOpen.name = "ParallelProcess_" + gateOpen.name ; 
+		Gateway gateClose = new Gateway(g);
+		gateClose.type = Gateway.gatetype.AND;gateClose.name  = "ParallelProcessClose_" + gateClose.name ;
+		g.ScenarioAddNode(gateClose);
+		
+		
 		for(Graph gg1: endEffectScenarios)
 			for(Graph gg2: endEffectScenarios2){
-				Graph g = new Graph();
-				Gateway gateOpen = new Gateway(g);
-				g.addNode(gateOpen);
-				gateOpen.type = Gateway.gatetype.AND; gateOpen.name = "ParallelProcess_" + gateOpen.name ; 
-				Gateway gateClose = new Gateway(g);
-				gateClose.type = Gateway.gatetype.AND;gateClose.name  = "ParallelProcessClose_" + gateClose.name ;
-				g.addNode(gateClose);
 				makePara(gg1,g,gateOpen,gateClose);
 				makePara(gg2,g,gateOpen,gateClose);
 				FixGraph(g);
 				
 				p.structure = g;
-				std.calls.display(g.toString());
+				myScenarios.add(g);
+				//std.calls.display(g.toString());
 				
 //				ScenarioBuilder myProcessBuilder = new ScenarioBuilder(p.structure);
 //				myProcessBuilder.BuildScenarioLabels();	// this will build all scenario labels.
@@ -91,22 +92,57 @@ public class Make {
 	}
 	
 	public static void makePara(Graph p1, Graph g, Vertex gateOpen, Vertex gateClose){
-		
+
+			String previous ="";
 			FixGraph(p1);
 			for(Vertex v:p1.startNodes){
+				if(previous.equals(v.name)) continue; 	// remove duplicates
+				previous = v.name;
+				//m.E.writeConsole("Adding vertex open: " + v.name + m.E.endl);
 				SequenceEdge e1 = new SequenceEdge(g);
 				e1.addSource(gateOpen);
 				e1.addTarget(v);
-				e1.finalize();
 				g.ScenarioAddEdge(e1);
+				e1.finalize();				
 			}
+			previous ="";
+			//m.E.writeConsole("End Nodes size = "  + p1.endNodes.size() + p1.endNodes.toString());
 			for(Vertex v:p1.endNodes){
+				if(previous.equals(v.name)) continue; 	// remove duplicates
+				previous = v.name;
+				//m.E.writeConsole("Adding vertex close: " + v.name + m.E.endl);
 				SequenceEdge e1 = new SequenceEdge(g);
 				e1.addSource(v);
 				e1.addTarget(gateClose);
 				e1.finalize();
 				g.ScenarioAddEdge(e1);
 			}
+			
+			for(Vertex v:p1.allNodes){
+				if(p1.startNodes.contains(v) || p1.endNodes.contains(v)) continue;
+				g.ScenarioAddNode(v);
+				for(Vertex ov: v.outNodes){
+					boolean switcher = false;
+					for(SequenceEdge e: v.parent.edges){
+						if(e.source == v && e.target == ov){
+							g.ScenarioAddEdge(e);
+							switcher = true;
+						}						
+					}
+					if(!switcher){
+						SequenceEdge e = new SequenceEdge(g);
+						e.source = v;
+						e.target = ov;
+						e.finalize();
+						g.ScenarioAddEdge(e);
+					}
+				}
+			}
+//			for(SequenceEdge e: p1.edges){
+//				g.addEdge(e);
+//			}
+			
+			
 			g.finalize();
 		
 	}
@@ -184,6 +220,29 @@ public class Make {
 		if(p2.startNodes == null) p2.startNodes = new LinkedList<Vertex>();
 		if(p2.endNodes == null) p2.endNodes = new LinkedList<Vertex>();
 		
+		LinkedList<Vertex> removal = new LinkedList<Vertex>();
+		LinkedList<Vertex> used = new LinkedList<Vertex>();
+		LinkedList<String> names = new LinkedList<String>();	names.add("");
+		
+		for(Vertex v: p2.startNodes){ if(v.inNodes != null && v.inNodes.size() == 0 &&!used.contains(v)) used.add(v); };
+		
+		for(Vertex v:used) if(names.contains(v.name)) removal.add(v);		
+		for(Vertex v: removal) used.remove(v);
+			
+		p2.startNodes = new LinkedList<Vertex>(); for(Vertex v:used) p2.startNodes.add(v);
+		removal = new LinkedList<Vertex>();
+		used = new LinkedList<Vertex>();
+		names = new LinkedList<String>();	names.add("");
+		for(Vertex v: p2.endNodes){ if(v.outNodes != null && v.outNodes.size() == 0 && !used.contains(v)) used.add(v); };
+
+		for(Vertex v:used) if(names.contains(v.name)) removal.add(v);		
+		for(Vertex v: removal) used.remove(v);
+		
+		p2.endNodes = new LinkedList<Vertex>(); 
+		for(Vertex v:used) {p2.endNodes.add(v);};// m.E.writeConsole("Added " + v.name + " to end nodes");};
+		
+		
+		
 			for(Vertex v: p2.allNodes){
 				if(v.inNodes == null || v.inNodes.size() < 1){
 					p2.startNodes.add(v);
@@ -191,7 +250,7 @@ public class Make {
 				}else{
 //					std.calls.showResult(" Not Adding " + v.name + " to start nodes");
 				}
-				if(v.outNodes == null || v.inNodes.size() < 1){
+				if(v.outNodes == null || v.outNodes.size() < 1){
 					p2.endNodes.add(v);
 				}
 			}

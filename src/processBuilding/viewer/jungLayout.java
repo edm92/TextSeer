@@ -78,7 +78,8 @@ public class jungLayout {
 	    
 	Map<Graph<String,String>,Dimension> sizes = new HashMap<Graph<String,String>,Dimension>();
 	
-	@SuppressWarnings("rawtypes")
+	
+	@SuppressWarnings("unchecked")
 	Class[] layoutClasses = new Class[]{CircleLayout.class,SpringLayout.class,FRLayout.class,KKLayout.class};
 	/**
 	 * the visual component and renderer for the graph
@@ -90,9 +91,10 @@ public class jungLayout {
 	Dimension subLayoutSize;
 	
 	PickedState<String> ps;
-	@SuppressWarnings({ "rawtypes" })
-	Class<CircleLayout> subLayoutType = CircleLayout.class;
 
+	@SuppressWarnings("unchecked")
+	Class<CircleLayout> subLayoutType = CircleLayout.class;
+	
 	
 	public jungLayout(process viewme){
 		super();
@@ -148,7 +150,7 @@ public class jungLayout {
          */
         vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller<String>());
         vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller<String>());
-        @SuppressWarnings("rawtypes")
+        
 		final DefaultModalGraphMouse graphMouse = new DefaultModalGraphMouse();
 
         vv.setGraphMouse(graphMouse);
@@ -200,7 +202,7 @@ public class jungLayout {
         layoutTypeComboBox.setSelectedItem(FRLayout.class);
         layoutTypeComboBox.addItemListener(new ItemListener() {
 
-			@SuppressWarnings("rawtypes")
+			@SuppressWarnings("unchecked")
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
 					Class<CircleLayout> clazz = (Class<CircleLayout>)e.getItem();
@@ -228,7 +230,7 @@ public class jungLayout {
         });
         subLayoutTypeComboBox.addItemListener(new ItemListener() {
 
-			@SuppressWarnings("rawtypes")
+			@SuppressWarnings("unchecked")
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
 					subLayoutType = (Class<CircleLayout>)e.getItem();
@@ -327,7 +329,7 @@ public class jungLayout {
     	component.setMaximumSize(d);
     }
     
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked" })
 	private Layout<String, String> getLayoutFor(Class<CircleLayout> layoutClass, Graph<String, String> graph) throws Exception {
     	Object[] args = new Object[]{graph};
     	Constructor<CircleLayout> constructor = layoutClass.getConstructor(new Class[] {Graph.class});

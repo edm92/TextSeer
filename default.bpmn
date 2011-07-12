@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:BpmnDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:bpmn="http://stp.eclipse.org/bpmn" xmi:id="_wTDmYHFzEeCrXtRGDBpotw" iD="_wS51YXFzEeCrXtRGDBpotw">
+  <pools xmi:type="bpmn:Pool" xmi:id="_wU_gEXFzEeCrXtRGDBpotw" iD="_wU_gEHFzEeCrXtRGDBpotw" name="Pool">
+    <vertices xmi:type="bpmn:Activity" xmi:id="_wWet0XFzEeCrXtRGDBpotw" iD="_wWet0HFzEeCrXtRGDBpotw" outgoingEdges="_h-cQgYH2EeCA1YFpYNLrdw" name="Start here" activityType="Task"/>
+    <vertices xmi:type="bpmn:Activity" xmi:id="_ajZbQYH2EeCA1YFpYNLrdw" iD="_ajZbQIH2EeCA1YFpYNLrdw" outgoingEdges="_dh07QYH2EeCA1YFpYNLrdw _elewoYH2EeCA1YFpYNLrdw" incomingEdges="_h-cQgYH2EeCA1YFpYNLrdw" name="Exclusive choise, go only one way" activityType="GatewayDataBasedExclusive"/>
+    <vertices xmi:type="bpmn:Activity" xmi:id="_dhrxUYH2EeCA1YFpYNLrdw" iD="_dhrxUIH2EeCA1YFpYNLrdw" outgoingEdges="_yZkmOoH2EeCA1YFpYNLrdw" incomingEdges="_dh07QYH2EeCA1YFpYNLrdw" name="Option 1" activityType="Task"/>
+    <vertices xmi:type="bpmn:Activity" xmi:id="_elU_oYH2EeCA1YFpYNLrdw" iD="_elU_oIH2EeCA1YFpYNLrdw" outgoingEdges="_fxB9yIH2EeCA1YFpYNLrdw" incomingEdges="_elewoYH2EeCA1YFpYNLrdw" name="Option 2" activityType="Task"/>
+    <vertices xmi:type="bpmn:Activity" xmi:id="_fw4MwYH2EeCA1YFpYNLrdw" iD="_fw4MwIH2EeCA1YFpYNLrdw" outgoingEdges="_lAwK-oH2EeCA1YFpYNLrdw _McCo4YzUEeCeQfYMk27U0w" incomingEdges="_fxB9yIH2EeCA1YFpYNLrdw" name="Do both tasks following &#xD;&#xA;this togeather" activityType="GatewayParallel"/>
+    <vertices xmi:type="bpmn:Activity" xmi:id="_lAwK8YH2EeCA1YFpYNLrdw" iD="_lAwK8IH2EeCA1YFpYNLrdw" outgoingEdges="_pt29KozUEeCeQfYMk27U0w" incomingEdges="_lAwK-oH2EeCA1YFpYNLrdw" name="Task 5 - &#xD;&#xA;Do this with  Task 6" activityType="Task"/>
+    <vertices xmi:type="bpmn:Activity" xmi:id="_utrjQYH2EeCA1YFpYNLrdw" iD="_utrjQIH2EeCA1YFpYNLrdw" outgoingEdges="_v0A5OoH2EeCA1YFpYNLrdw" incomingEdges="_NU9N4YzUEeCeQfYMk27U0w _rFLVYYzUEeCeQfYMk27U0w" name="End Paralell" activityType="GatewayParallel"/>
+    <vertices xmi:type="bpmn:Activity" xmi:id="_v0A5MYH2EeCA1YFpYNLrdw" iD="_v0A5MIH2EeCA1YFpYNLrdw" outgoingEdges="_y39yYYH2EeCA1YFpYNLrdw" incomingEdges="_v0A5OoH2EeCA1YFpYNLrdw" name="Task 7" activityType="Task"/>
+    <vertices xmi:type="bpmn:Activity" xmi:id="_yZkmMYH2EeCA1YFpYNLrdw" iD="_yZkmMIH2EeCA1YFpYNLrdw" outgoingEdges="_0eymSoH2EeCA1YFpYNLrdw" incomingEdges="_yZkmOoH2EeCA1YFpYNLrdw _y39yYYH2EeCA1YFpYNLrdw" name="End of choice" activityType="GatewayDataBasedExclusive"/>
+    <vertices xmi:type="bpmn:Activity" xmi:id="_0eymQYH2EeCA1YFpYNLrdw" iD="_0eymQIH2EeCA1YFpYNLrdw" incomingEdges="_0eymSoH2EeCA1YFpYNLrdw" name="End of process" activityType="Task"/>
+    <vertices xmi:type="bpmn:Activity" xmi:id="_Mb434YzUEeCeQfYMk27U0w" iD="_Mb434IzUEeCeQfYMk27U0w" outgoingEdges="_NU9N4YzUEeCeQfYMk27U0w" incomingEdges="_McCo4YzUEeCeQfYMk27U0w" name="Task 6" activityType="Task"/>
+    <vertices xmi:type="bpmn:Activity" xmi:id="_pt29IYzUEeCeQfYMk27U0w" iD="_pt29IIzUEeCeQfYMk27U0w" outgoingEdges="_rFLVYYzUEeCeQfYMk27U0w" incomingEdges="_pt29KozUEeCeQfYMk27U0w" name="Task5.5" activityType="Task"/>
+    <sequenceEdges xmi:type="bpmn:SequenceEdge" xmi:id="_dh07QYH2EeCA1YFpYNLrdw" iD="_dh07QIH2EeCA1YFpYNLrdw" name="Goto Option 1" source="_ajZbQYH2EeCA1YFpYNLrdw" target="_dhrxUYH2EeCA1YFpYNLrdw"/>
+    <sequenceEdges xmi:type="bpmn:SequenceEdge" xmi:id="_elewoYH2EeCA1YFpYNLrdw" iD="_elewoIH2EeCA1YFpYNLrdw" name="Goto Option 2" source="_ajZbQYH2EeCA1YFpYNLrdw" target="_elU_oYH2EeCA1YFpYNLrdw"/>
+    <sequenceEdges xmi:type="bpmn:SequenceEdge" xmi:id="_fxB9yIH2EeCA1YFpYNLrdw" iD="_fxB9x4H2EeCA1YFpYNLrdw" source="_elU_oYH2EeCA1YFpYNLrdw" target="_fw4MwYH2EeCA1YFpYNLrdw"/>
+    <sequenceEdges xmi:type="bpmn:SequenceEdge" xmi:id="_h-cQgYH2EeCA1YFpYNLrdw" iD="_h-cQgIH2EeCA1YFpYNLrdw" source="_wWet0XFzEeCrXtRGDBpotw" target="_ajZbQYH2EeCA1YFpYNLrdw"/>
+    <sequenceEdges xmi:type="bpmn:SequenceEdge" xmi:id="_lAwK-oH2EeCA1YFpYNLrdw" iD="_lAwK-YH2EeCA1YFpYNLrdw" name="First Task" source="_fw4MwYH2EeCA1YFpYNLrdw" target="_lAwK8YH2EeCA1YFpYNLrdw"/>
+    <sequenceEdges xmi:type="bpmn:SequenceEdge" xmi:id="_v0A5OoH2EeCA1YFpYNLrdw" iD="_v0A5OYH2EeCA1YFpYNLrdw" source="_utrjQYH2EeCA1YFpYNLrdw" target="_v0A5MYH2EeCA1YFpYNLrdw"/>
+    <sequenceEdges xmi:type="bpmn:SequenceEdge" xmi:id="_yZkmOoH2EeCA1YFpYNLrdw" iD="_yZkmOYH2EeCA1YFpYNLrdw" source="_dhrxUYH2EeCA1YFpYNLrdw" target="_yZkmMYH2EeCA1YFpYNLrdw"/>
+    <sequenceEdges xmi:type="bpmn:SequenceEdge" xmi:id="_y39yYYH2EeCA1YFpYNLrdw" iD="_y39yYIH2EeCA1YFpYNLrdw" source="_v0A5MYH2EeCA1YFpYNLrdw" target="_yZkmMYH2EeCA1YFpYNLrdw"/>
+    <sequenceEdges xmi:type="bpmn:SequenceEdge" xmi:id="_0eymSoH2EeCA1YFpYNLrdw" iD="_0eymSYH2EeCA1YFpYNLrdw" source="_yZkmMYH2EeCA1YFpYNLrdw" target="_0eymQYH2EeCA1YFpYNLrdw"/>
+    <sequenceEdges xmi:type="bpmn:SequenceEdge" xmi:id="_McCo4YzUEeCeQfYMk27U0w" iD="_McCo4IzUEeCeQfYMk27U0w" name="Second Task" source="_fw4MwYH2EeCA1YFpYNLrdw" target="_Mb434YzUEeCeQfYMk27U0w"/>
+    <sequenceEdges xmi:type="bpmn:SequenceEdge" xmi:id="_NU9N4YzUEeCeQfYMk27U0w" iD="_NU9N4IzUEeCeQfYMk27U0w" source="_Mb434YzUEeCeQfYMk27U0w" target="_utrjQYH2EeCA1YFpYNLrdw"/>
+    <sequenceEdges xmi:type="bpmn:SequenceEdge" xmi:id="_pt29KozUEeCeQfYMk27U0w" iD="_pt29KYzUEeCeQfYMk27U0w" source="_lAwK8YH2EeCA1YFpYNLrdw" target="_pt29IYzUEeCeQfYMk27U0w"/>
+    <sequenceEdges xmi:type="bpmn:SequenceEdge" xmi:id="_rFLVYYzUEeCeQfYMk27U0w" iD="_rFLVYIzUEeCeQfYMk27U0w" source="_pt29IYzUEeCeQfYMk27U0w" target="_utrjQYH2EeCA1YFpYNLrdw"/>
+  </pools>
+</bpmn:BpmnDiagram>

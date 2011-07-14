@@ -26,7 +26,7 @@ import java.io.InputStreamReader;
 
 public class Run {
 	public static String SOURCEFILE = std.string.endl + "Error in: std.prover.Run.java" + std.string.endl;
-	public static boolean DEBUG = true; // std.string.debug;	// Hopefully true when you edit :P
+	public static boolean DEBUG = false; // std.string.debug;	// Hopefully true when you edit :P
 	public static void debug(String msg){
 		if(DEBUG)
 			std.calls.debug_(msg + SOURCEFILE);
@@ -74,6 +74,7 @@ public class Run {
              //std.calls.showResult("Exited with error code "+exitVal + std.string.endl);
              exitVal++; // only to remove warning
              if(!result && std.string.debug){
+            	 result = false;
             	 debug("Can't see a result for one consistency check; Most likely an inconsistency (need to double check these ones)" + std.string.endl);
              }
              

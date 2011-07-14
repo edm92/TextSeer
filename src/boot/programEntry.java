@@ -29,6 +29,7 @@ import java.util.LinkedList;
 import processBuilding.*;
 import std.prover.PairwiseChecker;
 import textSeer.Model.Graph;
+import textSeer.Model.Vertex;
 
 
 // Don't forget to configure std.strings for your system (will need to implement config file in the future).
@@ -149,10 +150,12 @@ public class programEntry {
 				if(scenarioChecker.isConsistent){
 					//ScenarioBuilder.redoGraph(great);
 					compProcess.endEffectScenarios.add(great);
-					//std.calls.showResult("Consistent:" + ScenarioBuilder.graphString(great));
+					std.calls.showResult("Consistent:" + ScenarioBuilder.graphString(great));
+					
+					
 					
 				}else{
-					//std.calls.showResult("Inconsistent Scenario: " + ScenarioBuilder.graphString(great));
+					std.calls.showResult("Inconsistent Scenario: " + ScenarioBuilder.graphString(great));
 				}
 		}
 		for(Graph g: compProcess.endEffectScenarios){

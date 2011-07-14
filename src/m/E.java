@@ -6,7 +6,8 @@ public class E {
 	public static String endl = std.string.endl;
 	
 	public static boolean writeConsole(String msg){
-		return std.calls.display(msg);
+		System.err.println(msg); 
+		return true;//std.calls.display(msg);
 	}
 
 	public static boolean writeGUI(String msg){

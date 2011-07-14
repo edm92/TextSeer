@@ -58,7 +58,7 @@ public class string {
 	public static String openFile = "newpkg1.xpdl";
 	public static String filePath = "e:" + path + "workspace" + path + "XPDL_Loader" + path;
 	
-	public static boolean debug = false;
+	public static boolean debug = true;
 	public static boolean showPopups = false;
 	
 	public static String license = " TextSeer  Copyright (C) 2011  Evan Morrison <br/>"+

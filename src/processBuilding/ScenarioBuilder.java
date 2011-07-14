@@ -226,7 +226,10 @@ public class ScenarioBuilder {
 		
 		
 		for(Vertex v: g.allNodes){
-			returnResult +=  v.name + "["+(v.IE==null?"":v.IE.toValue())+"] -> ";
+			if(v.outNodes.size() > 0)
+				for(Vertex w: v.outNodes){
+					returnResult +=  v.name + "["+(v.IE==null?"":v.IE.toValue())+"] -> " + w.name + "["+(v.IE==null?"":v.IE.toValue())+"]" + m.E.endl;
+				}
 		}
 		
 		if(returnResult.length() > "-> ".length()) returnResult = returnResult.substring(0, returnResult.length()-"-> ".length());

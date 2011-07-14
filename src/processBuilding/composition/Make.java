@@ -23,6 +23,7 @@ package processBuilding.composition;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeMap;
 
 import processBuilding.process;
 
@@ -52,9 +53,9 @@ public class Make {
 		Graph g = new Graph();
 		Gateway gateOpen = new Gateway(g);
 		g.ScenarioAddNode(gateOpen);
-		gateOpen.type = Gateway.gatetype.AND; gateOpen.name = "ParallelProcess_" + gateOpen.name ; 
+		gateOpen.type = Gateway.gatetype.AND; gateOpen.name = "NewStartParallelProcess_" + gateOpen.name ; 
 		Gateway gateClose = new Gateway(g);
-		gateClose.type = Gateway.gatetype.AND;gateClose.name  = "ParallelProcessClose_" + gateClose.name ;
+		gateClose.type = Gateway.gatetype.AND;gateClose.name  = "NewEndParallelProcessClose_" + gateClose.name ;
 		g.ScenarioAddNode(gateClose);
 		
 		
@@ -144,6 +145,7 @@ public class Make {
 			
 			
 			g.finalize();
+			FinalGraphCleanUp(g);
 		
 	}
 	
@@ -174,26 +176,34 @@ public class Make {
 						SequenceEdge joinEdge = new SequenceEdge(newScenario);
 						joinEdge.name ="GenJoinEdge"+p1.ID + p2.ID + counter++;
 						// Dodgy hack, need to find out why the end and start nodes of this process are the same
-						joinEdge.addSource(p1.allNodes.get(p1.allNodes.size()-1));
+						// joinEdge.addSource(p1.allNodes.get(p1.allNodes.size()-1));
+						joinEdge.addSource(p1.endNodes.get(0));
 						
 						joinEdge.addTarget(p2.startNodes.get(0));
+						
 						newScenario.ScenarioAddEdge(joinEdge);
 						//p2.startNodes.get(0).inNodes.add(newScenario.endNodes.get(0));
 						//p2.startNodes.remove(0);
-						newScenario.endNodes.remove(0);
+						newScenario.endNodes.remove(p1.endNodes.get(0));
 						int k = 0; int l = 1;
 						for(Vertex v : p2.allNodes){
 							//std.calls.showResult("Adding " + v.name);
 							newScenario.ScenarioAddNode(v);
-							if(l < p2.allNodes.size()){							
+							if(l < p2.allNodes.size()){
+								String edgeName = "";
+								for(SequenceEdge e: p2.edges){
+									if(e.source == p2.allNodes.get(k) && e.target == p2.allNodes.get(l))
+										edgeName = e.name;
+								}
 								SequenceEdge newGenEdge = new SequenceEdge(newScenario);
 				        		newGenEdge.addSource(p2.allNodes.get(k));
 				        		newGenEdge.addTarget(p2.allNodes.get(l));
-				        		newGenEdge.name = p2.ID + "MakeGenEdge" + k + l;
+				        		newGenEdge.name = edgeName.length() < 1 ? p2.ID + "MakeGenEdge" + k + l : edgeName;
 				        		newScenario.ScenarioAddEdge(newGenEdge);
 				        		k++; l++;
 							};
 						}
+						FinalGraphCleanUp(newScenario);
 						myScenarios.add(newScenario);
 						//std.calls.showResult("Added " + ScenarioBuilder.graphString(newScenario));
 			
@@ -254,17 +264,94 @@ public class Make {
 					p2.endNodes.add(v);
 				}
 			}
-//			if(p2.edges.size() < 1){
-//	        	int k = 0;
-//	        	for(int l = 1; l < p2.allNodes.size(); l++){
-//	        		SequenceEdge newGenEdge = new SequenceEdge(p2);
-//	        		newGenEdge.addSource(p2.allNodes.get(k));
-//	        		newGenEdge.addTarget(p2.allNodes.get(l));
-//	        		newGenEdge.name = p2.ID + "MakeGenEdge" + k + l;
-//	        		p2.ScenarioAddEdge(newGenEdge);
-//	        		k++;
-//	        	}
-//	        	}
+			if(p2.edges.size() < 1){
+	        	int k = 0;
+	        	for(int l = 1; l < p2.allNodes.size(); l++){
+	        		SequenceEdge newGenEdge = new SequenceEdge(p2);
+	        		newGenEdge.addSource(p2.allNodes.get(k));
+	        		newGenEdge.addTarget(p2.allNodes.get(l));
+	        		newGenEdge.name = p2.ID + "MakeGenEdge" + k + l;
+	        		p2.ScenarioAddEdge(newGenEdge);
+	        		k++;
+	        	}
+	        	}
+	}
+	
+	public static void FinalGraphCleanUp(Graph g){
+		g.finalize();
+		LinkedList<SequenceEdge> remove = new LinkedList<SequenceEdge>();
+		LinkedList<SequenceEdge> compared = new LinkedList<SequenceEdge>();
+		
+		for(SequenceEdge e:g.edges){
+			for(SequenceEdge f:g.edges){
+				if(!remove.contains(f))
+				if(e!=f && e.source == f.source && e.target == f.target){
+					if(!compared.contains(f)){
+						remove.add(f);
+						compared.add(e);
+					}
+				}
+			}
+		}
+		
+		
+				
+		LinkedList<Vertex> rmrf = new LinkedList<Vertex>();
+		
+		// Remove danglers
+		TreeMap<Vertex,Vertex> fck = new TreeMap<Vertex,Vertex>();
+		for(Vertex v: g.allNodes){
+			
+			if(v.outNodes.size() > 0){
+				for(Vertex nn: v.outNodes)
+					if(!g.allNodes.contains(nn) && !g.startNodes.contains(nn) && !g.endNodes.contains(nn)){
+						if(nn.outNodes.size() > 1)
+							{
+							m.E.writeConsole("Can't find : " + nn.name);
+							fck.put(v, nn);
+							}
+					}
+				
+			}
+		}
+		
+		for(Vertex v: fck.keySet()){
+			v.outNodes.remove(fck.get(v));
+		}
+		
+		for(Vertex v: g.allNodes){
+			if(v.outNodes.size() < 1 && !g.endNodes.contains(v))
+				for(Vertex vv: g.allNodes){
+					if(vv.inNodes.contains(v)){
+						v.outNodes.add(vv);
+						SequenceEdge newEdge = new SequenceEdge(g);
+						newEdge.addSource(v);
+						newEdge.addTarget(vv);
+						newEdge.name = g.ID + "MakeGenEdge" + v + vv;
+		        		g.ScenarioAddEdge(newEdge);
+		        		
+					}
+				}
+			if(v.outNodes.size() < 1 && !g.endNodes.contains(v)){
+				rmrf.add(v);
+				m.E.writeConsole("Trying to remove " + v.name);
+			}
+		}
+		
+		for(Vertex v: rmrf){
+			g.allNodes.remove(v);
+			for(SequenceEdge e: g.edges){
+				if(e.source == v || e.target == v)
+					remove.add(e);
+			}
+		}
+		
+		for(SequenceEdge e: remove){
+			e.source.outEdges.remove(e);
+			e.target.inEdges.remove(e);
+			g.edges.remove(e);
+		}
+		
 	}
 
 }

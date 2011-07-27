@@ -29,7 +29,6 @@ import java.util.LinkedList;
 import processBuilding.*;
 import std.prover.PairwiseChecker;
 import textSeer.Model.Graph;
-import textSeer.Model.Vertex;
 
 
 // Don't forget to configure std.strings for your system (will need to implement config file in the future).
@@ -72,14 +71,17 @@ public class programEntry {
 		process myProcess = processBuilding.Parser.SigBPMNParser.PARSEmain("FinancialReportProcess.bpmn20.xml");
 		myProcess.name = "FinancialReportProcess.bpmn20.xml";
 		myprocesses.push(myProcess);
+
+		
 		
 		myProcess = processBuilding.Parser.SigBPMNParser.PARSEmain("VacationRequest.bpmn20.xml");
 		myProcess.name = "VacationRequest.bpmn20.xml";
 		myprocesses.push(myProcess);
 		
+		
 		// Display graphs textually
 		// Process 1
-		m.E.writeGUI("#################################");
+		//a.s.writeGUI("#################################");
 		myProcessBuilder = new ScenarioBuilder(myprocesses.get(0).structure);
 		myProcessBuilder.BuildScenarioLabels();	// this will build all scenario labels.
 		for(Graph g: myProcessBuilder.parentEffects){
@@ -90,21 +92,24 @@ public class programEntry {
 				myProcessBuilder.processEffects.add(g);				
 				myprocesses.get(0).endEffectScenarios.add(g);
 			}else{
-				m.E.writeGUI("Inconsistent Scenario: " + ScenarioBuilder.graphString(g));
+//				a.s.writeGUI("Inconsistent Scenario: " + ScenarioBuilder.graphString(g));
 			}
 		}
 		
-		m.E.writeGUI(m.E.endl + "Process " + myprocesses.get(0).name + " has the following consistent end effect scenarios" + std.string.endl);
+//		a.s.writeGUI(a.s.endl + "Process " + myprocesses.get(0).name + " has the following consistent end effect scenarios" + std.string.endl);
 		
-		for(Graph g: myProcessBuilder.processEffects){
-			m.E.writeGUI(ScenarioBuilder.graphString(g));
-			m.E.writeGUI("CE:" + ScenarioBuilder.cummulativeEffect(g));
-		}
+//		for(Graph g: myProcessBuilder.processEffects){
+//			a.s.writeGUI(ScenarioBuilder.graphString(g));
+//			a.s.writeGUI("CE:" + ScenarioBuilder.cummulativeEffect(g));
+//		}
 		
 		
 		std.calls.showResult("#################################");
 		// Process 2
+		
+		
 		myProcessBuilder = new ScenarioBuilder(myprocesses.get(1).structure);
+		
 		myProcessBuilder.BuildScenarioLabels();	// this will build all scenario labels.
 		for(Graph g: myProcessBuilder.parentEffects){
 			//std.calls.showResult("Trying Scenario: " + ScenarioBuilder.graphString(g));
@@ -114,19 +119,19 @@ public class programEntry {
 				myProcessBuilder.processEffects.add(g);				
 				myprocesses.get(1).endEffectScenarios.add(g);
 			}else{
-				m.E.writeGUI("Inconsistent Scenario: " + ScenarioBuilder.graphString(g));
+				a.s.writeGUI("Inconsistent Scenario: " + ScenarioBuilder.graphString(g));
 			}
 		}
 		
-		m.E.writeGUI(m.E.endl + "Process " + myprocesses.get(1).name + " has the following consistent end effect scenarios" + m.E.endl);
+		a.s.writeGUI(a.s.endl + "Process " + myprocesses.get(1).name + " has the following consistent end effect scenarios" + a.s.endl);
 		
 		for(Graph g: myProcessBuilder.processEffects){
-			m.E.writeGUI(ScenarioBuilder.graphString(g));
-			m.E.writeGUI("CE:" + ScenarioBuilder.cummulativeEffect(g));
+			a.s.writeGUI(ScenarioBuilder.graphString(g));
+			a.s.writeGUI("CE:" + ScenarioBuilder.cummulativeEffect(g));
 		}
 		
 //		/////////////////////////////////////////////////////////
-		m.E.writeGUI("-----------------------" + std.string.endl + "Starting Processing" + std.string.endl + "-----------------------" + std.string.endl);
+		a.s.writeGUI("-----------------------" + std.string.endl + "Starting Processing" + std.string.endl + "-----------------------" + std.string.endl);
 	}
 
 	
@@ -150,17 +155,17 @@ public class programEntry {
 				if(scenarioChecker.isConsistent){
 					//ScenarioBuilder.redoGraph(great);
 					compProcess.endEffectScenarios.add(great);
-					std.calls.showResult("Consistent:" + ScenarioBuilder.graphString(great));
+					//std.calls.showResult("Consistent:" + ScenarioBuilder.graphString(great));
 					
 					
 					
 				}else{
-					std.calls.showResult("Inconsistent Scenario: " + ScenarioBuilder.graphString(great));
+					//std.calls.showResult("Inconsistent Scenario: " + ScenarioBuilder.graphString(great));
 				}
 		}
 		for(Graph g: compProcess.endEffectScenarios){
 			//std.calls.showResult(ScenarioBuilder.graphString(g));
-			std.calls.showResult("CE:" + ScenarioBuilder.cummulativeEffect(g));
+			//std.calls.showResult("CE:" + ScenarioBuilder.cummulativeEffect(g));
 			process subprocess = new process();
 			subprocess.structure = g;
 			myprocesses.add(subprocess);

@@ -39,7 +39,43 @@ public class PairwiseChecker {
 	
 	public boolean isConsistent = false;
 	
+	public void findallhiddennodes(Graph g){
+		for(Vertex e: g.endNodes){
+			if(!g.allNodes.contains(e))
+				g.allNodes.add(e);
+		}
+		for(Vertex e: g.startNodes){
+			if(!g.allNodes.contains(e))
+				g.allNodes.add(e);
+		}		
+
+		LinkedList<Vertex> adder = new LinkedList<Vertex>();
+		
+		for(Vertex e: g.allNodes){
+			//a.s.writeConsole("Looking at: " + e.name);
+			for(Vertex f: e.outNodes)
+				if(!g.allNodes.contains(f)){
+					adder.add(f);
+				}
+		}
+		for(Vertex e: adder){
+			if(!g.allNodes.contains(e))
+				g.allNodes.add(e);
+		}
+		if(adder.size() > 0)
+			findallhiddennodes(g);
+		
+		g.finalize();
+	}
+	
+	
 	public PairwiseChecker(Graph g){
+		
+		
+//		findallhiddennodes(g);		
+		
+		//a.s.writeConsole("Working on : " + g.toString());
+		
 		if(g.allNodes != null && g.allNodes.size() > 0)
 			isConsistent = ReverseListAccumulateBack(g.allNodes.get(g.allNodes.size()-1), g, new Graph(), 1);
 		else{
@@ -54,6 +90,11 @@ public class PairwiseChecker {
 			if(!g.allNodes.contains(e))
 				g.allNodes.add(e);
 		}
+		for(Vertex e: g.startNodes){
+			if(!g.allNodes.contains(e))
+				g.allNodes.add(e);
+		}		
+		
 		for(Vertex e: g.allNodes){
 			LinkedList<Vertex> remover = new LinkedList<Vertex>();
 			for(Vertex f: e.outNodes)
@@ -98,6 +139,7 @@ public class PairwiseChecker {
 	
 	public boolean ReverseListAccumulateBack(Vertex v, Graph g, Graph reverse, int counter){
 		reverse.ScenarioAddNode(v);
+		//a.s.writeConsole("Adding node:" + v.name);
 		//std.calls.showResult("Trying Scenario: " + ScenarioBuilder.graphString(reverse));
 		std.prover.makeInput.createInput(g);				
 		if(std.prover.Run.exec()){
@@ -167,7 +209,7 @@ public class PairwiseChecker {
 				removeForward(out, owner);
 			}
 		}
-		m.E.writeMsg("Removing the following: " + badNode.name);
+		a.s.writeMsg("Removing the following: " + badNode.name);
 		if(owner.allNodes.contains(badNode))
 			owner.allNodes.remove(badNode);
 		if(owner.endNodes.contains(badNode))

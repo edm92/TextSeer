@@ -47,6 +47,8 @@ public class Make {
 		process p = new process();
 		LinkedList<Graph> myScenarios = new LinkedList<Graph>();
 		
+		
+		
 		FixGraph(endEffectScenarios);
 		FixGraph(endEffectScenarios2);
 		
@@ -95,6 +97,8 @@ public class Make {
 	public static void makePara(Graph p1, Graph g, Vertex gateOpen, Vertex gateClose){
 
 			String previous ="";
+			
+			
 			FixGraph(p1);
 			for(Vertex v:p1.startNodes){
 				if(previous.equals(v.name)) continue; 	// remove duplicates
@@ -122,7 +126,9 @@ public class Make {
 			for(Vertex v:p1.allNodes){
 				if(p1.startNodes.contains(v) || p1.endNodes.contains(v)) continue;
 				g.ScenarioAddNode(v);
+				
 				for(Vertex ov: v.outNodes){
+					
 					boolean switcher = false;
 					for(SequenceEdge e: v.parent.edges){
 						if(e.source == v && e.target == ov){
@@ -307,7 +313,7 @@ public class Make {
 					if(!g.allNodes.contains(nn) && !g.startNodes.contains(nn) && !g.endNodes.contains(nn)){
 						if(nn.outNodes.size() > 1)
 							{
-							m.E.writeConsole("Can't find : " + nn.name);
+							a.s.writeConsole("Can't find : " + nn.name);
 							fck.put(v, nn);
 							}
 					}
@@ -334,7 +340,7 @@ public class Make {
 				}
 			if(v.outNodes.size() < 1 && !g.endNodes.contains(v)){
 				rmrf.add(v);
-				m.E.writeConsole("Trying to remove " + v.name);
+				a.s.writeConsole("Trying to remove " + v.name);
 			}
 		}
 		

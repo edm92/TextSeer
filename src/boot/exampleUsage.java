@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * @author Evan Morrison (edm92@uow.edu.au)
  *
- */
+ *//*
 
 
 package boot;
@@ -49,10 +49,10 @@ public class exampleUsage {
 	process myProcess ;
 	process myProcess2 ;
 	
-	/***
+	*//***
 	 * First construct your models here. Then fill in the Processing function for 
 	 * experiments. Finally use the showResults function to display your output.
-	 */
+	 *//*
 	
 	
 	// This example will load two files
@@ -118,9 +118,9 @@ public class exampleUsage {
 		std.calls.showResult("-----------------------" + std.string.endl + "Starting Processing" + std.string.endl + "-----------------------" + std.string.endl);
 	}
 	
-	/***
+	*//***
 	 * Example of processing the loaded data. This will churn the process model through prover9 
-	 */
+	 *//*
 	public void _Process(){
 		// Do your experiments here
 		t = new std.Timer();
@@ -152,9 +152,9 @@ public class exampleUsage {
 		t.end();
 	}
 	
-	/***
+	*//***
 	 * Self show output
-	 */
+	 *//*
 	
 	public void _ShowResults(){
 		// Select which results to show here
@@ -168,10 +168,10 @@ public class exampleUsage {
 	}
 	
 	
-	/***
+	*//***
 	 * This is for generating process outputs
 	 * this takes about 2 minutes to run through
-	 */
+	 *//*
 
 	long[][] times = new long[10][20]; 
 	public void __Process(){
@@ -244,10 +244,10 @@ public class exampleUsage {
 	}
 	
 	
-	/**
+	*//**
 	 * Testing out the sequence functions
 	 * 
-	 */
+	 *//*
 	public void ___Process(){
 		
 		// First start the timer
@@ -302,10 +302,10 @@ class usagePartTwo{
 	process myProcess ;
 	process myProcess2 ;
 	
-	/***
+	*//***
 	 * First construct your models here. Then fill in the Processing function for 
 	 * experiments. Finally use the showResults function to display your output.
-	 */
+	 *//*
 
 	
 	public void ModelConstruction(){
@@ -525,9 +525,9 @@ class usagePartTwo{
 	
 	
 	
-/*
+
  * Boot up the gui display
- */	
+ 	
 //	private programEntry thisEntry;
 //	
 //	public programEntry(){
@@ -556,4 +556,4 @@ class usagePartTwo{
 
 
 	
-}
+}*/

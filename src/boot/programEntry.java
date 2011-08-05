@@ -84,16 +84,16 @@ public class programEntry {
 		//a.s.writeGUI("#################################");
 		myProcessBuilder = new ScenarioBuilder(myprocesses.get(0).structure);
 		myProcessBuilder.BuildScenarioLabels();	// this will build all scenario labels.
-		for(Graph g: myProcessBuilder.parentEffects){
-			//std.calls.showResult("Trying Scenario: " + ScenarioBuilder.graphString(g));
-			PairwiseChecker scenarioChecker = new PairwiseChecker(g);
-			if(scenarioChecker.isConsistent){
-				ScenarioBuilder.redoGraph(g);
-				myProcessBuilder.processEffects.add(g);				
-				myprocesses.get(0).endEffectScenarios.add(g);
-			}else{
-//				a.s.writeGUI("Inconsistent Scenario: " + ScenarioBuilder.graphString(g));
-			}
+		for(Graph g: myProcessBuilder.processScenarios){
+			std.calls.showResult("Trying Scenario: " + g);
+//			PairwiseChecker scenarioChecker = new PairwiseChecker(g);
+//			if(scenarioChecker.isConsistent){
+//				//ScenarioBuilder.redoGraph(g);
+//				//myProcessBuilder.processEffects.add(g);				
+//				myprocesses.get(0).endEffectScenarios.add(g);
+//			}else{
+				//a.s.writeGUI("Scenario: " + ScenarioBuilder.graphString(g));
+//			}
 		}
 		
 //		a.s.writeGUI(a.s.endl + "Process " + myprocesses.get(0).name + " has the following consistent end effect scenarios" + std.string.endl);
@@ -106,31 +106,9 @@ public class programEntry {
 		
 		std.calls.showResult("#################################");
 		// Process 2
+
 		
 		
-		myProcessBuilder = new ScenarioBuilder(myprocesses.get(1).structure);
-		
-		myProcessBuilder.BuildScenarioLabels();	// this will build all scenario labels.
-		for(Graph g: myProcessBuilder.parentEffects){
-			//std.calls.showResult("Trying Scenario: " + ScenarioBuilder.graphString(g));
-			PairwiseChecker scenarioChecker = new PairwiseChecker(g);
-			if(scenarioChecker.isConsistent){
-				ScenarioBuilder.redoGraph(g);
-				myProcessBuilder.processEffects.add(g);				
-				myprocesses.get(1).endEffectScenarios.add(g);
-			}else{
-				a.s.writeGUI("Inconsistent Scenario: " + ScenarioBuilder.graphString(g));
-			}
-		}
-		
-		a.s.writeGUI(a.s.endl + "Process " + myprocesses.get(1).name + " has the following consistent end effect scenarios" + a.s.endl);
-		
-		for(Graph g: myProcessBuilder.processEffects){
-			a.s.writeGUI(ScenarioBuilder.graphString(g));
-			a.s.writeGUI("CE:" + ScenarioBuilder.cummulativeEffect(g));
-		}
-		
-//		/////////////////////////////////////////////////////////
 		a.s.writeGUI("-----------------------" + std.string.endl + "Starting Processing" + std.string.endl + "-----------------------" + std.string.endl);
 	}
 

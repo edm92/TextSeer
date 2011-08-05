@@ -74,6 +74,10 @@ public class Graph {
 	  for(Vertex c:g.allNodes)
 		  if(!allNodes.contains(c))
 			  allNodes.add(c);
+	  for(SequenceEdge c:g.edges){
+		  if(!edges.contains(c))
+			  edges.add(c);
+	  }
 	  
   }
   
@@ -90,6 +94,15 @@ public class Graph {
 
   public String generateName() {
 	  return "Process" + totalProcesses; 
+  }
+  
+  public void SequenceCopy(Graph in){
+	  for(Vertex c: in.allNodes){
+		  this.ScenarioAddNode(c);
+	  }
+	  for(SequenceEdge c: in.edges){
+		  this.ScenarioAddEdge(c);
+	  }
   }
 
   public void copy( Graph in) {
@@ -131,6 +144,7 @@ public class Graph {
 	  }
   }
 
+  // Fix this to be a direct copy
   public void ScenarioAddNode(Vertex v){
 	  if(v != null){
 		  if(!v.visited.containsKey(this.ID))

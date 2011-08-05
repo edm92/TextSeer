@@ -42,9 +42,9 @@ public class ScenarioBuilder {
 			std.calls.debug_(msg + SOURCEFILE);
 	}
 	
-	public List<Graph> processEffects;
+	public List<Graph> processScenarios;
 	
-	public List<Graph> parentEffects;
+
 
 	public int currentMarker = 0;
 	public Graph parent;
@@ -64,7 +64,8 @@ public class ScenarioBuilder {
 	
 	public void init(){
 		//markerPoint.push(0);
-		processEffects = new LinkedList<Graph>();
+
+		processScenarios = new LinkedList<Graph>();
 	}
 	
 	public void BuildScenarioLabels(){
@@ -72,43 +73,36 @@ public class ScenarioBuilder {
 		// to capture all possible end effect scenarios
 
 		
+		LinkedList<Graph> myScenarios = new LinkedList<Graph>();
+		myScenarios.add(new Graph());
+		processScenarios = ProcessScan(null, null,parent, myScenarios);
 		
-		ProcessScan(null,parent);
-		
-		a.s.writeGUI("Output off Build Scenario = " + graphString(parent));
-		a.s.writeGUI("###############################");
-		
+	
 		
 		
 	}
 	
-	public List<Graph> ProcessScan(Vertex n, Graph g){
-		List<Graph> results = new LinkedList<Graph>();;
-		
-		
-		if(n == null && g.startNodes != null){
-			// No input given, then lets use the start nodes for the process.
-			for(Vertex v: g.startNodes){
-				List<Graph> myresults = ProcessNode(v,g);
-				mergeList(myresults, results);	// Copy results to results which is what we return.
-			}
-		}else if(n != null){
-			// Not exactly sure why we'd do this, but I imagine it's a consistency check for something
-			for(Vertex v: n.outNodes)
-				for(SequenceEdge w: v.outEdges){
-					if(!v.outNodes.contains( w.target))
-						v.outNodes.add(w.target);
-				}
-			// Process each outgoing node of given nodes
-			for(Vertex v: n.outNodes){				
-				List<Graph> myresults = ProcessNode(v,g);
-				mergeList(myresults, results);		// Copy results to results which is what we return.
-			};
+	public void AddToScenarios(Vertex v, LinkedList<Graph> Scenarios){
+		for(Graph g: Scenarios){
+			g.ScenarioAddNode(v);
 		}
+	}
 
-		// Some sort of output thing
-		parentEffects = results;
-		return results;
+	public void AddToScenarios(Vertex v, Vertex u, LinkedList<Graph> Scenarios){
+		if(Scenarios.size() < 1)
+			Scenarios.add(new Graph());
+		
+		for(Graph g: Scenarios){
+			g.ScenarioAddNode(v);
+			for(SequenceEdge e: v.outEdges){
+				if(!g.edges.contains(e))
+					g.ScenarioAddEdge(e);
+			}
+			for(SequenceEdge e: u.inEdges){
+				if(!g.edges.contains(e))
+					g.ScenarioAddEdge(e);
+			}
+		}
 	}
 	
 	public boolean CheckParallel(Vertex n, Graph g){
@@ -127,6 +121,7 @@ public class ScenarioBuilder {
 		return false;
 	}
 	
+	
 	public Vertex GetParallelClose(Vertex n, Graph g, int openGateways){
 		Vertex close = n;
 		if(CheckParallel(n,g))
@@ -141,214 +136,104 @@ public class ScenarioBuilder {
 		
 		return close;
 	}
-	
-	public void MarkParallelGraph(Vertex start, Graph g, Vertex end, Graph subGraph){
-		if(start.id == end.id){
-			subGraph.ScenarioAddNode(start);
-			return;
-		}
-		if(start.outNodes != null && start.outNodes.size() > 0)
-		for(Vertex n:start.outNodes){
-			MarkParallelGraph(n, g, end, subGraph);
-		}
-		if(!subGraph.allNodes.contains(start))
-			subGraph.ScenarioAddNode(start);
-		
-	}
-	
-	public List<Graph> ProcessNode(Vertex n, Graph g){
-		List<Graph> results = new LinkedList<Graph>();
-		if(n.outNodes != null && n.outNodes.size() > 0){
-			if(CheckParallel(n, g)){
-				//a.s.writeConsole("New parallel branch " + n.name);
-				Vertex v = GetParallelClose(n,g,0);
-				
-				Graph pg = new Graph();
-				MarkParallelGraph(n,g,v, pg);
-				
-				List<Graph> subResults = ProcessScan(n,pg);
-				if(subResults.size() < 1){
-					subResults.add(pg);
-				}
-				
-				mergeList(subResults, results);
-				for(Vertex t: v.outNodes){					
-					List<Graph> newsubResults = ProcessNode(t,g);	
-					mergeResultsList(t, newsubResults, results);
-				}
-				
-				
-				//return results;
-				
-			}else{	// XOR
-				if(n.getClass().equals(Gateway.class) && n.outNodes.size() > 1){
-					if(((Gateway)n).type == Gateway.gatetype.XOR ){
-						//a.s.writeConsole("For " + n.name + " outnodes = " + n.outNodes.size());
-						for(Vertex v: n.outNodes){
-							List<Graph>  subResults = ProcessScan(v,g);
-							mergeList(subResults, results);							
-						}
-						
-						}}
-						else	// Non XOR			
-				for(Vertex v: n.outNodes){
-					if(g.allNodes.contains(v)){
-						List<Graph>  subResults = ProcessNode(v,g);
-						
-						mergeList(subResults, results);
-						
-					}else{	// Fall off the edge					
-						//debug("End of branch +" + v.name);
-						return new LinkedList<Graph>();
-						
-					}
-				}
-				
-			}
-			//a.s.writeConsole("results size = " + results.size());
-			for(Graph m: results){
-				a.s.writeConsole("Adding " + n.toString());
-				m.ScenarioAddNode(n);
-			}
-		}else{
-			Graph m = new Graph();
-			m.ScenarioAddNode(n);
-			results.add(m);
-		};
-		return results;
-	}
-	
-	public static void  mergeList(List<Graph> in, List<Graph> out){
-		
-		for(Graph g: in)
-			if(out!=null)
-				out.add(g);
-			else
-			{
-				out = new LinkedList<Graph>();
-				out.add(g);
-			}
-	}
-	
-	public static void  mergeResultsList(Vertex t, List<Graph> in, List<Graph> out){
-		LinkedList<Graph> removal = new LinkedList<Graph>();
-		LinkedList<Graph> putback = new LinkedList<Graph>();
-		
-		if(out != null)
-		for(Graph g: out){
-			g.finalize();
-			LinkedList<Vertex> rm = new LinkedList<Vertex>();
-			for(Vertex v: g.endNodes){
-				if(!v.outNodes.contains(t))
-					v.outNodes.add(t);
-				if(!t.inNodes.contains(v))
-					t.inNodes.add(v);
-				rm.add(v);
-			}
-			for(Vertex v: rm){
-				g.endNodes.remove(v);
-			}
-			g.allNodes.add(t);
-			
-			g.finalize();
-			LinkedList<Graph> additions = new LinkedList<Graph>();
-			additions.add(g);
-			if(in.size() > 1){
-				// Make some copies
-				Graph newOut = new Graph();
-				newOut.copy(g);
-				additions.add(newOut);
-			}				
-			// Simply tack the two graphs together
-			for(Graph b: additions){
-				if(in !=null){
-					Graph gg = in.get(0);
-					for(Vertex v: gg.allNodes){
-						if(!b.allNodes.contains(v))
-							b.allNodes.add(v);
-					}
-					for(SequenceEdge v: gg.edges){
-						if(!b.edges.contains(v))
-							b.edges.add(v);
-					}
-				};
-				putback.add(b);
-			}
-			removal.add(g);
-		}
-		for(Graph g: removal){
-			out.remove(g);
-		}
-		for(Graph g: putback){
-			out.add(g);
-		}
-		
-	}
-	
-	public String showOutput(){
-		String returnResult = "";
-		if(parentEffects == null){
-			debug("Null effects in showOutput()");
-			returnResult = "Null Effects";
-		}else{
-			for(Graph g: parentEffects){
-				returnResult += std.string.endl + "Scenario: ";
-				for(Vertex v: g.allNodes){
-					returnResult += v.name + "[] ";
-				}
-			}
-		}
-		
-		
-		
-		return returnResult;
-	}
-	
-	public static String cummulativeEffect(Graph g){
-		String returnResult = "";
-		//returnResult += std.string.endl + "";
-		for(Vertex v: g.allNodes){
-			returnResult += (v.IE==null || v.IE.toValue().length() < 3?"":(v.IE.toValue()+" & "));
-		}
-		
-		if(returnResult.length() > 3){
-			returnResult = returnResult.substring(0, returnResult.length()-3);
-		}
-		
-		return returnResult;
-	}
 
-	public static void redoGraph(Graph g){
-		
-		LinkedList<Vertex> mine = (LinkedList<Vertex>) g.allNodes;
-		LinkedList<Vertex> replacement = new LinkedList<Vertex>();
-		Iterator<Vertex> i = mine.descendingIterator();
-		while(i.hasNext()){
-			Vertex n = i.next();
-			
-			replacement.add(n);
-					
-		}
-		g.allNodes = replacement;
-	}
 	
-	public static String graphString(Graph g){
-		String returnResult = "";
+	public LinkedList<Graph> ProcessScan(Vertex start, Vertex end, Graph g, LinkedList<Graph> scenarios){
 		
-		
-		for(Vertex v: g.allNodes){
-			if(v.outNodes.size() > 0)
-				for(Vertex w: v.outNodes){
-					returnResult +=  v.name + "["+(v.IE==null?"":v.IE.toValue())+"] -> " + w.name + "["+(v.IE==null?"":v.IE.toValue())+"]" + a.s.endl;
+		// For each start node continue
+		if(start == null){
+			for(Vertex outnode: g.startNodes){
+				scenarios = ProcessScan(outnode, end, g, scenarios);
+			}
+		}else{	// Check for terminal nodes
+			if((end != null && start.name.compareTo(end.name) == 0) || start.outNodes.size() < 1){	// Start = End
+				AddToScenarios(start, scenarios);
+				return scenarios;
+			}else	// Check for straight through nodes
+			if(start.nodeType != std.type.Node.GATEWAY){
+				// Assuming that there is only one outnode				
+				scenarios = ProcessScan(start.outNodes.get(0), end, g, scenarios);
+			}else	// Lets look at the XOR's 
+			if(start.nodeType == std.type.Node.GATEWAY && start.subNodeType == std.type.GatewayType.XOR){
+				// Duplicate scenario for each outgoing node
+				LinkedList<LinkedList<Graph>> subScenarios = new LinkedList<LinkedList<Graph>>();
+				
+				for(Vertex v: start.outNodes){
+					LinkedList<Graph> newScenarios = new LinkedList<Graph>();
+					for(Graph sg : scenarios){
+						Graph copySG = new Graph(sg);
+						newScenarios.add(copySG);
+					}
+					newScenarios = ProcessScan(v, end, g, newScenarios);
+					subScenarios.add(newScenarios);
+				}
+				scenarios = new LinkedList<Graph>();
+				for(LinkedList<Graph> subList: subScenarios){
+					for(Graph subGraph : subList){
+						scenarios.add(subGraph);
+					}
+				}
+			}else	// Parallel branches
+				if(CheckParallel(start, g)){
+					Vertex v = GetParallelClose(start,g,0);
+					Vertex nextAfterClose = v.outNodes.get(0);	// Assuming only one node coming out of the close
+					
+					LinkedList<LinkedList<Graph>> subScenarios = new LinkedList<LinkedList<Graph>>();
+					scenarios = ProcessScan(nextAfterClose, end, g, scenarios);
+					for(Vertex outNodes: start.outNodes){
+						LinkedList<Graph> futureScenarios = new LinkedList<Graph>();
+						for(Graph src: scenarios)
+							futureScenarios.add(new Graph(src));
+						futureScenarios = ProcessScan(outNodes, v, g, futureScenarios);
+						subScenarios.add(futureScenarios);
+					}
+					
+					// MERGE PARALLEL BRANCHES
+					LinkedList<Graph> parallelScenarios = mergeParallelBranches(subScenarios);
+					scenarios = mergeScenarios(parallelScenarios, scenarios);
 				}
 		}
 		
-		if(returnResult.length() > "-> ".length()) returnResult = returnResult.substring(0, returnResult.length()-"-> ".length());
-		//returnResult = new StringBuffer(returnResult).reverse().toString();
-		returnResult = std.string.endl + "Scenario: " + returnResult;
-		return returnResult;
+		if(start != null){
+			a.s.writeConsole("Adding scenarios: " + start.name + " and ");
+			a.s.writeConsole( start.outNodes.get(0).name);
+			AddToScenarios(start, start.outNodes.get(0), scenarios);
+		}
+		return scenarios;
+	}	
+	
+	public LinkedList<Graph> mergeScenarios(LinkedList<Graph> first, LinkedList<Graph> second){
+		LinkedList<Graph> mergedScenario = new LinkedList<Graph>();
+		for(Graph scene: first){
+			for(Graph scene2 : second){
+				Graph copy = new Graph(scene);
+				copy.SequenceCopy(scene2);
+				mergedScenario.add(copy);
+			}
+		}
+		return mergedScenario;
 	}
 	
+	public LinkedList<Graph> mergeParallelBranches(LinkedList<LinkedList<Graph>> possibleWorlds){
+		LinkedList<Graph> result = new LinkedList<Graph>();
+		LinkedList<Graph> second = new LinkedList<Graph>();
+		if(possibleWorlds.size() > 2){	// Pairwise joining, shrink parallel processing down to two worlds at a time and mergebackwards
+			LinkedList<LinkedList<Graph>> newWorlds = new LinkedList<LinkedList<Graph>>();
+			for(int i = 1; i < possibleWorlds.size(); i++)
+				newWorlds.add(possibleWorlds.get(i));
+			second = mergeParallelBranches(newWorlds);
+		}else
+			second = possibleWorlds.get(1);
+		
+		for(Graph scene: possibleWorlds.get(0)){
+			for(Graph scenesecond : second){
+				Graph copy = new Graph(scene);
+				copy.SequenceCopy(scenesecond);
+				result.add(copy);
+			}	
+		}	
+		return result;
+	}
 	
 	
 }

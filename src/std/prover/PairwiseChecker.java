@@ -172,12 +172,12 @@ public class PairwiseChecker {
 			}
 			
 			for(Vertex d:badNodes){
-				debug("Return is " + std.calls.popupquery("Found an inconsistent node:" + std.string.endl +
-						"New node:" + d.name + std.string.endl +
-						"  with effects: " + d.IE.toValue() + std.string.endl +
-						"It is conflicting with " + ScenarioBuilder.graphString(reverse) + std.string.endl +
-						"Would you like to Acc?"
-						, "Acc Query"));
+//				debug("Return is " + std.calls.popupquery("Found an inconsistent node:" + std.string.endl +
+//						"New node:" + d.name + std.string.endl +
+//						"  with effects: " + d.IE.toValue() + std.string.endl +
+//						"It is conflicting with " + ScenarioBuilder.graphString(reverse) + std.string.endl +
+//						"Would you like to Acc?"
+//						, "Acc Query"));
 				// Remove node and path
 				//badNodeRemover(d, g);
 				

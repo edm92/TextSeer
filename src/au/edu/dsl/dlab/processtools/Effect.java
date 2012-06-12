@@ -45,7 +45,7 @@ public class Effect implements Serializable{
 		formula = (Formula) logic.createExpression(formulaText);
 		sigma = logic.scanSignature(formulaText);
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}};
 		
 		

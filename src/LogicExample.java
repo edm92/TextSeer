@@ -13,24 +13,27 @@ public class LogicExample {
 		// Example of Effect Accumulation
 		long start = System.currentTimeMillis();
 		// Create new effect scenarios
-		Effect e1 = new Effect("(clientregisteredinsystem | clientgivenguestpass) & (eeee)");			// Used to demonstrate accumulation
+		Effect e1 = new Effect("a & b & c & ~a");			// Used to demonstrate accumulation
 		Effect e2 = new Effect("a & b");			// Used to demonstrate accumulation
+//
+//		// Accumulation class is a non-static class
+//		Accumulate acc = new Accumulate();
 
-		// Accumulation class is a non-static class
-		Accumulate acc = new Accumulate();
-
-		LinkedHashSet<Effect> resultEffects = acc.pairwise_acc(e1,e2, "(clientgivenguestpass | clientregisteredinsystem) -> ~(a & b)", true);	
+		//LinkedHashSet<Effect> resultEffects = acc.pairwise_acc(e1,e2, "(clientgivenguestpass | clientregisteredinsystem) -> ~(a & b)", true);	
+		
+		// Check if consistent
+		System.out.println("Checking if " + e1 + " is consistent : " + e1.issat());
+		System.out.println("Checking if " + e1 + " entails " + e2 + " : " + e1.entails(e2));
 		
 		
-		
-		// Display Results 
-		for(Effect e: resultEffects){
-			System.out.println("Effect scenario resulting from acc: " + e);
-
-			// Entailment checking is built into effects
-			System.out.println("Test if " + e1 + " entails " + e + ", result: " + e1.entails(e));
-
-		}
+//		// Display Results 
+//		for(Effect e: resultEffects){
+//			System.out.println("Effect scenario resulting from acc: " + e);
+//
+//			// Entailment checking is built into effects
+//			System.out.println("Test if " + e1 + " entails " + e + ", result: " + e1.entails(e));
+//
+//		}
 		
 		long end = System.currentTimeMillis();
 		System.out.println("Execution time was "+(end-start)+" ms.");

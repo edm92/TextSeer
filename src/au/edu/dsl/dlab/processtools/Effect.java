@@ -41,8 +41,14 @@ public class Effect implements Serializable{
 	public int clauses = 0;
     
 	public String getFormula(){ if(formulaText == null || formulaText.compareTo("") == 0) formulaText = "eeee";  return formulaText;};
-	public void setFormula(String newFormula){ if(newFormula == null) formulaText = "eeee"; else formulaText = newFormula;};
-	
+	public void setFormula(String newFormula){ if(newFormula == null) formulaText = "eeee"; else formulaText = newFormula; try {
+		formula = (Formula) logic.createExpression(formulaText);
+		sigma = logic.scanSignature(formulaText);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}};
+		
+		
 	public Effect(){	
 		this("");
 	}
@@ -108,6 +114,31 @@ public class Effect implements Serializable{
     	return vs;
     }
     
+    public boolean issat(){
+    	return issat(getFormula());
+//    	try{
+//    		logic = new ClassicalLogicS();
+//	    	sigma = logic.scanSignature(getFormula());
+//	        formula = (Formula) logic.createExpression(getFormula());
+//	        
+//	        Set<String> symbols = new HashSet<String>(); 
+//	        
+//	    	for (Iterator<?> i = sigma.iterator(); i.hasNext(); ) {
+//	    		Symbol o = (Symbol) i.next();
+//	            
+//	    		symbols.add(o.toString());
+//	    	}
+//	    	System.err.println("Setting " + symbols);
+//	    	if(computeAssignments(symbols)) return true;
+//	    	
+//    	}catch(Exception e){
+//    		logger.error("Error with effects eval():" + e);
+//    		e.printStackTrace();
+//    		
+//    	}
+//    	return false;
+    }
+    
     public boolean issat(String vs){
     	try{
     		logic = new ClassicalLogicS();
@@ -154,7 +185,7 @@ public class Effect implements Serializable{
     			  combination.append (elements[indices[i]] + " ");
     			  _sym.add(elements[indices[i]]);
     			  eleCount++;
-    		  }    			  
+    		  }
     	  }
     	  if(eleCount == symbols.size()){
     		  boolean result = issat(_sym);
@@ -167,9 +198,13 @@ public class Effect implements Serializable{
     }
     
     public boolean issat(Set<String> s){
+    	//System.err.println("Checking out " + s);
     	Map<SymbolBase, Boolean> intermap = new HashMap<SymbolBase, Boolean>();
     	for(String _symbolBase : s)
     	{
+    		// Removed because it was stuffing up worst cases
+//    		if(intermap.containsKey(_symbolBase.replace("~", "")))
+//    			if(intermap.get(_symbolBase.replace("~", "")) != _symbolBase.contains("~")) return false;
     		if(_symbolBase.contains("~"))
     			intermap.put(new SymbolBase(_symbolBase.replace("~", ""), Types.TRUTH), Boolean.FALSE);
     		else
@@ -188,11 +223,14 @@ public class Effect implements Serializable{
      * @return
      */
     public boolean entails(Effect target){
+    	if(!issat() || !target.issat()) return false; // Can't have entailment from non-sat.
+    	
     	return entails(getFormula(), target.getFormula());
     }
     
     private boolean entails(String s1, String s2){  	
     	boolean deduce = false;
+    	
     	if(s1.length() < 1) return false;
     	if(s2.length() < 1) return true;
     	try {

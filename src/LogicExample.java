@@ -9,11 +9,12 @@ import au.edu.dsl.dlab.processtools.logic.Accumulate;
 
 
 public class LogicExample {
+
 	public static void main(String[] Args){
 		// Example of Effect Accumulation
 		long start = System.currentTimeMillis();
 		// Create new effect scenarios
-		Effect e1 = new Effect("a & b & c & d & e & f");			// Used to demonstrate accumulation
+		Effect e1 = new Effect("~(a & b) | ~c");			// Used to demonstrate accumulation
 		Effect e2 = new Effect("(a & b) -> ~c");			// Used to demonstrate accumulation
 //
 

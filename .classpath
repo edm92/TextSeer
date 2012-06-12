@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="lib/jppf-server.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/sqlite4java.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

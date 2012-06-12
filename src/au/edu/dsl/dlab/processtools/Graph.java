@@ -307,6 +307,7 @@ public class Graph<T extends Vertex ,V extends Edge> extends DefaultDirectedGrap
 	}
 	
 	public void printPaths(){
+		if(this.trueStart == null || this.trueEnd == null) { System.out.println("No paths found"); return;}
 		// Print all paths through the model        
         KShortestPaths<T, V> sp = new KShortestPaths<T, V>(this, this.trueStart, MAX_PATH_LENGTH);
         int i = 0;
@@ -332,10 +333,13 @@ public class Graph<T extends Vertex ,V extends Edge> extends DefaultDirectedGrap
 				if(this.outDegreeOf(node) == 0) trueEnd = node;
 		}
 		if(trueStart == null)
-		if(vSet.size() > 0)
+		if(vSet.size() >= 0)
 			for(T node: vSet){
 				trueStart = trueEnd = node;
 			}
+		
+		if(trueStart == null || trueEnd == null) return;
+
 		trueStart.setCorresponding(trueEnd);
 		// Fix non-nice gateways
 		fixGateWays(print);

@@ -1,1 +1,1 @@
-ClientRegisteredInSystem & (RequestSubmitted | FormFilledIn) & c & FormFilledIn & RequestSubmitted & ClientGivenGuestPass & (ClientRegisteredInSystem | ClientGivenGuestPass)###c & FormFilledIn & RequestSubmitted
+c & FormFilledIn & RequestSubmitted###ClientRegisteredInSystem & (RequestSubmitted | FormFilledIn) & c & FormFilledIn & RequestSubmitted & ClientGivenGuestPass & (ClientRegisteredInSystem | ClientGivenGuestPass)

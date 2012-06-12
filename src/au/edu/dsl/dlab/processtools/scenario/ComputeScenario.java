@@ -180,6 +180,7 @@ public class ComputeScenario<T extends Vertex, V extends Edge> {
 	
 	public HashSet<Effect> compute(Graph<T,V> g, String KB){
 		if(g.trueStart == null || g.trueEnd == null || g.trueStart == g.trueEnd){
+			if(g == null) return new HashSet<Effect>();
 			g.cleanup(false);	// Try to fix
 		}
 		if(g.trueStart == null || g.trueEnd == null || g.trueStart == g.trueEnd){

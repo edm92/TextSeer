@@ -2,6 +2,8 @@ import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import au.edu.dsl.dlab.strategy.strategy;
+
 import com.almworks.sqlite4java.SQLiteConnection;
 import com.almworks.sqlite4java.SQLiteConstants;
 import com.almworks.sqlite4java.SQLiteStatement;
@@ -29,14 +31,10 @@ public class StrategyDBTest {
 	    	    //System.out.println("columnName:" + columnName);
 	    	  }
 	    	  while (st.step()) {
-	    		  System.out.println("New Strategy-------------");
-	    	    for (int i = 0; i < st.columnCount(); i++) {
-	    	      int type = st.columnType(0);
-	    	      if (type == SQLiteConstants.SQLITE_INTEGER) {	    	    	  
-	    	    	  System.out.println(ColumnNames[i] + ": " + st.columnString(i));  
-	    	      }
-	    	      
-	    	    }
+	    		  //System.out.println("New Strategy-------------");
+	    		  strategy newStrategy = new strategy(st.columnString(0), st.columnString(1), 
+	    				  st.columnString(2), st.columnString(3), st.columnString(4));
+	    		  //System.out.println(":" + newStrategy);
 	    	  }
 	    } catch (Exception e) {
 			e.printStackTrace();
@@ -44,8 +42,11 @@ public class StrategyDBTest {
 			if(st!= null)
 				st.dispose();
 	    }
-
 	    db.dispose();
+	    
+	    for(strategy s: strategy.allStrategies.values()){
+	    	System.out.println(s);
+	    }
 
 	}
 

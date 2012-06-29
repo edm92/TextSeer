@@ -18,8 +18,11 @@ public class LogicExample {
 		Effect e2 = new Effect("(a & b) -> ~c");			// Used to demonstrate accumulation
 //
 
-			
-		
+		Effect e3 = new Effect("(p -> q) & (m -> (p | q))");			// Used to demonstrate accumulation
+		Effect e4 = new Effect("m -> q");	
+		System.out.println("(p->q), (m-> p V q)} |= (m->q)? " +  e3.entails(e4));
+		Effect e5 = new Effect("(p -> q) & (m -> (p | q)) ^ ~(m -> q)");
+		System.out.println("(p->q), (m-> p V q)} U ~(m->q)? " +  e5.issat());
 		// Check if consistent
 		System.out.println("Checking if " + e1 + " is consistent : " + e1.issat());
 		System.out.println("Checking if " + e1 + " entails " + e2 + " : " + e1.entails(e2));

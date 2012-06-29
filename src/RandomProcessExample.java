@@ -6,12 +6,23 @@ import au.edu.dsl.dlab.processtools.Vertex;
 
 public class RandomProcessExample {
 	public static void main(String[] args){
+
+		for(int i = 0; i < 250; i++){
+			System.out.println("");
+			makeProcess();
+			System.out.println("");
+		}
+		
+		
+	}
+	
+	public static void makeProcess(){
 		RandomProcessGenerator<Vertex,Edge> myProcess = new RandomProcessGenerator<Vertex,Edge>(new Graph<Vertex,Edge>());
 		
 		// Optional Configure //
 		myProcess.CHANCE_OF_GATEWAY = 2;	// Set roughly a 1 in 5 chance that next node will be a gateway
 											// Default of this variable is 5
-		myProcess.MIN_NUMBER_OF_NODES = 10; // Set minimum nodes for new graph. 
+		myProcess.MIN_NUMBER_OF_NODES = 3; // Set minimum nodes for new graph. 
 											// Default of this variable is 10.
 		
 		// Generate //  
@@ -24,8 +35,6 @@ public class RandomProcessExample {
 		//Vertex.TO_STRING_WITH_EFFECTS = false;
 		System.out.println("##############Showing Paths ###################");
 		myProcess.getGraph().printPaths();		// Requesting graph from class as an example - you can use either way.
-		
-		
-		
+
 	}
 }

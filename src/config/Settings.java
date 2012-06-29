@@ -32,7 +32,7 @@ public class Settings {
 	public static boolean visualEnabled = false;
 	public static transient TreeMap<String, String> PROP = new TreeMap<String,String>();
 	public static String currentProp = "";
-	
+	public static String StrategyDB = "";// "models/strategy.sqlite";
 	
 	public transient static ModelLoader MODELS = null; 
 	
@@ -94,7 +94,7 @@ public class Settings {
 				visualEnabled = Activiti.PREPARE_VISUAL_MODELS = Integer.parseInt(props.getProperty("prepareVisual")) == 1 ? true : false;
 				LoadFromRepo = Integer.parseInt(props.getProperty("loadFromRepo")) == 1 ? true : false;
 				RECOMPUTE_SCENARIOS = Integer.parseInt(props.getProperty("recomputeScenarios")) == 1 ? true : false; 
-				
+				StrategyDB = _repository + "\\" + props.getProperty("StrategyDB");
 
 //				LoadFromDB = Integer.parseInt(props.getProperty("loadFromDB")) == 1 ? true : false;
 //				StoreInDB = Integer.parseInt(props.getProperty("storeInDB")) == 1 ? true : false;

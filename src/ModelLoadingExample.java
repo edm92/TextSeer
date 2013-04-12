@@ -8,7 +8,24 @@ import au.edu.dsl.dlab.processtools.parser.ModelLoader;
 import au.edu.dsl.dlab.processtools.parser.bpmn.visualize;
 import au.edu.dsl.dlab.processtools.scenario.ComputeScenario;
 
-
+/**
+ * 
+ * 
+ * 
+ * 
+ * This example has been superseded by BPMN2ModelLoadingExample
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * @author edm92
+ * @deprecated use {@link BPMN2ModelLoadingExample} instead.  
+ *
+ */
+@Deprecated
 public class ModelLoadingExample {
 
 	

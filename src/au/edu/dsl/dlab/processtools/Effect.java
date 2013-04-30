@@ -26,7 +26,7 @@ import orbital.logic.sign.type.Types;
  * The following class using orbital to store and process effects using propositional logic.
  * I have tried to keep classes here transient for future distributed processing.
  * @author edm92
- *
+ * @deprecated This class has been moved to be.fnord.util.logic
  */
 public class Effect implements Serializable{
 	private static final long serialVersionUID = 1L;

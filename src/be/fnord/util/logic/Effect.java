@@ -1,4 +1,4 @@
-package be.fnord.util.processModel;
+package be.fnord.util.logic;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -10,7 +10,6 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
-import be.fnord.util.logic.ClassicalLogicS;
 
 import com.merriampark.Gilleland.CombinationGenerator;
 

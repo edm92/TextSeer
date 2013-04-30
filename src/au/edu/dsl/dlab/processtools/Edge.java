@@ -4,10 +4,11 @@ import java.util.UUID;
 
 import org.jgrapht.graph.DefaultWeightedEdge;
 
+
 /**
  * Extension of the DefaultEdge. Any changes to the edge class should go here rather than in the utility functions.
  * @author edm92
- *
+ * @deprecated This class has been moved to be.fnord.util.processModel
  */
 public class Edge extends DefaultWeightedEdge {
 	private static final long serialVersionUID = 1L;

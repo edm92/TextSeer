@@ -32,7 +32,7 @@ public class DecisionFreeGraphConversion {
 		if(!gc.CheckEventsAndGateways(g1)) a.e.println("Issue checking events and gateways"); 
 
 		LinkedList<Graph<Vertex, Edge>> _decisionless = GraphTransformer.makeDecisionFree(g1);
-		LinkedList<Graph<Vertex, Edge>> decisionless = GraphTransformer.removeDupes(_decisionless);
+		LinkedList<Graph<Vertex, Edge>> decisionless = GraphTransformer.removeDupesFromDecisionFreeGraphs(_decisionless);
 				
 		for(Graph<Vertex,Edge> g : decisionless){
 			GraphChecker gcc = new GraphChecker();
@@ -43,7 +43,7 @@ public class DecisionFreeGraphConversion {
 				// Create some traces
 				LinkedList<Trace> traces = GraphTransformer.createTrace(g);
 				for(Trace trace : traces){
-					a.e.println("Got a trace: " + trace.toVertexArray() );  a.e.println("");
+					a.e.println("Got a trace: " + trace.toString() );
 				}
 //				g.toView();
 			}

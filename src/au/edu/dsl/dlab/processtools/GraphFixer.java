@@ -19,6 +19,11 @@ import au.edu.dsl.dlab.processtools.Edge;
 import au.edu.dsl.dlab.processtools.Graph;
 import au.edu.dsl.dlab.processtools.Vertex;
 
+/**
+ * 
+ * @author edm92
+ * @deprecated This class has been moved to be.fnord.util.processModel
+ */
 public class GraphFixer {
 	
 	public boolean getScenarioPaths(Graph<Vertex,Edge> in){

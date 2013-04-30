@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+
 import com.merriampark.Gilleland.CombinationGenerator;
 
 import au.edu.dsl.dlab.collections.functions.PartitionListElement;
@@ -22,7 +23,7 @@ import orbital.moon.logic.resolution.DefaultClausalFactory;
 /**
  * The following class is used for accumulation. I have tried to keep most variables transient for distributed processing. 
  * @author edm92
- *
+ * @deprecated This class has been moved to be.fnord.util.logic 
  */
 public class Accumulate implements Serializable{
 	private static final long serialVersionUID = 1L;

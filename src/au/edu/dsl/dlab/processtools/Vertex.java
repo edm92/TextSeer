@@ -3,6 +3,13 @@ package au.edu.dsl.dlab.processtools;
 import java.util.Random;
 import java.util.UUID;
 
+
+
+/**
+ * 
+ * @author edm92
+ * @deprecated This class has been moved to be.fnord.util.processModel
+ */
 public class Vertex {
 	public static boolean TO_STRING_WITH_EFFECTS = false;
 	public static boolean ADD_RANDOM_EFFECTS = false;

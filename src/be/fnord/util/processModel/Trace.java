@@ -23,8 +23,8 @@ public class Trace extends Vertex{
 	public boolean INCLUDE_EDGE = false;
 	private static final long serialVersionUID = 1L;
 	public Trace(String _name) {	super(_name);	isTrace = true;}
-	public Trace() { super() ; isTrace = true; allTraces.put(this.name, this);}
-	
+	public Trace(Graph<Vertex,Edge> g) { super() ; parentGraph = g; isTrace = true; allTraces.put(this.name, this);}
+	public Graph<Vertex, Edge> parentGraph;
 	
 	public boolean isSubTrace = false;
 	
@@ -67,7 +67,7 @@ public class Trace extends Vertex{
 	}
 	
 	public Trace copy(){
-		Trace result = new Trace();
+		Trace result = new Trace(parentGraph);
 		result.isTrace = true;
 		for(String t: this.subTraces){
 			result.addSubTrace(t);
@@ -107,11 +107,28 @@ public class Trace extends Vertex{
 	private Trace processFullSubTraces(LinkedList<Vertex> vertexArray) {
 		return null;
 	}
+	
 	private Trace processSimpleSubTraces(LinkedList<Vertex> vertexArray) {
+		Trace newTrace = new Trace(parentGraph);
 
-
-		return null;
+		this.addSubTrace(newTrace.name);
+		newTrace.isSubTrace = true;
+		Vertex previous = null;
+		for(Vertex v: vertexArray){
+			newTrace.addTraceNode(v);
+			
+			// Add in the edges
+			if(previous != null){
+				Edge e = this.parentGraph.getEdge(previous, v);
+				newTrace.addTraceEdge(e);
+			}
+			
+			previous = v;
+		}	
+		return newTrace;
 	}
+	
+	
 	/**
 	 * toVertexArray should take as input a trace and then convert that trace into a list of verticies. 
 	 * The actual return is a list of lists of vertices. We have multiple returns because for each array conduct an

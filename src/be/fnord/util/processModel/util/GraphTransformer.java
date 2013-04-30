@@ -22,36 +22,41 @@ public class GraphTransformer {
 	public static boolean __DEBUG = a.e.__DEBUG;
 	public static boolean __INFO  = a.e.__INFO;
 	
-// Removed on 30/4/13 and doesn't seem to hurt. 
-//	public static LinkedList<Trace> createTraces(LinkedList<Graph<Vertex,Edge>> models){
-//		LinkedList<Trace> results = new LinkedList<Trace>();
-//		
-//		for(Graph<Vertex,Edge> g: models){
-//			// Should we dedupe this too?
-//			results.addAll(createTrace(g));
-//			
-//		}
-//		
-//		return results;
-//	}
+	public static LinkedList<Trace> createTraces(LinkedList<Graph<Vertex,Edge>> models){
+		LinkedList<Trace> results = new LinkedList<Trace>();
+		for(Graph<Vertex,Edge> g: models){
+			
+			results.addAll(createTrace(g));
+			
+		}
+		return results;
+	}
 	
 	
 	/**
-	 * Create Trace
+	 * Create Traces
 	 */
 	public static LinkedList<Trace> createTrace(Graph<Vertex,Edge> g){
-		LinkedList<Trace> results = new LinkedList<Trace>();
+		LinkedList<Trace> __results = new LinkedList<Trace>();
 		
 		// All input models should be decision free models, so we need to first check for parallel gateways. 
 		// Break down the model into sections of parallel and non parallel paths
 		// Then combine each non-parallel path with OCP instances of the parallel path.  
-		Trace startTrace = new Trace();
+		Trace startTrace = new Trace(g);
 		Vertex currentNode;
 		if(g.trueStart != null){
 			currentNode = g.trueStart;
-			results.add(startTrace);
+			__results.add(startTrace);
 			createTrace(g, startTrace, currentNode, g.trueEnd);
 		}	
+		
+		// Transform all traces into OCP's
+		LinkedList<Trace> _results = new LinkedList<Trace>();
+		for(Trace t: __results){
+			_results.addAll(t.processSubTraces(a.e.DEFAULT_TRACE_TYPE));
+		};
+		// Dedupe 
+		LinkedList<Trace> results = removeDupesFromTraces(_results);
 		
 		return results;
 	}
@@ -71,13 +76,13 @@ public class GraphTransformer {
 		if(g.outDegreeOf(currentNode) > 1 && currentNode.isAND) {
 //			results.remove(currentTrace);
 			if(__DEBUG) a.e.println("Splitting into parallel at " + currentNode + " until " + currentNode.corresponding);
-			Trace subTrace = new Trace();
+			Trace subTrace = new Trace(g);
 			currentTrace.removeTraceNode(currentNode);
 			currentTrace.addTraceNode(subTrace);
 			Vertex next  = null;
 			for(Edge e : g.outgoingEdgesOf(currentNode)){
 				Vertex newNode = g.getEdgeTarget(e);
-				Trace newTrace = new Trace(); newTrace.isTrace = true;
+				Trace newTrace = new Trace(g); newTrace.isTrace = true;
 				newTrace.addTraceNode(currentNode);
 				subTrace.addTraceNode(newTrace);				
 				createTrace(g, newTrace,newNode,currentNode.corresponding);
@@ -98,14 +103,31 @@ public class GraphTransformer {
 	}
 	
 	
+	public static LinkedList<Trace> removeDupesFromTraces(LinkedList<Trace> duped){
+		if(a.e.DEFAULT_DEDUPING_LEVEL == a.e.NO_DEDUPING) return duped;		
+		
+		LinkedList<Trace> deDuped = new LinkedList<Trace>();
+		LinkedList<String> hashedDecisionFreeGraphs = new LinkedList<String>();
+		
+		for(Trace g: duped){
+			String key = hashDecisionFreeGraph(g);
+			
+			if(!hashedDecisionFreeGraphs.contains(key)) { hashedDecisionFreeGraphs.add(key); deDuped.add(g);}
+			//else a.e.println("Found duped graph " + key);
+		}
+		
+		return deDuped;
+
+	}
+	
 	/**
 	 * Remove duplicate decision free graphs. 
 	 * @param duped
 	 * @return
 	 */
-	public static LinkedList<Graph<Vertex,Edge>> removeDupes(LinkedList<Graph<Vertex,Edge>> duped){
+	public static LinkedList<Graph<Vertex,Edge>> removeDupesFromDecisionFreeGraphs(LinkedList<Graph<Vertex,Edge>> duped){
 
-		if(a.e.DEDUPING_LEVEL == a.e.NO_DEDUPING) return duped;		
+		if(a.e.DEFAULT_DEDUPING_LEVEL == a.e.NO_DEDUPING) return duped;		
 		
 		LinkedList<Graph<Vertex, Edge>> deDuped = new LinkedList<Graph<Vertex, Edge>>();
 		LinkedList<String> hashedDecisionFreeGraphs = new LinkedList<String>();
@@ -141,7 +163,7 @@ public class GraphTransformer {
 		for(String s: vertices.descendingSet())
 			result += s;
 		
-		if(a.e.DEDUPING_LEVEL == a.e.SIMPLE_DEDUPING)
+		if(a.e.DEFAULT_DEDUPING_LEVEL == a.e.SIMPLE_DEDUPING)
 		for(String s: edges.descendingSet())
 			result += s;
 		

@@ -12,7 +12,7 @@ import au.edu.dsl.dlab.processtools.Vertex._TYPE;
  * Random process generator. Currently generates processes that have randomally assigned effects. To make changes to the graph, vertex, 
  * edge or effect classes or functions please do so in the respective files. This should remain a utility class for process generation.  
  * @author edm92
- *
+ * @deprecated This class has been moved to be.fnord.util.processModel
  */
 
 public class RandomProcessGenerator<T extends Vertex,V extends Edge> {

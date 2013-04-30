@@ -18,6 +18,7 @@ import org.jgrapht.alg.KShortestPaths;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.GraphPathImpl;
 
+
 import au.edu.dsl.dlab.collections.functions.OrderConstrainedPartitionList;
 import au.edu.dsl.dlab.collections.functions.PartitionList;
 import au.edu.dsl.dlab.collections.functions.PartitionListElement;
@@ -30,7 +31,7 @@ import au.edu.dsl.dlab.processtools.logic.ClassicalLogicS;
  * The following graph is a simple extension of the jGraph DefaultDirectedGraph. The idea is that any changes that need to be made to the type of 
  * graph used should go here. That way all other utility classes can remain as they are. 
  * @author edm92
- *
+ * @deprecated This class has been moved to be.fnord.util.processModel
  */
 
 public class Graph<T extends Vertex ,V extends Edge> extends DefaultDirectedGraph<T, V>{

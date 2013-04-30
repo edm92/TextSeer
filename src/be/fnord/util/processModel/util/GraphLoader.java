@@ -12,7 +12,8 @@ import org.yaoqiang.bpmn.model.BPMNModelParsingErrors.ErrorMessage;
 import org.yaoqiang.bpmn.model.elements.XMLElement;
 import org.yaoqiang.bpmn.model.elements.core.common.*;
 import org.yaoqiang.bpmn.model.elements.process.*;
-
+import org.yaoqiang.bpmn.model.elements.core.foundation.BaseElement;
+import org.yaoqiang.bpmn.model.elements.core.foundation.Documentation;
 import be.fnord.util.processModel.Edge;
 import be.fnord.util.processModel.Graph;
 import be.fnord.util.processModel.Vertex;
@@ -24,6 +25,8 @@ import org.yaoqiang.bpmn.model.elements.events.*;
 import org.yaoqiang.bpmn.model.elements.humaninteraction.*;
 
 public class GraphLoader {
+	public static final boolean __DEBUG = a.e.__DEBUG; 
+	
 	
 	public static Graph<Vertex,Edge> loadModel(String filename){
 		return loadModel(filename, a.e.NO_FLAGS);
@@ -44,7 +47,7 @@ public class GraphLoader {
 			// Change the dont save messages and participants flag to true if you want pools and messages
 			for(String key: myCodec.getBPMNElementMap().keySet()){
 				saveElement(myCodec.getBPMNElementMap().get(key), 
-						flags);	 
+						flags, "");	 
 			}
 			
 			// Add the nodes to the model
@@ -135,6 +138,7 @@ public class GraphLoader {
 	public static final int UserTask = "org.yaoqiang.bpmn.model.elements.humaninteraction.UserTask".hashCode();
 	public static final int CallActivity = "org.yaoqiang.bpmn.model.elements.activities.CallActivity".hashCode();
 	public static final int SubProcess = "org.yaoqiang.bpmn.model.elements.activities.SubProcess".hashCode();
+	public static final int Documentation = "org.yaoqiang.bpmn.model.elements.core.foundation.Documentation".hashCode();
 	
 	public static String getType(int _type){
 		if(_type == ExclusiveGateway) return "ExclusiveGateway";
@@ -153,6 +157,7 @@ public class GraphLoader {
 		if(_type == IntermediateThrowEvent) return "IntermediateThrowEvent";
 		if(_type == BoundaryEvent) return "BoundaryEvent";
 		if(_type == Participant) return "Participant";
+		if(_type == Documentation) return "Documentation";
 		return "unknown";
 	}
 	
@@ -166,7 +171,7 @@ public class GraphLoader {
 	 * Updated converter function for all XMLElements
 	 * used when processing value elements of myCodec.getBPMNElementMap()
 	 */
-	public static void saveElement(XMLElement _ele, int getMessages){
+	public static void saveElement(XMLElement _ele, int getMessages, String documentation){
 		String _name = _ele.getClass().getCanonicalName();
 		int hashCode = _name.hashCode();
 		if (hashCode == BPMNShape) {
@@ -175,6 +180,23 @@ public class GraphLoader {
 			// Doesn't seem important?
 			return;
 		}
+		// Handle Effects
+		if (hashCode == Documentation) {
+			Documentation r = (Documentation)_ele;
+			BaseElement et = ((BaseElement)r.getParent().getParent());
+
+			if(__DEBUG) a.e.println("documentation " + " " + r.getId() + " " + r.toValue() + " saving to " + et.getId());
+			if(tNodes.containsKey(et.getId())){
+				TNode at = (TNode) tNodes.get(et.getId());
+				tNodes.remove(et.getId());
+				at.node.addEffect(r.toValue());
+				tNodes.put(et.getId(), at);
+			}else{
+				saveElement((XMLElement) et, getMessages, r.toValue());
+			}
+			return;
+		}
+		
 		if (hashCode == ExclusiveGateway) {
 			ExclusiveGateway r = (ExclusiveGateway)_ele;
 			TNode myNode = new TNode(r.getId(), r.getName(), ExclusiveGateway, _ele);
@@ -182,9 +204,10 @@ public class GraphLoader {
 			v.id = r.getId();
 			v.isXOR = true;
 			v.isGateway = true;
+			v.setEffect(documentation);
 			myNode.node = v;
+			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
-			//a.e.println("Gateway " + " " + r.getId() + " " + r.getName());
 			return;
 		}
 		if (hashCode == ParallelGateway) {
@@ -194,9 +217,10 @@ public class GraphLoader {
 			v.id = r.getId();
 			v.isAND = true;
 			v.isGateway = true;
-			myNode.node = v;		
+			v.setEffect(documentation);
+			myNode.node = v;
+			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
-			//a.e.println("Gateway " + " " + r.getId() + " " + r.getName());
 			return;
 		}
 		if (hashCode == InclusiveGateway) {
@@ -206,9 +230,10 @@ public class GraphLoader {
 			v.id = r.getId();
 			v.isOR = true;
 			v.isGateway = true;
-			myNode.node = v;		
+			v.setEffect(documentation);
+			myNode.node = v;	
+			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
-			//a.e.println("Gateway " + " " + r.getId() + " " + r.getName());
 			return;
 		}		
 		if (hashCode == ServiceTask) {
@@ -217,13 +242,14 @@ public class GraphLoader {
 			Vertex v = new Vertex(r.getId() + r.getName(), ServiceTask );
 			v.id = r.getId();
 			v.isOR = true;
+			v.setEffect(documentation);
 			if(r.getBoundaryEventRefs() != null)
 			for(BoundaryEvent e: r.getBoundaryEventRefs()){
 				v.boundaryRefs.add(e.getId());
 			}
-			myNode.node = v;		
+			myNode.node = v;	
+			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
-			//a.e.println("Gateway " + " " + r.getId() + " " + r.getName());
 			return;
 		}
 		if (hashCode == UserTask) {
@@ -232,13 +258,14 @@ public class GraphLoader {
 			Vertex v = new Vertex(r.getId() + r.getName(), UserTask );
 			v.id = r.getId();
 			v.isOR = true;
+			v.setEffect(documentation);
 			if(r.getBoundaryEventRefs() != null)
 			for(BoundaryEvent e: r.getBoundaryEventRefs()){
 				v.boundaryRefs.add(e.getId());
 			}
-			myNode.node = v;		
+			myNode.node = v;	
+			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
-			//a.e.println("Gateway " + " " + r.getId() + " " + r.getName());
 			return;
 		}
 		if (hashCode == CallActivity) {
@@ -246,13 +273,14 @@ public class GraphLoader {
 			TNode myNode = new TNode(r.getId(), r.getName(), CallActivity, _ele);
 			Vertex v = new Vertex(r.getId() + r.getName(), CallActivity );
 			v.id = r.getId();
+			v.setEffect(documentation);
 			if(r.getBoundaryEventRefs() != null)
 			for(BoundaryEvent e: r.getBoundaryEventRefs()){
 				v.boundaryRefs.add(e.getId());
 			}
 			myNode.node = v;		
+			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
-			//a.e.println("Gateway " + " " + r.getId() + " " + r.getName());
 			return;
 		}
 
@@ -262,12 +290,13 @@ public class GraphLoader {
 			Vertex v = new Vertex(r.getId() + r.getName(), SubProcess );
 			v.id = r.getId();
 			v.isSubprocess = true;
+			v.setEffect(documentation);
 			for(BoundaryEvent e: r.getBoundaryEventRefs()){
 				v.boundaryRefs.add(e.getId());
 			}
-			myNode.node = v;		
+			myNode.node = v;	
+			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
-			//a.e.println("Gateway " + " " + r.getId() + " " + r.getName());
 			return;
 		}
 		if (hashCode == ErrorEventDefinition) {
@@ -276,9 +305,10 @@ public class GraphLoader {
 			Vertex v = new Vertex(r.getId() + r.toName(), ErrorEventDefinition );
 			v.id = r.getId();
 			v.isOR = true;
-			myNode.node = v;		
+			v.setEffect(documentation);
+			myNode.node = v;	
+			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
-			//a.e.println("Gateway " + " " + r.getId() + " " + r.getName());
 			return;
 		}
 		
@@ -308,9 +338,10 @@ public class GraphLoader {
 			for(BoundaryEvent e: r.getBoundaryEventRefs()){
 				v.boundaryRefs.add(e.getId());
 			}
-			myNode.node = v;		
+			v.setEffect(documentation);
+			myNode.node = v;	
+			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
-			//a.e.println("Task " + " " + r.getId() + " " + r.getName() );
 			return;
 		}
 		if (hashCode == BPMNDiagram) {
@@ -323,10 +354,11 @@ public class GraphLoader {
 			TNode myNode = new TNode(r.getId(), r.getName(), Participant, _ele);
 			Vertex v = new Vertex(r.getId() + r.getName(), Participant);
 			v.id = r.getId();
+			v.setEffect(documentation);
 			myNode.node = v;		
 			a.e.println("Participant " + r.getId() + " " + r.getName() + " -- " );	
+			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
-			
 			return;
 		}
 		if (hashCode == StartEvent) {
@@ -334,7 +366,9 @@ public class GraphLoader {
 			TNode myNode = new TNode(r.getId(), r.getName(), StartEvent, _ele);
 			Vertex v = new Vertex(r.getId() + r.getName(), StartEvent );
 			v.id = r.getId();
+			v.setEffect(documentation);
 			myNode.node = v;		
+			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
 			return;
 		}
@@ -343,7 +377,9 @@ public class GraphLoader {
 			TNode myNode = new TNode(r.getId(), r.getName(), IntermediateCatchEvent, _ele);
 			Vertex v = new Vertex(r.getId() + r.getName(), IntermediateCatchEvent );
 			v.id = r.getId();
-			myNode.node = v;		
+			v.setEffect(documentation);
+			myNode.node = v;	
+			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
 			return;
 		}
@@ -352,7 +388,9 @@ public class GraphLoader {
 			TNode myNode = new TNode(r.getId(), r.getName(), IntermediateThrowEvent, _ele);
 			Vertex v = new Vertex(r.getId() + r.getName(), IntermediateThrowEvent );
 			v.id = r.getId();
+			v.setEffect(documentation);
 			myNode.node = v;		
+			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
 			return;
 		}
@@ -361,7 +399,9 @@ public class GraphLoader {
 			TNode myNode = new TNode(r.getId(), r.getName(), BoundaryEvent, _ele);
 			Vertex v = new Vertex(r.getId() + r.getName(), BoundaryEvent );
 			v.id = r.getId();
-			myNode.node = v;		
+			v.setEffect(documentation);
+			myNode.node = v;	
+			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
 			return;
 		}
@@ -370,7 +410,9 @@ public class GraphLoader {
 			TNode myNode = new TNode(r.getId(), r.getName(), EndEvent, _ele);
 			Vertex v = new Vertex(r.getId() + r.getName(), EndEvent);
 			v.id = r.getId();
-			myNode.node = v;		
+			v.setEffect(documentation);
+			myNode.node = v;	
+			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
 			return;
 		}
@@ -400,8 +442,7 @@ public class GraphLoader {
 		return;
 	}
 	
-	public  int c(String _in){
-		
+	public  int c(String _in){	
 		return _in.hashCode();
 	}
 	

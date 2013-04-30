@@ -13,7 +13,8 @@ import be.fnord.util.processModel.Vertex;
 
 /**
  * Transformation functions for graphs
- * TODO Fix the templating system, I've written over it to produce code very quickly
+ * TODO Fix the templating system, I've written over it to produce code very quickly, if you can figure out what the 
+ * templating system is please note it here. I've forgotten. 
  * @author Evan Morrison edm92@uowmail.edu.au http://www.fnord.be
  * Apache License, Version 2.0, Apache License Version 2.0, January 2004 http://www.apache.org/licenses/
  */
@@ -21,21 +22,23 @@ public class GraphTransformer {
 	public static boolean __DEBUG = a.e.__DEBUG;
 	public static boolean __INFO  = a.e.__INFO;
 	
+// Removed on 30/4/13 and doesn't seem to hurt. 
+//	public static LinkedList<Trace> createTraces(LinkedList<Graph<Vertex,Edge>> models){
+//		LinkedList<Trace> results = new LinkedList<Trace>();
+//		
+//		for(Graph<Vertex,Edge> g: models){
+//			// Should we dedupe this too?
+//			results.addAll(createTrace(g));
+//			
+//		}
+//		
+//		return results;
+//	}
+	
+	
 	/**
 	 * Create Trace
 	 */
-	public static LinkedList<Trace> createTraces(LinkedList<Graph<Vertex,Edge>> models){
-		LinkedList<Trace> results = new LinkedList<Trace>();
-		
-		for(Graph<Vertex,Edge> g: models){
-			// Should we dedupe this too?
-			results.addAll(createTrace(g));
-			
-		}
-		
-		return results;
-	}
-	
 	public static LinkedList<Trace> createTrace(Graph<Vertex,Edge> g){
 		LinkedList<Trace> results = new LinkedList<Trace>();
 		

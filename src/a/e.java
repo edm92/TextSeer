@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 
 /**
- * General utilities
+ * General utilities and global flags
  * @author Evan Morrison edm92@uowmail.edu.au http://www.fnord.be
  * Apache License, Version 2.0, Apache License Version 2.0, January 2004 http://www.apache.org/licenses/
  * 
@@ -20,8 +20,13 @@ public class e {
 	
 	public static boolean __LOGGER = true;
 	
+	// Process Model loading 
 	public static final int NO_FLAGS = 0;
 	public static final int DONT_SAVE_MESSAGES_AND_PARTICIPANTS= 1;		// Don't bother with message flows between pools or between actors
+	
+	// Trace processing 
+	public static final int SIMPLE_TRACES = 0;			// Simple trace processing, don't both with order constrained permutations
+	public static final int FULL_TRACES = 1;			// Compute ALL traces. 
 	
 	public static final int AGGRESSIVE_DEDUPING = 1;	// Don't consider edges, if you find that edges are being removed then change to simple
 	public static final int SIMPLE_DEDUPING = 2; 		// Consider edges, this edges up leaving lots of duplicates. 

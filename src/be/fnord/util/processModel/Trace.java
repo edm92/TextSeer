@@ -13,6 +13,8 @@ import be.fnord.util.functions.OCP.PartitionListItem;
  * @author Evan Morrison edm92@uowmail.edu.au http://www.fnord.be
  * Apache License, Version 2.0, Apache License Version 2.0, January 2004 http://www.apache.org/licenses/
  *
+ *
+ *
  * @param <v>
  * @param <e>
  */
@@ -21,7 +23,17 @@ public class Trace extends Vertex{
 	public boolean INCLUDE_EDGE = false;
 	private static final long serialVersionUID = 1L;
 	public Trace(String _name) {	super(_name);	isTrace = true;}
-	public Trace() { super() ; isTrace = true;}
+	public Trace() { super() ; isTrace = true; allTraces.put(this.name, this);}
+	
+	
+	public boolean isSubTrace = false;
+	
+	// List of all graphs
+	public static TreeMap<String, Trace> allTraces = new TreeMap<String, Trace>();	
+	//public LinkedList<String> subTraces = new LinkedList<String>(); // Defined in Graph	
+	
+	
+	
 
 	LinkedList<Vertex> nodes = new LinkedList<Vertex>();
 	LinkedList<Edge> edges = new LinkedList<Edge>();
@@ -50,9 +62,17 @@ public class Trace extends Vertex{
 			edges.remove(edge);
 	}
 	
+	public void addSubTrace(String t){
+		this.subTraces.add(t);
+	}
+	
 	public Trace copy(){
 		Trace result = new Trace();
 		result.isTrace = true;
+		for(String t: this.subTraces){
+			result.addSubTrace(t);
+		}
+		
 		for(Vertex vert : nodes){
 			result.addTraceNode(vert);
 		}
@@ -63,6 +83,35 @@ public class Trace extends Vertex{
 	}
 	public static int ten = 10;
 	
+	
+	/**
+	 * Once we are happy with our trace, we will create subtraces which are the actual <v,v,v,v> traces
+	 * 
+	 * @param SIMPLE_OR_FULL either SIMPLE_TRACES or FULL_TRACES
+	 * @return
+	 */
+	public LinkedList<Trace> processSubTraces(int SIMPLE_OR_FULL){
+		LinkedList<Trace> results = new LinkedList<Trace>();
+		LinkedList<LinkedList<Vertex>> vertexArrays = toVertexArray();
+		for(LinkedList<Vertex> vertexArray : vertexArrays){
+			if(SIMPLE_OR_FULL == a.e.SIMPLE_TRACES){
+				results.add(processSimpleSubTraces(vertexArray));
+			}else if(SIMPLE_OR_FULL == a.e.FULL_TRACES){
+				results.add(processFullSubTraces(vertexArray));
+			}
+		}
+		return results; 
+	}
+	
+	// TODO Make this happen! Create this 
+	private Trace processFullSubTraces(LinkedList<Vertex> vertexArray) {
+		return null;
+	}
+	private Trace processSimpleSubTraces(LinkedList<Vertex> vertexArray) {
+
+
+		return null;
+	}
 	/**
 	 * toVertexArray should take as input a trace and then convert that trace into a list of verticies. 
 	 * The actual return is a list of lists of vertices. We have multiple returns because for each array conduct an
@@ -74,21 +123,41 @@ public class Trace extends Vertex{
 		Trace.reset();	// This is a really weird hack and will screw with parallel processing.
 		// Needed because for some reason the processGroupsOfParallelNodes returns different results
 		
-		return toVertexArray(KEEP_START_END_NODES_IN_TRACE);
+		return _cleanVertexArray(_toVertexArray(KEEP_START_END_NODES_IN_TRACE));
 	}
 	
 	public static final boolean IGNORE_START_END_NODES_IN_TRACE = true;
 	public static final boolean KEEP_START_END_NODES_IN_TRACE = false;
 	
 	public static int num = 10;
-	public LinkedList<LinkedList<Vertex>> toVertexArray(boolean SHOULD_IGNORE_START_END_NODES){
+	
+	public LinkedList<LinkedList<Vertex>> _cleanVertexArray(LinkedList<LinkedList<Vertex>> input){
+		LinkedList<LinkedList<Vertex>> output = new LinkedList<LinkedList<Vertex>>();
+		for(LinkedList<Vertex> currentTrace : input){
+			LinkedList<String> _existing = new LinkedList<String>();
+			LinkedList<Vertex> _replacement = new LinkedList<Vertex>();
+			
+			for(Vertex v : currentTrace){
+				if(!_existing.contains(v.toString())){
+					_existing.add(v.toString());
+					if(!v.isSubstructural)
+						_replacement.add(v);
+				}
+			}
+			if(_replacement.size() > 0)
+				output.add(_replacement);
+		}
+		
+		return output;
+	}
+	
+	public LinkedList<LinkedList<Vertex>> _toVertexArray(boolean SHOULD_IGNORE_START_END_NODES){
 		// For the main store of vertices
 		LinkedList<LinkedList<Vertex>> mainResult = new LinkedList<LinkedList<Vertex>>();
 		
 		LinkedList<Vertex> newResult = new LinkedList<Vertex>();
 		LinkedList<Vertex> currentLL = new LinkedList<Vertex>();
 		
-		int _num = num ;
 		num+= 10;
 		boolean inSquares = false;
 		// Iterate through each node in the trace		
@@ -102,7 +171,7 @@ public class Trace extends Vertex{
 					inSquares = true;
 				}
 				Trace t = (Trace)v;	// We expand the this trace into a list of lists of elements. 
-				LinkedList<LinkedList<Vertex>> newvArray = t.toVertexArray(IGNORE_START_END_NODES_IN_TRACE) ;
+				LinkedList<LinkedList<Vertex>> newvArray = t._toVertexArray(IGNORE_START_END_NODES_IN_TRACE) ;
 				// Result should be a list of possible alternatives. 
 				// [<s, a,b, e>,<s, c,d, e>,<s, d,f, e>]
 				
@@ -117,7 +186,7 @@ public class Trace extends Vertex{
 				if(inSquares){
 						inSquares = false;
 						// Process LL's
-						a.e.print("1--");
+//						a.e.print("1--");
 						LinkedList<Vertex> returnedResults = _processGroupsOfParallelNodes(currentLL);
 						newResult.addAll(returnedResults); // .substring(0, currentString.length()/2));
 				}
@@ -128,7 +197,7 @@ public class Trace extends Vertex{
 			if(v == nodes.getLast()){
 				if(inSquares){
 						inSquares = false;
-						a.e.print("2--");
+//						a.e.print("2--");
 						LinkedList<Vertex> returnedResults = _processGroupsOfParallelNodes(currentLL);
 						newResult.addAll(returnedResults); // .substring(0, currentString.length()/2));
 				}
@@ -255,11 +324,10 @@ public class Trace extends Vertex{
 
 	public String toString(){
 		String result = "Trace<";
-		int i = 0;
-		
+	
 		// Changed for now, replace with functin below later TODO~!
 		for(Vertex v: nodes){
-			a.e.println(v.name + ",");
+			result += v.name + ",";
 		}
 //		for(Vertex v : this.toVertexArray()){			
 //			result += v.name + ",";

@@ -170,7 +170,7 @@ public class GraphChecker {
 				Vertex v2 = new Vertex("newXORGate-" + UUID.randomUUID(), GraphLoader.ExclusiveGateway);
 				v2.isXOR = true;
 				v2.isGateway = true;
-
+				v2.isSubstructural =true;
 				g.addV(v2);
 
 				LinkedList<Edge> removeListEdges = new LinkedList<Edge>();
@@ -191,6 +191,7 @@ public class GraphChecker {
 				Vertex v2 = new Vertex("newXORGate-" + UUID.randomUUID(), GraphLoader.ExclusiveGateway);
 				v2.isXOR = true;
 				v2.isGateway = true;
+				v2.isSubstructural = true;
 				g.addV(v2);
 				LinkedList<Edge> removeListEdges = new LinkedList<Edge>();
 				for(Edge e: g.incomingEdgesOf(v)){
@@ -212,6 +213,9 @@ public class GraphChecker {
 		for(Vertex v : fixDoubles){
 			Vertex v2 = new Vertex("newXORGate-" + UUID.randomUUID(), v.type);
 			g.addV(v2);
+			v2.isXOR = true;
+			v2.isGateway = true;
+			v2.isSubstructural = true;
 			for(Edge e: g.outgoingEdgesOf(v)){
 				g.removeE(e);
 				e.setSource(v2);

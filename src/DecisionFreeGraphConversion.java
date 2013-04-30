@@ -25,8 +25,8 @@ public class DecisionFreeGraphConversion {
 		//// Real start of program below	/////
 		/////////////////////////////////////////
 		
-		Graph<Vertex,Edge> g1 = GraphLoader.loadModel("models/MultiGateTest.bpmn20.xml", a.e.DONT_SAVE_MESSAGES_AND_PARTICIPANTS);
-//		Graph<Vertex,Edge> g1 = GraphLoader.loadModel("models/Model1.bpmn20.xml", a.e.DONT_SAVE_MESSAGES_AND_PARTICIPANTS);
+//		Graph<Vertex,Edge> g1 = GraphLoader.loadModel("models/MultiGateTest.bpmn20.xml", a.e.DONT_SAVE_MESSAGES_AND_PARTICIPANTS);
+		Graph<Vertex,Edge> g1 = GraphLoader.loadModel("models/Model1.bpmn20.xml", a.e.DONT_SAVE_MESSAGES_AND_PARTICIPANTS);
 //		System.out.println("G1-" + g1);
 		GraphChecker gc = new GraphChecker();
 		if(!gc.CheckEventsAndGateways(g1)) a.e.println("Issue checking events and gateways"); 
@@ -37,15 +37,15 @@ public class DecisionFreeGraphConversion {
 		for(Graph<Vertex,Edge> g : decisionless){
 			GraphChecker gcc = new GraphChecker();
 			boolean isgood = gcc.CheckGraph(g);
-			a.e.println("Decision Free Graph: " + g);
-			a.e.println("Checking if well formed results in a return of : " + isgood);
+//			a.e.println("Decision Free Graph: " + g);
+//			a.e.println("Checking if well formed results in a return of : " + isgood);
 			if(isgood){
-//				// Create some traces
-//				LinkedList<Trace> traces = GraphTransformer.createTrace(g);
-//				for(Trace trace : traces){
-//					a.e.println("Got a trace: " + trace.toVertexArray() );  a.e.println("");
-//				}
-				g.toView();
+				// Create some traces
+				LinkedList<Trace> traces = GraphTransformer.createTrace(g);
+				for(Trace trace : traces){
+					a.e.println("Got a trace: " + trace.toVertexArray() );  a.e.println("");
+				}
+//				g.toView();
 			}
 		}
 		return ;

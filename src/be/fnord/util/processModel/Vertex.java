@@ -2,7 +2,8 @@ package be.fnord.util.processModel;
 
 import java.util.LinkedList;
 import java.util.UUID;
-import be.fnord.util.logic.Effect;
+
+import au.edu.dsl.dlab.processtools.Effect;
 import be.fnord.util.processModel.util.GraphLoader;
 
 /**

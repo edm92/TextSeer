@@ -1,8 +1,9 @@
 import java.util.LinkedHashSet;
 
+import be.fnord.util.logic.Accumulate;
+
 
 import au.edu.dsl.dlab.processtools.Effect;
-import au.edu.dsl.dlab.processtools.logic.Accumulate;
 
 // Long effect to play with 
 // Effect e5 = new Effect(" (~a | ~b | c) & ~(~c | d) & (~c | e) & (a & b -> c) & (~e | ~f | g) & ((c & d) -> e) & (c & f -> g) & (a | d) & (f & g) & (b | ~a) & (p -> q) & ((l & m) -> p) & ((b & l) -> m) & ((a & p) -> l) & ((a & b) -> l)");

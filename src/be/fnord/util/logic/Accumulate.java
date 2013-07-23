@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import com.merriampark.Gilleland.CombinationGenerator;
 
+import au.edu.dsl.dlab.processtools.Effect;
 import be.fnord.util.functions.OCP.PartitionListElement;
 
 import orbital.logic.imp.Formula;

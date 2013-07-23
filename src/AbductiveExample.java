@@ -1,6 +1,7 @@
 import java.util.HashSet;
 import java.util.LinkedList;
-import au.edu.dsl.dlab.processtools.logic.AbductionReasoner;
+
+import be.fnord.util.logic.AbductionReasoner;
 
 
 /**

@@ -1,4 +1,4 @@
-package au.edu.dsl.dlab.processtools.logic;
+package be.fnord.util.logic;
 
 import java.util.HashSet;
 import java.util.LinkedList;

@@ -3,6 +3,30 @@ import java.util.LinkedList;
 import au.edu.dsl.dlab.processtools.logic.AbductionReasoner;
 
 
+/**
+ * An abductive reasoner, will take in a knowledgebase, some possible actions effects (facts) and an observation. The reasoner
+ * will then find possible actions that could be performed together. 
+ * 
+ * An extension to this is a planning problem, by using an accumlation function to add effects to each other. 
+ * 
+ * 
+ * Output produced
+
+Input KB = ((dr & cf) -> ~rt) & ((dr & ~cf) -> rt)
+Input Observations = rt
+After trying 103 guesses I think the following are possible events that could have happened...
+	 ( di ) & ( dr ) & ( ~cf ) 
+	 ( di ) & ( ~cf ) & ( dr ) 
+	 ( dr ) & ( di ) & ( ~cf ) 
+	 ( dr ) & ( ~cf ) 
+The minimal scenarios are: 
+	 ( dr ) & ( ~cf ) 
+
+ * 
+ * @author edm92
+ *
+ */
+
 public class AbductiveExample {
 
 	public static void main(String[] args) {
@@ -43,9 +67,9 @@ public class AbductiveExample {
 		System.out.println("Input Observations = " + myReason.getObservations());
 		
 		if(!myReason.SOLUTION_FOUND){
-			System.out.println("After trying " + myReason.CURRENT_GUESS + " possible results couldn't find a theory to support the observation");
+			System.out.println("After trying " + myReason.CURRENT_GUESS + " guesses possible results couldn't find a theory to support the observation");
 		}else{
-			System.out.println("After trying " + myReason.CURRENT_GUESS + " I think the following are possible events that could have happened...");
+			System.out.println("After trying " + myReason.CURRENT_GUESS + " guesses I think the following are possible events that could have happened...");
 			for(String hypthosis: possibleScenarios){
 				System.out.println("\t " + hypthosis);
 			}

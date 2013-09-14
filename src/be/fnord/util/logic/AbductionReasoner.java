@@ -3,7 +3,8 @@ package be.fnord.util.logic;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-import au.edu.dsl.dlab.processtools.Effect;
+import be.fnord.util.processModel.Effect;
+
 
 public class AbductionReasoner {
 	public static final boolean _VERBOSE = false;

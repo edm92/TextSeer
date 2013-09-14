@@ -6,8 +6,6 @@ import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 
-import au.edu.dsl.dlab.processtools.parser.ModelLoader;
-import au.edu.dsl.dlab.processtools.parser.bpmn.Activiti;
 
 
 public class Settings {
@@ -34,7 +32,6 @@ public class Settings {
 	public static String currentProp = "";
 	public static String StrategyDB = "";// "models/strategy.sqlite";
 	
-	public transient static ModelLoader MODELS = null; 
 	
 	public static boolean LoadFromDB = false;
 	public static boolean StoreInDB = false;
@@ -91,7 +88,6 @@ public class Settings {
 				if(_repository.contains("$CURRENTDIR$")){
 					_repository = _repository.replace("$CURRENTDIR$", _currentDir);
 				}			
-				visualEnabled = Activiti.PREPARE_VISUAL_MODELS = Integer.parseInt(props.getProperty("prepareVisual")) == 1 ? true : false;
 				LoadFromRepo = Integer.parseInt(props.getProperty("loadFromRepo")) == 1 ? true : false;
 				RECOMPUTE_SCENARIOS = Integer.parseInt(props.getProperty("recomputeScenarios")) == 1 ? true : false; 
 				StrategyDB = _repository + "\\" + props.getProperty("StrategyDB");

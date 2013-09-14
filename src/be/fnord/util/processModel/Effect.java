@@ -1,4 +1,4 @@
-package au.edu.dsl.dlab.processtools;
+package be.fnord.util.processModel;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
-import au.edu.dsl.dlab.processtools.logic.ClassicalLogicS;
+import be.fnord.util.logic.ClassicalLogicS;
 
 import com.merriampark.Gilleland.CombinationGenerator;
 
@@ -30,7 +30,6 @@ import orbital.logic.sign.type.Types;
  */
 public class Effect implements Serializable{
 	private static final long serialVersionUID = 1L;
-	@SuppressWarnings("deprecation")
 	protected transient ClassicalLogicS   logic ;
 	private transient Formula       formula;
 	private transient Formula       formula2;

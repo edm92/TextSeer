@@ -1,10 +1,11 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
-import au.edu.dsl.dlab.collections.functions.OrderConstrainedPartitionList;
-import au.edu.dsl.dlab.collections.functions.PartitionList;
-import au.edu.dsl.dlab.collections.functions.PartitionListElement;
-import au.edu.dsl.dlab.collections.functions.PartitionListItem;
+import be.fnord.collections.functions.OrderConstrainedPartitionList;
+import be.fnord.collections.functions.PartitionList;
+import be.fnord.collections.functions.PartitionListElement;
+import be.fnord.collections.functions.PartitionListItem;
+
 
 
 

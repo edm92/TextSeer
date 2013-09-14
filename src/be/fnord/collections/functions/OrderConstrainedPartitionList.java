@@ -1,4 +1,4 @@
-package au.edu.dsl.dlab.collections.functions;
+package be.fnord.collections.functions;
 import java.util.HashSet;
 import java.util.List;
 

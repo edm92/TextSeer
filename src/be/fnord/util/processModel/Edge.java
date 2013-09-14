@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.jgrapht.graph.DefaultWeightedEdge;
 
+
 /**
  * 
  * @author Evan Morrison edm92@uowmail.edu.au http://www.fnord.be
@@ -38,4 +39,36 @@ public class Edge extends DefaultWeightedEdge{
 	
 	// TODO Implement this at some time
 	public Edge makeCopy(){ return this; }
+	
+	
+	private Effect immEffect = new Effect();
+	private String effect;
+	
+	private UUID ID;
+	public Effect getEffect(){immEffect.setFormula(effect); return immEffect;};
+	
+	public String getID() { return ID.toString(); };
+	public Edge(){super();ID = UUID.randomUUID();	}
+//	public Edge(String _name){this(); name = _name;}
+	public void addEffect(String _effect){
+		effect = _effect;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String toString(Graph<?,?> in){
+		String result = "";
+		try{
+			Graph<Vertex, Edge> newG = (Graph<Vertex, Edge>) in;
+			
+			if(newG != null){
+				if(newG.getEdgeSource(this) != null && newG.getEdgeTarget(this) != null){
+					result = "{" + newG.getEdgeSource(this).name + "} --&gt; {" + newG.getEdgeTarget(this).name + "}";
+				}
+			}
+		}catch(Exception e){
+			return "";
+		};
+		
+		return result;
+	}	
 }

@@ -9,8 +9,8 @@ import org.apache.log4j.Logger;
 
 import com.merriampark.Gilleland.CombinationGenerator;
 
-import au.edu.dsl.dlab.processtools.Effect;
 import be.fnord.util.functions.OCP.PartitionListElement;
+import be.fnord.util.processModel.Effect;
 
 import orbital.logic.imp.Formula;
 import orbital.logic.imp.Logic;

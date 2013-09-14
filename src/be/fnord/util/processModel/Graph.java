@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.UUID;
-
+import org.apache.log4j.Logger;
 import org.jbpt.pm.AndGateway;
 import org.jbpt.pm.FlowNode;
 import org.jbpt.pm.Gateway;
@@ -14,7 +14,6 @@ import org.jbpt.pm.ProcessModel;
 import org.jbpt.pm.XorGateway;
 import org.jbpt.pm.bpmn.Task;
 import org.jgrapht.graph.DefaultDirectedGraph;
-
 import be.fnord.util.processModel.Edge;
 import be.fnord.util.processModel.Vertex;
 import be.fnord.util.processModel.visual.jungViewer;
@@ -27,8 +26,27 @@ import be.fnord.util.processModel.visual.jungViewer;
  * @param <v>
  * @param <e>
  */
-public class Graph<v extends Vertex , e extends Edge> extends DefaultDirectedGraph<Vertex, Edge>{
+public class Graph<v extends Vertex , e extends Edge> extends DefaultDirectedGraph<Vertex, Edge> implements org.jgrapht.Graph<Vertex, Edge> {
 	public static boolean __DEBUG = a.e.__DEBUG;
+	
+	protected transient static Logger logger = Logger.getLogger("GraphClass");
+	public static boolean SKIP_EMPTY_EFFECT_PATHS = true;
+	public static final int MAX_PATH_LENGTH = 100; // Set higher if your graph isn't working out
+	
+	
+	public HashSet<Effect> effects;
+	public String filename = "";
+	public String documentation = "";
+//	public String name = "";
+//	public String id = "";
+	public String QOS = "";
+	private transient UUID ID;
+	public String getID() { return ID.toString(); };
+	public TreeMap<String, String> effectMap = new TreeMap<String, String>();
+	public int addition = 0;
+	public char currentEffect = 'a';
+//	public t trueStart;
+//	public t trueEnd;
 	
 	ProcessModel jbptProcess = new ProcessModel();
 	
@@ -187,8 +205,8 @@ public class Graph<v extends Vertex , e extends Edge> extends DefaultDirectedGra
 		String result = a.e.dent() + 
 				"g[{" + "NODES:" + a.e.endl;
 		a.e.incIndent();
-		for(Vertex v : this.vertexSet()){
-			result += a.e.dent() + v.toString() + a.e.endl;
+		for(Vertex t : this.vertexSet()){
+			result += a.e.dent() + t.toString() + a.e.endl;
 		}		
 		result += "}{EDGES: " +a.e.endl;
 		
@@ -309,8 +327,9 @@ public class Graph<v extends Vertex , e extends Edge> extends DefaultDirectedGra
 
 	@SuppressWarnings("unchecked")
 	public void toView(){
-		jungViewer jv = new jungViewer();
-		jv.displayGraph((Graph<Vertex, Edge>) this,this.name);
+		jungViewer jt = new jungViewer();
+		jt.displayGraph((Graph<Vertex, Edge>) this,this.name);
 	}
+
 
 }

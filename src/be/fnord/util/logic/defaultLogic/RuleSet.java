@@ -207,6 +207,11 @@ public class RuleSet {
 	}
 	
 	public HashSet<String> getLongestExtensions(HashSet<String> _ext){
+		
+		// Fix the bug of not getting C & F and C & E & F by splitting the string
+		// i.e. Tokens = s.split("&"); 
+		
+		
 		HashSet<String> _result = new HashSet<String>();
 		HashSet<String> _remove = new HashSet<String>();
 		_result.add(a.e.EMPTY_FORMULA);

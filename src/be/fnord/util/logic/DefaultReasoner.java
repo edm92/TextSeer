@@ -1,5 +1,6 @@
 package be.fnord.util.logic;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 
 import be.fnord.util.logic.defaultLogic.DefaultRule;
@@ -40,7 +41,7 @@ public class DefaultReasoner {
 		
 		
 		DefaultReasoner loader = new DefaultReasoner(myWorld, myRules);
-		LinkedList<String> extensions = loader.getPossibleScenarios();
+		HashSet<String> extensions = loader.getPossibleScenarios();
 		a.e.println("Possible Extensions");
 		for(String c : extensions){			
 			a.e.println("\t Ext:" + c);
@@ -89,23 +90,29 @@ public class DefaultReasoner {
 	}
 	
 	// Process world and rules 
-	public LinkedList<String> getPossibleScenarios(){
+	public HashSet<String> getPossibleScenarios(){
 //		WorldSet _results = new WorldSet();
 		
 		// First step - make a WFF of the world
 		WFF myWorld = new WFF(world.getWorld());
+		WFF myOriginalWorld = new WFF(world.getWorld());
 		
 		// Take the full set of consequences 
 		LinkedList<String> consequences = rules.getAllConsequences(myWorld);
 		
 		// Apply the rules againt the consequences to test the results
-		LinkedList<String> extensions = rules.applyRules(consequences, myWorld);
+		LinkedList<String> extensions = rules.generateExtensions(consequences, myWorld);
 		
-		
+		// Take the max strings
+		LinkedList<String> validExtensions = rules.applyRules(extensions, myOriginalWorld);
+		HashSet<String> _validExtensions = new HashSet<String>();
+		for(String s: validExtensions)
+			_validExtensions.add(s);
+		HashSet<String> maxLenExtensions = rules.getLongestExtensions(_validExtensions);
 		
 		
 		// Return the result
-		return extensions;
+		return maxLenExtensions;
 	}
 
 }

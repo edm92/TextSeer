@@ -1,3 +1,4 @@
+import java.util.HashSet;
 import java.util.LinkedList;
 
 import be.fnord.util.logic.DefaultReasoner;
@@ -11,34 +12,41 @@ public class DefaultLogicExample {
 public static void main(String[] args){
 		
 		WorldSet myWorld = new WorldSet();
-		myWorld.addFormula("bird_x");		// We think that x is a bird
-		myWorld.addFormula("(penguin_x " + a.e.IMP + " " + a.e.NOT + "flies_x)");		// Penguins can not fly
-		myWorld.addFormula("penguin_x"); // X is a Penguin
+		myWorld.addFormula("B");		// We think that x is a bird
+		myWorld.addFormula("(C -> (D | A))");		// Penguins can not fly
+		myWorld.addFormula("((A & C) -> ~E)"); // X is a Penguin
+		myWorld.addFormula(a.e.EMPTY_EFFECT); // X is a Penguin
 		
 		DefaultRule rule1 = new DefaultRule();
-		rule1.setPrerequisite("bird_x");
-		rule1.setJustificatoin("flies_x");
-		rule1.setConsequence("flies_x");
+		rule1.setPrerequisite(a.e.EMPTY_EFFECT);
+		rule1.setJustificatoin("A");
+		rule1.setConsequence("A");
 		
 		DefaultRule rule2 = new DefaultRule();
-		rule2.setPrerequisite("bird_x");
-		rule2.setJustificatoin("penguin_x");
-		rule2.setConsequence(a.e.NOT + "flies_x");
+		rule2.setPrerequisite("B");
+		rule2.setJustificatoin("C");
+		rule2.setConsequence("C");
 		
 		DefaultRule rule3 = new DefaultRule();
-		rule3.setPrerequisite("dog_x");
-		rule3.setJustificatoin("cat_x");
-		rule3.setConsequence(a.e.NOT + "monkey_x");
+		rule3.setPrerequisite("(D & A)");
+		rule3.setJustificatoin("E");
+		rule3.setConsequence("E");
 		
+		DefaultRule rule4 = new DefaultRule();
+		rule4.setPrerequisite("C & E");
+		rule4.setJustificatoin("((~A) & (D | A))");
+		rule4.setConsequence("F");
 		
 		RuleSet myRules = new RuleSet();
 		myRules.addRule(rule1);
 		myRules.addRule(rule2);
 		myRules.addRule(rule3);
+		myRules.addRule(rule4);
 		
 		
 		DefaultReasoner loader = new DefaultReasoner(myWorld, myRules);
-		LinkedList<String> extensions = loader.getPossibleScenarios();
+		HashSet<String> extensions = loader.getPossibleScenarios();
+		
 		a.e.println("Possible Extensions");
 		for(String c : extensions){			
 			a.e.println("\t Ext:" + c);

@@ -108,11 +108,11 @@ public class DefaultReasoner {
 		HashSet<String> _validExtensions = new HashSet<String>();
 		for(String s: validExtensions)
 			_validExtensions.add(s);
-		HashSet<String> maxLenExtensions = rules.getLongestExtensions(_validExtensions);
+//		HashSet<String> maxLenExtensions = rules.getLongestExtensions(_validExtensions);
 		
 		
 		// Return the result
-		return maxLenExtensions;
+		return _validExtensions;
 	}
 
 }

@@ -32,7 +32,13 @@ public class DefaultRule {
 	
 	public String toString(){
 		String _results = "";
-		_results = "[" + prerequisite + ":" + justificatoin + "->" + consequence + "]";
+		String p = prerequisite;
+		String j = justificatoin;
+		String c = consequence;
+		if(prerequisite.compareTo(a.e.EMPTY_FORMULA) == 0) p = "[]";
+		if(justificatoin.compareTo(a.e.EMPTY_FORMULA) == 0) j = "[]";
+		if(consequence.compareTo(a.e.EMPTY_FORMULA) == 0) c = "[]";
+		_results = "[" + p + ":" + j + "->" + c + "]";
 		return _results;
 	}
 	

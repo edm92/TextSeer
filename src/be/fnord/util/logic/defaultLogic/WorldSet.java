@@ -15,6 +15,10 @@ public class WorldSet {
 
 	private LinkedList<String> formula = new LinkedList<String>();
 
+	public WorldSet(){
+		this.addFormula(a.e.EMPTY_FORMULA); // We assume that empty is true (this is needed by default
+	}
+	
 	public LinkedList<String> getFormula() {
 		return formula;
 	}
@@ -42,6 +46,21 @@ public class WorldSet {
 			return _result;
 		}else{
 			return a.e.EMPTY_FORMULA;
+		}
+	}
+	
+	public String toString(){
+		if(!formula.isEmpty()){
+			String _result = "";
+			for(String e : formula){
+				if(e.compareTo(a.e.EMPTY_FORMULA) == 0) continue;
+				_result = _result + " " + a.e.AND + " " + e; 
+			}
+			if(_result.length() > 3)
+				_result = _result.substring((" " + a.e.AND + " ").length(), _result.length());
+			return _result;
+		}else{
+			return "[]";
 		}
 	}
 }

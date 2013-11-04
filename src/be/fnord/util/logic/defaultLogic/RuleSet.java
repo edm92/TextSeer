@@ -13,6 +13,15 @@ public class RuleSet {
 
 	private LinkedList<DefaultRule> rules = new LinkedList<DefaultRule>();
 
+	public String toString(){
+		String s = "";
+		for(DefaultRule r : rules){
+			s += r.toString() + " , ";
+		}
+		if(s.length() > 1) s = s.substring(0, s.length() - 3);
+		return s;
+	}
+	
 	public LinkedList<String> getAllConsequences(WFF w){
 		LinkedList<String> _result = new LinkedList<String>();
 		
@@ -135,27 +144,64 @@ public class RuleSet {
 	public LinkedList<String> applyRules(LinkedList<String> possibleExtensions, WFF world){
 		LinkedList<String> _extensions = new LinkedList<String>();
 //		System.out.println("Applyig rules to the world " + world + " ==== " + world.getClosure().trim());
-		System.out.println("!!-------------------------------------------------------");
-		System.out.println(possibleExtensions);
+//		System.out.println("!!-------------------------------------------------------");
+//		System.out.println(possibleExtensions);
 		for(String possExtension : possibleExtensions){
 			
 			LinkedList<String> _consequences = new LinkedList<String>();
-			WFF currentExtension = new WFF(possExtension); 
 			
-			// So long as one rule fires then we store the consequences of the rule
-			boolean overall = false;
-			for(DefaultRule d : rules){
-				a.e.println("Trying: " + currentExtension.getFormula());
-				boolean results = testRule(currentExtension, world, d);
-				if(results) overall = true;
-				if(results){
-					_consequences.add(currentExtension.getFormula());
-				}
+			WFF currentExtension = new WFF(possExtension); 
+			WFF assertion = new WFF("("+ world.getFormula() +") & (" + possExtension + ")");
 
+			boolean overall = true;
+			for(DefaultRule d : rules){
+//				a.e.println("Trying: " + currentExtension.getFormula());
+				// Test if prerequisite is fired
+				WFF preq = new WFF(d.getPrerequisite());
+				WFF just = new WFF(d.getJustificatoin());
+				WFF cons = new WFF(d.getConsequence());
+				boolean prereqisite_fired = assertion.entails(preq);
+//				System.out.println(assertion.getFormula() + "  |=  " + preq.getFormula() + " ===" + prereqisite_fired);
+				
+				if(prereqisite_fired){
+					boolean just_consistent = assertion.isConsistent(just.getFormula());
+					if(just_consistent){
+						// Test if consequence is entailed by extension
+						boolean test_consequence_entailed_by_extension = currentExtension.entails(cons);
+//						System.out.println(currentExtension.getFormula() + " |= " + d.getConsequence() + " = " + test_consequence_entailed_by_extension );
+						
+						if(!test_consequence_entailed_by_extension) overall = false;
+						_consequences.add(currentExtension.getFormula());
+					}
+				}else{
+					WFF preqCon = new WFF("(" + d.getPrerequisite() + ") & (" + d.getJustificatoin() +")" );
+					if(!preqCon.isConsistent(currentExtension.getFormula())){
+						
+					}
+				}
 			}
-			System.out.println("_consequences:" + _consequences);
-			System.out.println("~~-------------------------------------------------------");
+//			System.out.println("_consequences:" + _consequences);
+//			System.out.println("~~-------------------------------------------------------");
 			if(overall){
+				// Loop through the rules again looking for inconsistencies
+				for(DefaultRule d : rules){
+					WFF preq = new WFF(d.getPrerequisite());
+//					WFF just = new WFF(d.getJustificatoin());
+					WFF cons = new WFF(d.getConsequence());
+					boolean prereqisite_fired = assertion.entails(preq);
+//					boolean just_consistent = assertion.isConsistent(just.getFormula());
+					
+					
+					if(!prereqisite_fired){
+						WFF preqCon = new WFF("(" + d.getPrerequisite() + ") & (" + d.getJustificatoin() +")" );
+						boolean test_consequence_entailed_by_extension = currentExtension.entails(cons);
+						if(test_consequence_entailed_by_extension)
+						if(!preqCon.isConsistent(currentExtension.getFormula())){
+							overall = false;
+						}
+					}
+				}
+				if(!overall) break;
 				// We create a deductive closure of the extension and all of the consequences
 				String talliedCons = "";
 				for(String c : _consequences){
@@ -189,9 +235,9 @@ public class RuleSet {
 //				System.err.println(ext + " " + cons);
 				if(ext.isConsistent(cons.getFormula())){
 					if(ext.entails(cons)) {
-						System.out.println("Testing extension " + ext.getFormula());
-						System.out.println("\tWorld is " + world + " prec is " + prec);
-						System.out.println("\tRule is " + d.toString());
+//						System.out.println("Testing extension " + ext.getFormula());
+//						System.out.println("\tWorld is " + world + " prec is " + prec);
+//						System.out.println("\tRule is " + d.toString());
 						return true;
 					}
 					
@@ -203,43 +249,42 @@ public class RuleSet {
 		}
 		
 		return false;
-
 	}
 	
-	public HashSet<String> getLongestExtensions(HashSet<String> _ext){
-		
-		// Fix the bug of not getting C & F and C & E & F by splitting the string
-		// i.e. Tokens = s.split("&"); 
-		
-		
-		HashSet<String> _result = new HashSet<String>();
-		HashSet<String> _remove = new HashSet<String>();
-		_result.add(a.e.EMPTY_FORMULA);
-		boolean updated = false;
-		for(String e : _ext){
-			for(String s: _ext){
-				
-				if(s.compareTo(e) != 0 && s.contains(e)){
-					updated = true;
-					_remove.add(e);
-				}else{					
-					_result.add(s);
-				}
-			}
-		}
-		_result.remove(a.e.EMPTY_FORMULA);
-		for(String s: _remove){
-			_result.remove(s);
-		}
-		if(updated){
-			
-			HashSet<String> _newResult = getLongestExtensions(_result);
-			
-			
-			return _newResult;
-		}
-		return _result;
-	}
+//	public HashSet<String> getLongestExtensions(HashSet<String> _ext){
+//		
+//		// Fix the bug of not getting C & F and C & E & F by splitting the string
+//		// i.e. Tokens = s.split("&"); 
+//		
+//		
+//		HashSet<String> _result = new HashSet<String>();
+//		HashSet<String> _remove = new HashSet<String>();
+//		_result.add(a.e.EMPTY_FORMULA);
+//		boolean updated = false;
+//		for(String e : _ext){
+//			for(String s: _ext){
+//				
+//				if(s.compareTo(e) != 0 && s.contains(e)){
+//					updated = true;
+//					_remove.add(e);
+//				}else{					
+//					_result.add(s);
+//				}
+//			}
+//		}
+//		_result.remove(a.e.EMPTY_FORMULA);
+//		for(String s: _remove){
+//			_result.remove(s);
+//		}
+//		if(updated){
+//			
+//			HashSet<String> _newResult = getLongestExtensions(_result);
+//			
+//			
+//			return _newResult;
+//		}
+//		return _result;
+//	}
 
 		
 }

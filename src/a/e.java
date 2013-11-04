@@ -20,7 +20,7 @@ public class e {
 	public static boolean __HIGHDETAILS = false;
 	
 	// Do logging?
-	public static boolean __LOGGER = true;
+	public static boolean __LOGGER = false;
 	
 	// Debug Levels
 	public static final int FATAL = 5;
@@ -57,7 +57,7 @@ public class e {
 	public static final String IMP = "->";
 	
 	public static final String EMPTY_EFFECT = "eeee";
-
+	public static final String EMPTY_FORMULA = EMPTY_EFFECT;
 	
 	// Special Characters
 	public static String endl = System.getProperty("line.separator");

@@ -45,7 +45,7 @@ public class DecisionFreeGraphConversion {
 				for(Trace trace : traces){
 					a.e.println("Got a trace: " + trace.toString() );
 				}
-//				g.toView();
+				g.toView();
 			}
 		}
 		return ;

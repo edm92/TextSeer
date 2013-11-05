@@ -125,11 +125,9 @@ public class DefaultLogicExample {
 		rule2.setJustificatoin("penguin_x");
 		rule2.setConsequence(a.e.NOT + "flies_x");
 		
-		
 		RuleSet myRules = new RuleSet();
 		myRules.addRule(rule1);
 		myRules.addRule(rule2);
-//		myRules.addRule(rule3);
 		
 		DefaultReasoner loader = new DefaultReasoner(myWorld, myRules);
 		HashSet<String> extensions = loader.getPossibleScenarios();

@@ -7,10 +7,13 @@ Text Seer Process Tools
 
 Basic users: 
 	For basic configuration options edit 'base.properties'
+	
 Intermediate users:
 	For more configuration options edit src.config.Settings.java
+	
 Advanced users:
 	For even more configuration options edit each java source file in the au.edu.dsl.dlab... package. 
+
 
 To load process repository - Store models in '/models/' directory. 
 

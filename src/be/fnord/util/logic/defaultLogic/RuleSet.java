@@ -81,7 +81,7 @@ public class RuleSet {
 	}
 	
 	// 
-	public static LinkedList<String> addedConsequence = new LinkedList<String>();
+	public LinkedList<String> addedConsequence = new LinkedList<String>();
 	
 	public LinkedList<String> generateExtensions(LinkedList<String> possibleExtensions, WFF world){
 		LinkedList<String> _extensions = new LinkedList<String>();
@@ -160,7 +160,7 @@ public class RuleSet {
 				WFF preq = new WFF(d.getPrerequisite());
 				WFF just = new WFF(d.getJustificatoin());
 				WFF cons = new WFF(d.getConsequence());
-				boolean prereqisite_fired = assertion.entails(preq);
+				boolean prereqisite_fired = assertion.eval(preq);
 //				System.out.println(assertion.getFormula() + "  |=  " + preq.getFormula() + " ===" + prereqisite_fired);
 				
 				if(prereqisite_fired){
@@ -174,10 +174,12 @@ public class RuleSet {
 						_consequences.add(currentExtension.getFormula());
 					}
 				}else{
-					WFF preqCon = new WFF("(" + d.getPrerequisite() + ") & (" + d.getJustificatoin() +")" );
-					if(!preqCon.isConsistent(currentExtension.getFormula())){
-						
-					}
+					
+//					
+//					
+//					if(!preqCon.isConsistent(currentExtension.getFormula())){
+//						System.out.println("false");
+//					}
 				}
 			}
 //			System.out.println("_consequences:" + _consequences);
@@ -221,10 +223,10 @@ public class RuleSet {
 		return _extensions;
 	}	
 	
-	public boolean testRule(WFF ext, WFF world, DefaultRule d){
+	public boolean testRule(WFF ext, WFF _world, DefaultRule d){
 		WFF prec = new WFF(d.getPrerequisite());
-//		WFF world = new WFF(_world.getFormula() + " & " + ext.getFormula());
-		if(world.eval(prec)){			
+		WFF world = new WFF(_world.getFormula() + " & " + ext.getFormula());
+		if(world.entails(prec)){			
 			// Good start, our prerequisite is true
 			
 			WFF just = new WFF(d.getJustificatoin());

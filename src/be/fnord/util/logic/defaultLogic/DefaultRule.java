@@ -38,7 +38,7 @@ public class DefaultRule {
 		if(prerequisite.compareTo(a.e.EMPTY_FORMULA) == 0) p = "[]";
 		if(justificatoin.compareTo(a.e.EMPTY_FORMULA) == 0) j = "[]";
 		if(consequence.compareTo(a.e.EMPTY_FORMULA) == 0) c = "[]";
-		_results = "[" + p + ":" + j + "->" + c + "]";
+		_results = "[(" + p + "):(" + j + ") ==> (" + c + ")]";
 		return _results;
 	}
 	

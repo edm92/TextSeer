@@ -6,18 +6,189 @@ import be.fnord.util.logic.defaultLogic.DefaultRule;
 import be.fnord.util.logic.defaultLogic.RuleSet;
 import be.fnord.util.logic.defaultLogic.WorldSet;
 
+/**
+ * Default logic examples. 
+ Most of the examples here are from  R. Reiter (1980). A logic for default reasoning. Artificial Intelligence, 13:81-132.
+ Notes on output format - if you see the string eeee anywhere in the output take it as an EMPTY set or value.
+ Default rules are written a:b ==> c  where a is the prerequisite, b is justification and c is conclusion.
+------------------------------------------------------------------------------------------------------------------------------
 
+	I have made every attempt to test this reasoner; however, have not documented the decision proceedure yet so please take 
+	results with a grain of salt. 
+ * @author edm92
+ *
+ */
 public class DefaultLogicExample {
 
 	public static void main(String[] args){
+		a.e.println("Default logic examples. \n Most of the examples here are from  R. Reiter (1980). A logic for default reasoning. Artificial Intelligence, 13:81-132.\n Notes on output format - if you see the string eeee anywhere in the output take it as an EMPTY set or value.\n Default rules are written a:b ==> c  where a is the prerequisite, b is justification and c is conclusion.\n------------------------------------------------------------------------------------------------------------------------------\n\n");
+		
 		example1();
+		a.e.println("--------------------------------------------------------------");
 		example2();
+		a.e.println("--------------------------------------------------------------");
 		example3();
+		a.e.println("--------------------------------------------------------------");
 		example4();
+		a.e.println("--------------------------------------------------------------");
 		example5();
+		a.e.println("--------------------------------------------------------------");
+		example6();
+		a.e.println("--------------------------------------------------------------");
+		example7();
+		a.e.println("--------------------------------------------------------------");
+		example8();
+		a.e.println("--------------------------------------------------------------");
+	}
+
+	// Example 2.3 From 
+		// A Logic for Default Reasoning, R. Reiter -- R. Reiter (1980). A logic for default reasoning. Artificial Intelligence, 13:81-132.
+	/**
+	 * Output
+			Applyig rules to the world Effect:eeee & eeee ==== eeee
+			Given the world: 
+				
+			 And the rules 
+				[([]):(C) ==> (~D)] , [([]):(D) ==> (~C)]
+			Possible Extensions
+				 Ext: Th(W U (~D))
+				 Ext: Th(W U (~C))
+
+	 */
+	 	public static void example8(){
+		WorldSet myWorld = new WorldSet();	// Empty World
+			myWorld.addFormula(a.e.EMPTY_FORMULA);
+			
+			
+			DefaultRule rule1 = new DefaultRule();
+			rule1.setPrerequisite(a.e.EMPTY_FORMULA);
+			rule1.setJustificatoin("C");
+			rule1.setConsequence("~D");
+			
+			DefaultRule rule2 = new DefaultRule();
+			rule2.setPrerequisite(a.e.EMPTY_FORMULA);
+			rule2.setJustificatoin("D");
+			rule2.setConsequence("~C");
+	
+			RuleSet myRules = new RuleSet();
+			myRules.addRule(rule1);
+			myRules.addRule(rule2);
+			
+			DefaultReasoner loader = new DefaultReasoner(myWorld, myRules);
+			HashSet<String> extensions = loader.getPossibleScenarios();
+			
+			a.e.println("Given the world: \n\t" + myWorld.toString() + "\n And the rules \n\t" + myRules.toString() );
+			
+			a.e.println("Possible Extensions");
+			for(String c : extensions){			
+				a.e.println("\t Ext: Th(W U (" + c + "))");	// Added for Graham
+			}
+		}
+		
+	// Example 2.2 From 
+	// A Logic for Default Reasoning, R. Reiter -- R. Reiter (1980). A logic for default reasoning. Artificial Intelligence, 13:81-132.
+/**
+ * Output
+		Applyig rules to the world Effect:eeee & eeee ==== eeee
+		Given the world: 
+			
+		 And the rules 
+			[([]):(C) ==> (~D)] , [([]):(D) ==> (~E)] , [([]):(E) ==> (~F)]
+		Possible Extensions
+			 Ext: Th(W U (~D & ~F))
+ */
+ 	public static void example7(){
+	WorldSet myWorld = new WorldSet();	// Empty World
+		myWorld.addFormula(a.e.EMPTY_FORMULA);
+		
+		
+		DefaultRule rule1 = new DefaultRule();
+		rule1.setPrerequisite(a.e.EMPTY_FORMULA);
+		rule1.setJustificatoin("C");
+		rule1.setConsequence("~D");
+		
+		DefaultRule rule2 = new DefaultRule();
+		rule2.setPrerequisite(a.e.EMPTY_FORMULA);
+		rule2.setJustificatoin("D");
+		rule2.setConsequence("~E");
+	
+		DefaultRule rule3 = new DefaultRule();
+		rule3.setPrerequisite(a.e.EMPTY_FORMULA);
+		rule3.setJustificatoin("E");
+		rule3.setConsequence("~F");
+		
+			
+		RuleSet myRules = new RuleSet();
+		myRules.addRule(rule1);
+		myRules.addRule(rule2);
+		myRules.addRule(rule3);
+
+		
+		DefaultReasoner loader = new DefaultReasoner(myWorld, myRules);
+		HashSet<String> extensions = loader.getPossibleScenarios();
+		
+		a.e.println("Given the world: \n\t" + myWorld.toString() + "\n And the rules \n\t" + myRules.toString() );
+		
+		a.e.println("Possible Extensions");
+		for(String c : extensions){			
+			a.e.println("\t Ext: Th(W U (" + c + "))");	// Added for Graham
+		}
 	}
 	
-	public static void example5(){
+		// Example 2.1 From 
+		// A Logic for Default Reasoning, R. Reiter -- R. Reiter (1980). A logic for default reasoning. Artificial Intelligence, 13:81-132.
+	/**
+	 * Output
+			Applyig rules to the world Effect:eeee & (B -> (~A & ~C)) ==== (~C | ~B) & eeee & (~A | ~B)
+			Given the world: 
+				(B -> (~A & ~C))
+			 And the rules 
+				[([]):(A) ==> (A)] , [([]):(B) ==> (B)] , [([]):(C) ==> (C)]
+			Possible Extensions
+				 Ext: Th(W U (B))
+				 Ext: Th(W U (A & C))
+	 */
+	 	public static void example6(){
+		WorldSet myWorld = new WorldSet();	// Empty World
+			myWorld.addFormula("(B -> (~A & ~C))");
+			
+			
+			DefaultRule rule1 = new DefaultRule();
+			rule1.setPrerequisite(a.e.EMPTY_FORMULA);
+			rule1.setJustificatoin("A");
+			rule1.setConsequence("A");
+			
+			DefaultRule rule2 = new DefaultRule();
+			rule2.setPrerequisite(a.e.EMPTY_FORMULA);
+			rule2.setJustificatoin("B");
+			rule2.setConsequence("B");
+		
+			DefaultRule rule3 = new DefaultRule();
+			rule3.setPrerequisite(a.e.EMPTY_FORMULA);
+			rule3.setJustificatoin("C");
+			rule3.setConsequence("C");
+			
+				
+			RuleSet myRules = new RuleSet();
+			myRules.addRule(rule1);
+			myRules.addRule(rule2);
+			myRules.addRule(rule3);
+
+			
+			DefaultReasoner loader = new DefaultReasoner(myWorld, myRules);
+			HashSet<String> extensions = loader.getPossibleScenarios();
+			
+			a.e.println("Given the world: \n\t" + myWorld.toString() + "\n And the rules \n\t" + myRules.toString() );
+			
+			a.e.println("Possible Extensions");
+			for(String c : extensions){			
+				a.e.println("\t Ext: Th(W U (" + c + "))");	// Added for Graham
+			}
+		}
+	
+	// From 
+	// A Logic for Default Reasoning, R. Reiter -- R. Reiter (1980). A logic for default reasoning. Artificial Intelligence, 13:81-132.
+ 	public static void example5(){
 	WorldSet myWorld = new WorldSet();	// Empty World
 		myWorld.addFormula("Spouse_Fred_Mary & Hometown_Fred_Toronto & Employer_Bill_Mary & Hometown_Bill_Vancouver");
 		myWorld.addFormula("Hometown_Mary_Vancouver -> ~Hometown_Mary_Toronto");
@@ -46,10 +217,12 @@ public class DefaultLogicExample {
 		
 		a.e.println("Possible Extensions");
 		for(String c : extensions){			
-			a.e.println("\t Ext:" + c);
+			a.e.println("\t Ext: Th(W U (" + c + "))");	// Added for Graham
 		}
 	}
 	
+ 	// Example 2.6 from 
+ 	// A Logic for Default Reasoning, R. Reiter -- R. Reiter (1980). A logic for default reasoning. Artificial Intelligence, 13:81-132.
 	public static void example4(){
 		WorldSet myWorld = new WorldSet();	// Empty World
 		
@@ -68,12 +241,13 @@ public class DefaultLogicExample {
 		
 		a.e.println("Given the world: \n\t" + myWorld.toString() + "\n And the rules \n\t" + myRules.toString() );
 		
-		a.e.println("Possible Extensions");
+		a.e.println("Possible Extensions ");
 		for(String c : extensions){			
-			a.e.println("\t Ext:" + c);
+			a.e.println("\t Ext: Th(W U (" + c + "))");	// Added for Graham
 		}
 	}
 	
+	// Example 
 	public static void example3(){
 		WorldSet myWorld = new WorldSet();	// Empty World
 		
@@ -105,7 +279,7 @@ public class DefaultLogicExample {
 		
 		a.e.println("Possible Extensions");
 		for(String c : extensions){			
-			a.e.println("\t Ext:" + c);
+			a.e.println("\t Ext: Th(W U (" + c + "))");	// Added for Graham
 		}
 	}
 	
@@ -136,7 +310,7 @@ public class DefaultLogicExample {
 		
 		a.e.println("Possible Extensions");
 		for(String c : extensions){			
-			a.e.println("\t Ext:" + c);
+			a.e.println("\t Ext: Th(W U (" + c + "))");	// Added for Graham
 		}
 	}
 	
@@ -182,7 +356,7 @@ public class DefaultLogicExample {
 		
 		a.e.println("Possible Extensions");
 		for(String c : extensions){			
-			a.e.println("\t Ext:" + c);
+			a.e.println("\t Ext: Th(W U (" + c + "))");	// Added for Graham
 		}
 	}
 	

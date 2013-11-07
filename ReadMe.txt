@@ -41,8 +41,4 @@ Updates
 
 
 --------------------------------------------------
-This software uses the GNU GPL v3
-GNU GENERAL PUBLIC LICENSE
-Version 3, 29 June 2007
-Copyright © 2007 Free Software Foundation, Inc. <http://fsf.org/>
-Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.
+ Apache License, Version 2.0, Apache License Version 2.0, January 2004 http://www.apache.org/licenses/

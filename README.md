@@ -3,7 +3,7 @@ Text Seer Process Tools
 
 >A collection of functions and tools for use on process effect accumulation. Free Software, Hell Yeah!
 
-* * Please note that the codebase has been updated substantially and this readme file has been left behind. It will be updated soon. *
+* Please note that the codebase has been updated substantially and this readme file has been left behind. It will be updated soon.
 
 Basic users: 
 	For basic configuration options edit 'base.properties'
@@ -32,25 +32,14 @@ Features
 
 Updates
 -------
- - 12-04-2013 -- Bought in code for Model combination and loading BPMN2.0 files. 
-
-
-Notes
------
-
-A set of classes help with quick BPMN graph loading. This set of classes have included 
- * jBPT which is distributed under the GNU Lesser GPL (www.gnu.org/licenses/lgpl.html)
- * Yaoqiang BPMN which is distributed under GNU General Public License version 3.0 (GPLv3) (http://www.gnu.org/licenses/quick-guide-gplv3.html)
-
-
-> Notes on use
-
-All sections of code have been implemented in basic Example programs. 
-
-1) XML reading of BPMN2.0 files. 
-I have based the implementation of BPMN2.0 standard files that have been generated using the Eclipse based Activiti process designer. 
-This has been done as the designer can import Signavio based BPMN files. 
+ - 2013-11-07 -- Started documenting code after adding default logic reasoner. 
+ - 2013-04-12 -- Bought in code for Model combination and loading BPMN2.0 files. 
 
 
 
-
+--------------------------------------------------
+This software uses the GNU GPL v3
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+Copyright © 2007 Free Software Foundation, Inc. <http://fsf.org/>
+Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.

@@ -17,7 +17,7 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import be.fnord.util.processModel.Edge;
 import be.fnord.util.processModel.Vertex;
 import be.fnord.util.processModel.visual.jungViewer;
-
+import be.fnord.util.logic.WFF;
 
 /**
  * 
@@ -30,11 +30,11 @@ public class Graph<v extends Vertex , e extends Edge> extends DefaultDirectedGra
 	public static boolean __DEBUG = a.e.__DEBUG;
 	
 	protected transient static Logger logger = Logger.getLogger("GraphClass");
-	public static boolean SKIP_EMPTY_EFFECT_PATHS = true;
+	public static boolean SKIP_EMPTY_WFF_PATHS = true;
 	public static final int MAX_PATH_LENGTH = 100; // Set higher if your graph isn't working out
 	
 	
-	public HashSet<Effect> effects;
+	public HashSet<WFF> WFFs;
 	public String filename = "";
 	public String documentation = "";
 //	public String name = "";
@@ -42,9 +42,9 @@ public class Graph<v extends Vertex , e extends Edge> extends DefaultDirectedGra
 	public String QOS = "";
 	private transient UUID ID;
 	public String getID() { return ID.toString(); };
-	public TreeMap<String, String> effectMap = new TreeMap<String, String>();
+	public TreeMap<String, String> WFFMap = new TreeMap<String, String>();
 	public int addition = 0;
-	public char currentEffect = 'a';
+	public char currentWFF = 'a';
 //	public t trueStart;
 //	public t trueEnd;
 	

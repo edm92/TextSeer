@@ -28,7 +28,7 @@ import orbital.logic.sign.type.Types;
  * @author edm92
  * @-deprecated This class has been moved to be.fnord.util.logic
  */
-public class Effect implements Serializable{
+public class EffectRemovable implements Serializable{
 	private static final long serialVersionUID = 1L;
 	protected transient ClassicalLogicS   logic ;
 	private transient Formula       formula;
@@ -49,10 +49,10 @@ public class Effect implements Serializable{
 		}};
 		
 		
-	public Effect(){	
+	public EffectRemovable(){	
 		this("");
 	}
-	public Effect(String formula){
+	public EffectRemovable(String formula){
 		super();
 		if(formula != null)
 		formulaText = formula;
@@ -71,7 +71,7 @@ public class Effect implements Serializable{
 	 * @param vs
 	 * @return
 	 */
-	public boolean eval(Effect vs){	return eval(vs.getFormula()); }
+	public boolean eval(EffectRemovable vs){	return eval(vs.getFormula()); }
 	
 	/**
 	 * Evaluate if effect is satisfiable given an input formula (as a string)
@@ -86,7 +86,7 @@ public class Effect implements Serializable{
 	 * @param KB knowledge base string
 	 * @return
 	 */
-	public boolean eval(Effect vs, String KB){ return eval(vs.getFormula(), KB); };
+	public boolean eval(EffectRemovable vs, String KB){ return eval(vs.getFormula(), KB); };
 	
 	/**
 	 * Evaluate if union of all inputs and this effect formula are satisfiable.
@@ -222,7 +222,7 @@ public class Effect implements Serializable{
      * @param target the entailee
      * @return
      */
-    public boolean entails(Effect target){
+    public boolean entails(EffectRemovable target){
     	if(!issat() || !target.issat()) return false; // Can't have entailment from non-sat.
     	
     	return entails(getFormula(), target.getFormula());

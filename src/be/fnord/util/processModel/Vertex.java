@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import be.fnord.util.processModel.util.GraphLoader;
-
+import be.fnord.util.logic.WFF;
 /**
  * 
  * @author Evan Morrison edm92@uowmail.edu.au http://www.fnord.be
@@ -26,8 +26,8 @@ public class Vertex extends Graph<Vertex, Edge>{
 	public boolean isSubprocess = false;
 	public boolean isTrace = false;
 	
-	private String effect = "";
-	private Effect immEffect = new Effect();
+	private String WFF = "";
+	private WFF immWFF = new WFF();
 	
 	public Vertex corresponding = null;
 	public LinkedList<String> boundaryRefs = new LinkedList<String>();
@@ -42,19 +42,19 @@ public class Vertex extends Graph<Vertex, Edge>{
 	public Vertex getCorresponding() {	return corresponding;	}
 	public void setCorresponding(Vertex corresponding) {if(corresponding.corresponding != null || corresponding.isXOR) return ; 
 														this.corresponding = corresponding; this.corresponding.corresponding = this;}
-	public Effect getEffect(){immEffect.setFormula(effect); return immEffect;};
-	public void setEffect(String _effect){	effect = _effect; 	}
-	public void addEffect(String _effect){ if(effect.length() > 0){effect = "( " + effect + " ) " + a.e.AND + " ( " + _effect + " )";}else	setEffect(_effect);	}
+	public WFF getWFF(){immWFF.setFormula(WFF); return immWFF;};
+	public void setWFF(String _WFF){	WFF = _WFF; 	}
+	public void addWFF(String _WFF){ if(WFF.length() > 0){WFF = "( " + WFF + " ) " + a.e.AND + " ( " + _WFF + " )";}else	setWFF(_WFF);	}
 
 	
-	public static boolean TO_STRING_WITH_EFFECTS = false;
-	public static boolean ADD_RANDOM_EFFECTS = false;
+	public static boolean TO_STRING_WITH_WFFS = false;
+	public static boolean ADD_RANDOM_WFFS = false;
 	public enum _TYPE { NODE, GATEWAY, SUBPROCESS, PLACE, TRANSISTION };
 	public enum _GTYPE { XOR, AND, AAND };
 //	public String name;
 //	public String id;
-//	private String effect = "";
-//	private Effect immEffect = new Effect();
+//	private String WFF = "";
+//	private WFF immWFF = new WFF();
 //	public _TYPE type;
 	public _GTYPE gtype;
 	private UUID ID;
@@ -78,7 +78,7 @@ public class Vertex extends Graph<Vertex, Edge>{
 	public int width = 0;
 	public int x = 0;
 	public int y = 0;
-//	public Effect getEffect(){immEffect.setFormula(effect); return immEffect;};
+//	public WFF getWFF(){immWFF.setFormula(WFF); return immWFF;};
 	public static Vertex createNew(){ return new Vertex(); }
 	
 	
@@ -87,12 +87,12 @@ public class Vertex extends Graph<Vertex, Edge>{
 	
 	
 	/**
-	 * This function generates a random effect scenario based on the starting random seeds. 
-	 * @return A new effect scenario
+	 * This function generates a random WFF scenario based on the starting random seeds. 
+	 * @return A new WFF scenario
 	 */
-	public static String generateEffects(){
+	public static String generateWFFs(){
 		boolean used[] = new boolean[MAX_RANDOM_PREDICATES];	// Need better implementation of this
-		String returnEffect = new String();
+		String returnWFF = new String();
 		Random randomGenerator = new Random();
 		String predicate = "";
 		int numPredicates = randomGenerator.nextInt(MAX_RANDOM_PREDICATES);
@@ -105,12 +105,12 @@ public class Vertex extends Graph<Vertex, Edge>{
 		}
 		if(predicate.length() > 3){ 
 			predicate = predicate.substring(0, predicate.length() - 3); // Remove final &
-			returnEffect += predicate + " & " ;
+			returnWFF += predicate + " & " ;
 		}
-		if(returnEffect.length() > 3)
-			returnEffect = returnEffect.substring(0, returnEffect.length() - 3);
+		if(returnWFF.length() > 3)
+			returnWFF = returnWFF.substring(0, returnWFF.length() - 3);
 
-		return returnEffect;
+		return returnWFF;
 
 	}
 	
@@ -134,8 +134,8 @@ public class Vertex extends Graph<Vertex, Edge>{
 	
 	public String toString(){
 		String result = "";
-		if(this.getEffect().getFormula().compareTo(a.e.EMPTY_EFFECT) != 0){			
-			result += "{"+this.getEffect().getFormula()+"}";
+		if(this.getWFF().getFormula().compareTo(a.e.EMPTY_EFFECT) != 0){			
+			result += "{"+this.getWFF().getFormula()+"}";
 		}
 		if(isSubprocess) {
 			if(boundaryRefs.size() > 0){
@@ -172,23 +172,23 @@ public class Vertex extends Graph<Vertex, Edge>{
 //	public Vertex(String newName){
 //		name = newName;
 //		type = _TYPE.NODE;
-//		effect = "";
-//		if(ADD_RANDOM_EFFECTS){
+//		WFF = "";
+//		if(ADD_RANDOM_WFFS){
 //			generated++;
 //			Random randomGenerator = new Random();
 //			if( randomGenerator.nextInt(2) > 0)
-//				addEffect(generateEffects());
+//				addWFF(generateWFFs());
 //		}
 //		ID = UUID.randomUUID();
 //	}
 //	
-//	public void addEffect(String _effect){
-//		//System.err.println("Adding effect " + _effect);
-//		effect = _effect;
+//	public void addWFF(String _WFF){
+//		//System.err.println("Adding WFF " + _WFF);
+//		WFF = _WFF;
 //	}
 //	
 //	/**
-//	 * Output String of a vertex. Set display of effects and types using TO_STRING_WITH_EFFECT flag.
+//	 * Output String of a vertex. Set display of WFFs and types using TO_STRING_WITH_WFF flag.
 //	 */
 //	public String toString(){
 //		String myType = "ACTIVITY";
@@ -201,7 +201,7 @@ public class Vertex extends Graph<Vertex, Edge>{
 //			}
 //		}
 //		
-//		return "V{" +name+ "}" + (TO_STRING_WITH_EFFECTS ? "{E:" +effect+ "}{T:" +myType+ "};" : "");
+//		return "V{" +name+ "}" + (TO_STRING_WITH_WFFS ? "{E:" +WFF+ "}{T:" +myType+ "};" : "");
 //	}
 	
 }

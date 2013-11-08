@@ -3,7 +3,7 @@ package be.fnord.util.processModel;
 import java.util.UUID;
 
 import org.jgrapht.graph.DefaultWeightedEdge;
-
+import be.fnord.util.logic.WFF;
 
 /**
  * 
@@ -41,17 +41,17 @@ public class Edge extends DefaultWeightedEdge{
 	public Edge makeCopy(){ return this; }
 	
 	
-	private Effect immEffect = new Effect();
-	private String effect;
+	private WFF immWFF = new WFF();
+	private String WFF;
 	
 	private UUID ID;
-	public Effect getEffect(){immEffect.setFormula(effect); return immEffect;};
+	public WFF getWFF(){immWFF.setFormula(WFF); return immWFF;};
 	
 	public String getID() { return ID.toString(); };
 	public Edge(){super();ID = UUID.randomUUID();	}
 //	public Edge(String _name){this(); name = _name;}
-	public void addEffect(String _effect){
-		effect = _effect;
+	public void addWFF(String _WFF){
+		WFF = _WFF;
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -23,6 +23,7 @@ import org.yaoqiang.bpmn.model.elements.activities.*;
 import org.yaoqiang.bpmn.model.elements.gateways.*; 
 import org.yaoqiang.bpmn.model.elements.events.*;
 import org.yaoqiang.bpmn.model.elements.humaninteraction.*;
+import be.fnord.util.logic.WFF;
 
 public class GraphLoader {
 	public static final boolean __DEBUG = a.e.__DEBUG; 
@@ -180,7 +181,7 @@ public class GraphLoader {
 			// Doesn't seem important?
 			return;
 		}
-		// Handle Effects
+		// Handle WFFs
 		if (hashCode == Documentation) {
 			Documentation r = (Documentation)_ele;
 			BaseElement et = ((BaseElement)r.getParent().getParent());
@@ -189,7 +190,7 @@ public class GraphLoader {
 			if(tNodes.containsKey(et.getId())){
 				TNode at = (TNode) tNodes.get(et.getId());
 				tNodes.remove(et.getId());
-				at.node.addEffect(r.toValue());
+				at.node.addWFF(r.toValue());
 				tNodes.put(et.getId(), at);
 			}else{
 				saveElement((XMLElement) et, getMessages, r.toValue());
@@ -204,7 +205,7 @@ public class GraphLoader {
 			v.id = r.getId();
 			v.isXOR = true;
 			v.isGateway = true;
-			v.setEffect(documentation);
+			v.setWFF(documentation);
 			myNode.node = v;
 			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
@@ -217,7 +218,7 @@ public class GraphLoader {
 			v.id = r.getId();
 			v.isAND = true;
 			v.isGateway = true;
-			v.setEffect(documentation);
+			v.setWFF(documentation);
 			myNode.node = v;
 			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
@@ -230,7 +231,7 @@ public class GraphLoader {
 			v.id = r.getId();
 			v.isOR = true;
 			v.isGateway = true;
-			v.setEffect(documentation);
+			v.setWFF(documentation);
 			myNode.node = v;	
 			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
@@ -242,7 +243,7 @@ public class GraphLoader {
 			Vertex v = new Vertex(r.getId() + r.getName(), ServiceTask );
 			v.id = r.getId();
 			v.isOR = true;
-			v.setEffect(documentation);
+			v.setWFF(documentation);
 			if(r.getBoundaryEventRefs() != null)
 			for(BoundaryEvent e: r.getBoundaryEventRefs()){
 				v.boundaryRefs.add(e.getId());
@@ -258,7 +259,7 @@ public class GraphLoader {
 			Vertex v = new Vertex(r.getId() + r.getName(), UserTask );
 			v.id = r.getId();
 			v.isOR = true;
-			v.setEffect(documentation);
+			v.setWFF(documentation);
 			if(r.getBoundaryEventRefs() != null)
 			for(BoundaryEvent e: r.getBoundaryEventRefs()){
 				v.boundaryRefs.add(e.getId());
@@ -273,7 +274,7 @@ public class GraphLoader {
 			TNode myNode = new TNode(r.getId(), r.getName(), CallActivity, _ele);
 			Vertex v = new Vertex(r.getId() + r.getName(), CallActivity );
 			v.id = r.getId();
-			v.setEffect(documentation);
+			v.setWFF(documentation);
 			if(r.getBoundaryEventRefs() != null)
 			for(BoundaryEvent e: r.getBoundaryEventRefs()){
 				v.boundaryRefs.add(e.getId());
@@ -290,7 +291,7 @@ public class GraphLoader {
 			Vertex v = new Vertex(r.getId() + r.getName(), SubProcess );
 			v.id = r.getId();
 			v.isSubprocess = true;
-			v.setEffect(documentation);
+			v.setWFF(documentation);
 			for(BoundaryEvent e: r.getBoundaryEventRefs()){
 				v.boundaryRefs.add(e.getId());
 			}
@@ -305,7 +306,7 @@ public class GraphLoader {
 			Vertex v = new Vertex(r.getId() + r.toName(), ErrorEventDefinition );
 			v.id = r.getId();
 			v.isOR = true;
-			v.setEffect(documentation);
+			v.setWFF(documentation);
 			myNode.node = v;	
 			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
@@ -338,7 +339,7 @@ public class GraphLoader {
 			for(BoundaryEvent e: r.getBoundaryEventRefs()){
 				v.boundaryRefs.add(e.getId());
 			}
-			v.setEffect(documentation);
+			v.setWFF(documentation);
 			myNode.node = v;	
 			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
@@ -354,7 +355,7 @@ public class GraphLoader {
 			TNode myNode = new TNode(r.getId(), r.getName(), Participant, _ele);
 			Vertex v = new Vertex(r.getId() + r.getName(), Participant);
 			v.id = r.getId();
-			v.setEffect(documentation);
+			v.setWFF(documentation);
 			myNode.node = v;		
 			a.e.println("Participant " + r.getId() + " " + r.getName() + " -- " );	
 			if(!tNodes.containsKey(r.getId()))
@@ -366,7 +367,7 @@ public class GraphLoader {
 			TNode myNode = new TNode(r.getId(), r.getName(), StartEvent, _ele);
 			Vertex v = new Vertex(r.getId() + r.getName(), StartEvent );
 			v.id = r.getId();
-			v.setEffect(documentation);
+			v.setWFF(documentation);
 			myNode.node = v;		
 			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
@@ -377,7 +378,7 @@ public class GraphLoader {
 			TNode myNode = new TNode(r.getId(), r.getName(), IntermediateCatchEvent, _ele);
 			Vertex v = new Vertex(r.getId() + r.getName(), IntermediateCatchEvent );
 			v.id = r.getId();
-			v.setEffect(documentation);
+			v.setWFF(documentation);
 			myNode.node = v;	
 			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
@@ -388,7 +389,7 @@ public class GraphLoader {
 			TNode myNode = new TNode(r.getId(), r.getName(), IntermediateThrowEvent, _ele);
 			Vertex v = new Vertex(r.getId() + r.getName(), IntermediateThrowEvent );
 			v.id = r.getId();
-			v.setEffect(documentation);
+			v.setWFF(documentation);
 			myNode.node = v;		
 			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
@@ -399,7 +400,7 @@ public class GraphLoader {
 			TNode myNode = new TNode(r.getId(), r.getName(), BoundaryEvent, _ele);
 			Vertex v = new Vertex(r.getId() + r.getName(), BoundaryEvent );
 			v.id = r.getId();
-			v.setEffect(documentation);
+			v.setWFF(documentation);
 			myNode.node = v;	
 			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);
@@ -410,7 +411,7 @@ public class GraphLoader {
 			TNode myNode = new TNode(r.getId(), r.getName(), EndEvent, _ele);
 			Vertex v = new Vertex(r.getId() + r.getName(), EndEvent);
 			v.id = r.getId();
-			v.setEffect(documentation);
+			v.setWFF(documentation);
 			myNode.node = v;	
 			if(!tNodes.containsKey(r.getId()))
 			tNodes.put(r.getId(), myNode);

@@ -36,6 +36,18 @@ public class Trace extends Vertex{
 	
 
 	LinkedList<Vertex> nodes = new LinkedList<Vertex>();
+	public LinkedList<Vertex> getNodes() {
+		return nodes;
+	}
+	public void setNodes(LinkedList<Vertex> nodes) {
+		this.nodes = nodes;
+	}
+	public LinkedList<Edge> getEdges() {
+		return edges;
+	}
+	public void setEdges(LinkedList<Edge> edges) {
+		this.edges = edges;
+	}
 	LinkedList<Edge> edges = new LinkedList<Edge>();
 	public boolean parallel = false;
 	

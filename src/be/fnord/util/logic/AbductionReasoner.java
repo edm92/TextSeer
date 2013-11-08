@@ -3,8 +3,8 @@ package be.fnord.util.logic;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-import be.fnord.util.processModel.Effect;
 
+import be.fnord.util.logic.WFF;
 
 public class AbductionReasoner {
 	public static final boolean _VERBOSE = false;
@@ -125,11 +125,11 @@ public class AbductionReasoner {
 			 possible_answer += "& (" + guess + ")";
 		}
 		
-		Effect observationEffect = new Effect(observation);
-		Effect answerEffect = new Effect(possible_answer);
+		WFF observationWFF = new WFF(observation);
+		WFF answerWFF = new WFF(possible_answer);
 		boolean result = false;
-		if(answerEffect.issat())
-			result = answerEffect.entails(observationEffect);		
+		if(answerWFF.issat())
+			result = answerWFF.entails(observationWFF);		
 		if(_VERBOSE) System.out.println(possible_answer + " isSat? " +  result);
 		return result;
 	}
@@ -145,8 +145,8 @@ public class AbductionReasoner {
 			// Loop through each solution and see if it entails other solutions
 			for(String t: input){				
 				if(s.compareTo(t) != 0){
-					Effect e1 = new Effect(s); 
-					Effect e2 = new Effect(t); 
+					WFF e1 = new WFF(s); 
+					WFF e2 = new WFF(t); 
 					if(e1.entails(e2) && !e2.entails(e1)){
 						best.add(t);
 						replacements = true;

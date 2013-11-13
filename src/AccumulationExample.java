@@ -1,5 +1,8 @@
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
+import be.fnord.util.logic.Accumulate;
+import be.fnord.util.logic.WFF;
 import be.fnord.util.processModel.Edge;
 import be.fnord.util.processModel.Graph;
 import be.fnord.util.processModel.Trace;
@@ -19,13 +22,23 @@ public class AccumulationExample {
 		// Store our traces in a list
 		LinkedList<Trace> traces = loadModel(); 	// Loading a model and convert into a set of traces	
 		
+		Accumulate acc = new Accumulate();
+		
 		
 		// Iterate through each trace. 
 		if(traces != null){
 			for(Trace t: traces){
-				System.out.println("New Model");
-				for(Vertex v: t.getNodes()){
-					a.e.println("Vertex effect " + v.getWFF());
+//				System.out.println("New Model");
+//				for(Vertex v: t.getNodes()){
+//					a.e.println("Vertex effect " + v.getWFF());
+//				}
+				LinkedHashSet<WFF> _ee = acc.trace_acc(t, "(a & b -> ~Teste2) & (~c)");
+				// Display Results 
+				for(WFF e: _ee){
+					if(e.isEmpty()) continue;
+					System.out.println("Effect scenario resulting from acc: " + e);
+					System.out.println("Checking if " + e + " is consistent : " + e.issat());
+
 				}
 			}
 		}

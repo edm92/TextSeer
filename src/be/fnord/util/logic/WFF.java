@@ -42,7 +42,9 @@ public class WFF implements Serializable{
     protected transient static Logger logger = Logger.getLogger("EffectFunction");
 	public int clauses = 0;
     
-	public String getFormula(){ if(formulaText == null || formulaText.compareTo("") == 0) formulaText = "eeee";  return formulaText;};
+	public boolean isEmpty() { if(formulaText == null || formulaText.compareTo("") == 0 || formulaText.compareTo(a.e.EMPTY_EFFECT) == 0) return true; return false; }
+	
+	public String getFormula(){ if(formulaText == null || formulaText.compareTo("") == 0) formulaText = a.e.EMPTY_EFFECT;  return formulaText;};
 	public void setFormula(String newFormula){ if(newFormula == null) formulaText = "eeee"; else formulaText = newFormula; try {
 		formula = (Formula) logic.createExpression(formulaText);
 		sigma = logic.scanSignature(formulaText);
@@ -172,7 +174,16 @@ public class WFF implements Serializable{
     	return false;
     }
     
-    public String toString(){ if(getFormula().length() > 0) return "Effect:" + getFormula(); else return ""; }
+    public String toString(){ 
+    	String _result = "";
+    	if(getFormula().length() > 0) _result= "" + getFormula(); else _result= ""; 
+    	_result = _result.replace("(" + a.e.EMPTY_EFFECT + ") & ", "");
+    	_result = _result.replace("& (" + a.e.EMPTY_EFFECT + ")", "");
+    	_result = _result.replace("" + a.e.EMPTY_EFFECT + " & ", "");
+    	_result = _result.replace("&" + a.e.EMPTY_EFFECT + "", "");
+    	
+    	return _result;
+    }
     
     public boolean computeAssignments(Set<String> symbols){
     	String[] elements = new String[symbols.size() * 2 ];

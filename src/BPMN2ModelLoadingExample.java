@@ -1,10 +1,8 @@
 
 
-import be.fnord.jbpt.extend.altJSON2Process;
 import be.fnord.util.processModel.Edge;
 import be.fnord.util.processModel.Graph;
 import be.fnord.util.processModel.Vertex;
-import be.fnord.util.processModel.io.BMIJSON2Graph;
 import be.fnord.util.processModel.util.GraphChecker;
 import be.fnord.util.processModel.util.GraphLoader;
 

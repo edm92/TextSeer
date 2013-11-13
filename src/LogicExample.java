@@ -21,7 +21,7 @@ public class LogicExample {
 		WFF e2 = new WFF("(a & b) -> ~c");			// Used to demonstrate accumulation
 //
 
-		WFF e3 = new WFF("(p -> q) & (m -> (p | q))");			// Used to demonstrate accumulation
+		WFF e3 = new WFF("(p -> q) & (m -> (p | q))");		
 		WFF e4 = new WFF("m -> q");
 		
 		System.out.println("(p->q), (m-> p V q)} |= (m->q)? " +  e3.eval(e4));
@@ -35,6 +35,18 @@ public class LogicExample {
 		Accumulate acc = new Accumulate();
 		// Do accumulation
 		LinkedHashSet<WFF> resultEffects = acc.pairwise_acc(e1,e2, "~e", true);
+		
+		// Display Results 
+		for(WFF e: resultEffects){
+			System.out.println("Effect scenario resulting from acc: " + e);
+			System.out.println("Checking if " + e + " is consistent : " + e.issat());
+
+		}
+		
+		WFF e6 = new WFF("Teste2");
+		WFF e7 = new WFF("(a & b)");
+		
+		resultEffects = acc.pairwise_acc(e6,e7, "((a & b) -> (~Teste2))", true);
 		
 		// Display Results 
 		for(WFF e: resultEffects){

@@ -142,11 +142,13 @@
     </exclusiveGateway>
     <sequenceFlow id="_10" sourceRef="_8" targetRef="_6"/>
     <task completionQuantity="1" id="_27" isForCompensation="false" name="Para XOR Choice 1" startQuantity="1">
+      <documentation id="_27_D_1" textFormat="text/plain"><![CDATA[c]]></documentation>
       <incoming>_28</incoming>
       <outgoing>_60</outgoing>
     </task>
     <sequenceFlow id="_28" sourceRef="_6" targetRef="_27"/>
     <task completionQuantity="1" id="_31" isForCompensation="false" name="Para XOR Choice 2" startQuantity="1">
+      <documentation id="_31_D_1" textFormat="text/plain"><![CDATA[~c]]></documentation>
       <incoming>_33</incoming>
       <outgoing>_61</outgoing>
     </task>
@@ -524,15 +526,15 @@
           <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_62" id="Yaoqiang-_62" sourceElement="_59" targetElement="_29">
-        <di:waypoint x="472.5" y="136.0"/>
+      <bpmndi:BPMNEdge bpmnElement="_30" id="Yaoqiang-_30" sourceElement="_7" targetElement="_29">
+        <di:waypoint x="355.5" y="22.5"/>
         <di:waypoint x="595.5" y="41.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_30" id="Yaoqiang-_30" sourceElement="_7" targetElement="_29">
-        <di:waypoint x="355.5" y="22.5"/>
+      <bpmndi:BPMNEdge bpmnElement="_62" id="Yaoqiang-_62" sourceElement="_59" targetElement="_29">
+        <di:waypoint x="472.5" y="136.0"/>
         <di:waypoint x="595.5" y="41.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>

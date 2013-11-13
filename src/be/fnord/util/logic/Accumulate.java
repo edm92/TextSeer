@@ -18,6 +18,8 @@ import orbital.moon.logic.resolution.ClausalSet;
 import orbital.moon.logic.resolution.Clause;
 import orbital.moon.logic.resolution.DefaultClausalFactory;
 import be.fnord.util.logic.WFF;
+import be.fnord.util.processModel.Trace;
+import be.fnord.util.processModel.Vertex;
 /**
  * The following class is used for accumulation. I have tried to keep most variables transient for distributed processing. 
  * @author edm92
@@ -31,7 +33,42 @@ public class Accumulate implements Serializable{
 	private int targetClauses = 0;
 	
 	boolean distro = false;
+	
+	/////////////////////////////////////////////////////////
+	// Below are functions for accumulating along a trace ///
+	/////////////////////////////////////////////////////////
+	
+	public LinkedHashSet<WFF> trace_acc(Trace src, String kb){
+		
+		LinkedHashSet<WFF> currentEff = new LinkedHashSet<WFF>();
+		currentEff.add(new WFF(a.e.EMPTY_EFFECT));
+		for(Vertex v: src.getNodes()){
+			LinkedHashSet<WFF> intEff = new LinkedHashSet<WFF>();
+			intEff.addAll(currentEff);
+			
+			for(WFF ce : currentEff){				
+				if(!v.getWFF().isEmpty()){
+					intEff.remove(ce);
+					Accumulate acc = new Accumulate(); // Needed because of semi-static variables
+					intEff.addAll(acc.pairwise_acc(ce,v.getWFF(), kb, true));
+				}
+			}
+			currentEff = new LinkedHashSet<WFF>();
+			currentEff.addAll(intEff);
+		}
+		
 
+		
+		
+		return currentEff;
+	}
+	
+	
+	
+	////////////////////////////////////////////////
+	//  Below are pairwise accumulation functions///
+	////////////////////////////////////////////////
+	
 	public LinkedHashSet<WFF> pairwise_acc(WFF source, WFF target, String KB, boolean distrobute){
 		distro = distrobute;
 		return pairwise_acc(source, target, KB);

@@ -32,7 +32,7 @@ public class AccumulationExample {
 //				for(Vertex v: t.getNodes()){
 //					a.e.println("Vertex effect " + v.getWFF());
 //				}
-				LinkedHashSet<WFF> _ee = acc.trace_acc(t, "(a & b -> ~Teste2) & (~c)");
+				LinkedHashSet<WFF> _ee = acc.trace_acc(t, "((a & b) -> ~c)");
 				// Display Results 
 				for(WFF e: _ee){
 					if(e.isEmpty()) continue;

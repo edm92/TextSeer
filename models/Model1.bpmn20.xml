@@ -59,7 +59,6 @@
     </startEvent>
     <task completionQuantity="1" id="_7" isForCompensation="false" name="Task" startQuantity="1">
       <documentation id="_7_D_1" textFormat="text/plain"><![CDATA[a & b]]></documentation>
-      <documentation id="_7_D_2" textFormat="text/plain"><![CDATA[Teste2]]></documentation>
       <incoming>_23</incoming>
       <outgoing>_30</outgoing>
     </task>
@@ -526,15 +525,15 @@
           <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_30" id="Yaoqiang-_30" sourceElement="_7" targetElement="_29">
-        <di:waypoint x="355.5" y="22.5"/>
+      <bpmndi:BPMNEdge bpmnElement="_62" id="Yaoqiang-_62" sourceElement="_59" targetElement="_29">
+        <di:waypoint x="472.5" y="136.0"/>
         <di:waypoint x="595.5" y="41.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_62" id="Yaoqiang-_62" sourceElement="_59" targetElement="_29">
-        <di:waypoint x="472.5" y="136.0"/>
+      <bpmndi:BPMNEdge bpmnElement="_30" id="Yaoqiang-_30" sourceElement="_7" targetElement="_29">
+        <di:waypoint x="355.5" y="22.5"/>
         <di:waypoint x="595.5" y="41.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>

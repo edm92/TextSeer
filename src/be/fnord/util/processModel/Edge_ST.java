@@ -71,7 +71,9 @@ public class Edge_ST extends DefaultWeightedEdge {
 	 *
 	 */
 	public String toString()
-	{	return "[acc](" + this.source.esWFF + "->" + this.target.esWFF +")" + ((this.name.length() > 0) ? "{"+name+"}" : ""); }
+	{	
+		if(this.source == null) return "";
+		return "[acc](" + this.source.esWFF + "->" + this.target.esWFF +")" + ((this.name.length() > 0) ? "{"+name+"}" : ""); }
 	
 	
 	

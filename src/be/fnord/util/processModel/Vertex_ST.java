@@ -15,6 +15,8 @@ import be.fnord.util.logic.WFF;
 
 public class Vertex_ST extends Graph<Vertex, Edge>{
 
+	private static int uniqueID = 0; 
+	
 	public String id = "";
 	public String taskName = "";
 	public String immWFF = "";
@@ -34,7 +36,7 @@ public class Vertex_ST extends Graph<Vertex, Edge>{
 	 */
 	public Vertex_ST(String _taskName, String _immWFF, String _esWFF){
 		this.id = UUID.randomUUID().toString(); 
-		this.taskName = _taskName;
+		this.taskName = _taskName + "_" + uniqueID++; // Evan added unique ID addition to help make each task name unique
 		this.immWFF = _immWFF;
 		this.esWFF = _esWFF;		
 	}

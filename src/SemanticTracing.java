@@ -37,10 +37,10 @@ import org.jgrapht.graph.DefaultDirectedGraph;
  * This class is for tracing the semantic route in a BPMN semantic accumulation
  * 
  * @author Xiong Wen (xw926@uowmail.edu.au)
- *
+ * Checked by Evan
  */
 public class SemanticTracing {
-	
+	private static final boolean _DEBUG = false ; // a.e.__DEBUG; -- Added during code review
 	/**
 	 * Load the process model from xml file, get the traces
 	 * @return traces 
@@ -82,9 +82,10 @@ public class SemanticTracing {
 			for(Edge_ST e: gST.edgeSet()){
 				//build up links between effect scenarios	
 				if(gST.getEdgeTarget(e).esWFF.equals(esWFF)){
-					a.e.println("Given an effect scenario, it can find out from which previous effect scenario it is resulted");
-					a.e.println("\nGiven effect scenario: " + esWFF);
+					a.e.println("Given an effect scenario, locate the task and effect scenario it most likely resulted from");
+					a.e.println("Given effect scenario: " + esWFF);
 					a.e.println("Found accumulation:  " + gST.getEdgeSource(e).esWFF + " --> " + gST.getEdgeTarget(e).esWFF);
+					a.e.println("");
 				}
 			}
 		}
@@ -131,28 +132,30 @@ public class SemanticTracing {
 				String str1 = "(c) & (d)";
 				String str2 = "(a) & (d)";
 				String str3 = "((b) & (c)) & (d)";
+				
 				backTrack(gST, str1);
 				backTrack(gST, str2);
 				backTrack(gST, str3);
 				
-				//test for edges in the new built graph
-//				System.out.println("edges count " + gST.edgeSet().size());
-//				for(Edge_ST e: gST.edgeSet()){
-//					System.out.println(gST.getEdgeSource(e).esWFF + " to " + gST.getEdgeTarget(e).esWFF);
-////					System.out.println(gST.getEdgeSource(e).esWFF);
-//				}
 				
-				//test for display of the vertices in the new Graph_ST
-//				System.out.println("\nThe number of nodes in Graph_ST: " + gST.vertexSet().size());
-//				for(Vertex_ST vst: gST.vertexSet()){
-//					
-//					System.out.println("\n---Begin a node in the graph---");
-//					System.out.println("taskName: " + vst.taskName);
-//					System.out.println("immediate effect: " + vst.immWFF);
-//					System.out.println("cummulative effect: " + vst.esWFF);
-//					System.out.println("---End a node in the graph----\n");
-//					
-//				}
+				if(_DEBUG){
+					//test for edges in the new built graph
+					System.out.println("edges count " + gST.edgeSet().size());
+					for(Edge_ST e: gST.edgeSet()){
+						a.e.println(gST.getEdgeSource(e).esWFF + " to " + gST.getEdgeTarget(e).esWFF);
+	//					System.out.println(gST.getEdgeSource(e).esWFF);
+					}
+					
+					//test for display of the vertices in the new Graph_ST
+					System.out.println("\nThe number of nodes in Graph_ST: " + gST.vertexSet().size());
+					for(Vertex_ST vst: gST.vertexSet()){
+						a.e.println("\n---Begin a node in the graph---");
+						a.e.println("taskName: " + vst.taskName);
+						a.e.println("immediate effect: " + vst.immWFF);
+						a.e.println("cummulative effect: " + vst.esWFF);
+						a.e.println("---End a node in the graph----\n");
+					}
+				}
 				 
 				 
 //				

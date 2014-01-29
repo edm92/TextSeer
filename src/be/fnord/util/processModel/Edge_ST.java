@@ -67,7 +67,7 @@ public class Edge_ST extends DefaultWeightedEdge {
 		this.name = _name; this.type = _type; this.source = _source; this.target = _target;	}
 	
 	/**
-	 * Print out the edge in the form of "[E](source es -> target es)"
+	 * Print out the edge in the form of "[acc](source es -> target es)"
 	 *
 	 */
 	public String toString()

@@ -1,316 +1,323 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="textseer" default="all">
-  
-  
-  <property file="build.properties"/>
-  <!-- Uncomment the following property if no tests compilation is needed -->
-  <!-- 
-  <property name="skip.tests" value="true"/>
-   -->
-  
-  <!-- Compiler options -->
-  
-  <property name="compiler.debug" value="on"/>
-  <property name="compiler.generate.no.warnings" value="off"/>
-  <property name="compiler.args" value=""/>
-  <property name="compiler.max.memory" value="128m"/>
-  <patternset id="ignored.files">
-    <exclude name="**/CVS/**"/>
-    <exclude name="**/SCCS/**"/>
-    <exclude name="**/RCS/**"/>
-    <exclude name="**/rcs/**"/>
-    <exclude name="**/.DS_Store/**"/>
-    <exclude name="**/.svn/**"/>
-    <exclude name="**/.pyc/**"/>
-    <exclude name="**/.pyo/**"/>
-    <exclude name="**/*.pyc/**"/>
-    <exclude name="**/*.pyo/**"/>
-    <exclude name="**/.git/**"/>
-    <exclude name="**/*.hprof/**"/>
-    <exclude name="**/_svn/**"/>
-    <exclude name="**/.hg/**"/>
-    <exclude name="**/*.lib/**"/>
-    <exclude name="**/*~/**"/>
-    <exclude name="**/__pycache__/**"/>
-    <exclude name="**/.bundle/**"/>
-    <exclude name="**/*.rbc/**"/>
-    <exclude name="**/vssver.scc/**"/>
-    <exclude name="**/vssver2.scc/**"/>
-  </patternset>
-  <patternset id="library.patterns">
-    <include name="*.war"/>
-    <include name="*.ear"/>
-    <include name="*.apk"/>
-    <include name="*.zip"/>
-    <include name="*.swc"/>
-    <include name="*.ane"/>
-    <include name="*.egg"/>
-    <include name="*.jar"/>
-  </patternset>
-  <patternset id="compiler.resources">
-    <exclude name="**/?*.java"/>
-    <exclude name="**/?*.form"/>
-    <exclude name="**/?*.class"/>
-    <exclude name="**/?*.groovy"/>
-    <exclude name="**/?*.scala"/>
-    <exclude name="**/?*.flex"/>
-    <exclude name="**/?*.kt"/>
-    <exclude name="**/?*.clj"/>
-  </patternset>
-  
-  <!-- JDK definitions -->
-  
-  <property name="jdk.bin.1.7" value="${jdk.home.1.7}/bin"/>
-  <path id="jdk.classpath.1.7">
-    <fileset dir="${jdk.home.1.7}">
-      <include name="jre/lib/charsets.jar"/>
-      <include name="jre/lib/deploy.jar"/>
-      <include name="jre/lib/javaws.jar"/>
-      <include name="jre/lib/jce.jar"/>
-      <include name="jre/lib/jfr.jar"/>
-      <include name="jre/lib/jfxrt.jar"/>
-      <include name="jre/lib/jsse.jar"/>
-      <include name="jre/lib/management-agent.jar"/>
-      <include name="jre/lib/plugin.jar"/>
-      <include name="jre/lib/resources.jar"/>
-      <include name="jre/lib/rt.jar"/>
-      <include name="jre/lib/ext/access-bridge-64.jar"/>
-      <include name="jre/lib/ext/dnsns.jar"/>
-      <include name="jre/lib/ext/jaccess.jar"/>
-      <include name="jre/lib/ext/localedata.jar"/>
-      <include name="jre/lib/ext/sunec.jar"/>
-      <include name="jre/lib/ext/sunjce_provider.jar"/>
-      <include name="jre/lib/ext/sunmscapi.jar"/>
-      <include name="jre/lib/ext/zipfs.jar"/>
-    </fileset>
-  </path>
-  
-  <property name="project.jdk.home" value="${jdk.home.1.7}"/>
-  <property name="project.jdk.bin" value="${jdk.bin.1.7}"/>
-  <property name="project.jdk.classpath" value="jdk.classpath.1.7"/>
-  
-  <!-- Modules -->
-  
-  
-  <!-- Module TextSeerProcessTools -->
-  
-  <dirname property="module.textseerprocesstools.basedir" file="${ant.file}"/>
-  
-  
-  <property name="module.jdk.home.textseerprocesstools" value="${project.jdk.home}"/>
-  <property name="module.jdk.bin.textseerprocesstools" value="${project.jdk.bin}"/>
-  <property name="module.jdk.classpath.textseerprocesstools" value="${project.jdk.classpath}"/>
-  
-  <property name="compiler.args.textseerprocesstools" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
-  
-  <property name="textseerprocesstools.output.dir" value="${module.textseerprocesstools.basedir}/bin"/>
-  <property name="textseerprocesstools.testoutput.dir" value="${module.textseerprocesstools.basedir}/bin"/>
-  
-  <path id="textseerprocesstools.module.bootclasspath">
-    <!-- Paths to be included in compilation bootclasspath -->
-  </path>
-  
-  <path id="textseerprocesstools.module.production.classpath">
-    <path refid="${module.jdk.classpath.textseerprocesstools}"/>
-    <pathelement location="${basedir}/lib/jgrapht-jdk1.6.jar"/>
-    <pathelement location="${basedir}/lib/log4j-1.2.16.jar"/>
-    <pathelement location="${basedir}/lib/orbital-core.jar"/>
-    <pathelement location="${basedir}/lib/orbital-ext.jar"/>
-    <pathelement location="${basedir}/lib/jgraph-5.8.3.1.jar"/>
-    <pathelement location="${basedir}/lib/jppf-client.jar"/>
-    <pathelement location="${basedir}/lib/jppf-common-node.jar"/>
-    <pathelement location="${basedir}/lib/jppf-common.jar"/>
-    <pathelement location="${basedir}/lib/jppf-server.jar"/>
-    <pathelement location="${basedir}/lib/log4j-1.2.15.jar"/>
-    <pathelement location="${basedir}/lib/slf4j-api-1.6.1.jar"/>
-    <pathelement location="${basedir}/lib/sqlite4java.jar"/>
-    <pathelement location="${basedir}/lib/collections-generic-4.01.jar"/>
-    <pathelement location="${basedir}/lib/colt.jar"/>
-    <pathelement location="${basedir}/lib/concurrent.jar"/>
-    <pathelement location="${basedir}/lib/gson-2.2.2.jar"/>
-    <pathelement location="${basedir}/lib/j3d-core-1.3.1.jar"/>
-    <pathelement location="${basedir}/lib/jbpt-0.2.363.jar"/>
-    <pathelement location="${basedir}/lib/jmxremote_optional.jar"/>
-    <pathelement location="${basedir}/lib/jung-3d-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-algorithms-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-api-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-graph-impl-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-io-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-jai-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-visualization-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/junit-4.10.jar"/>
-    <pathelement location="${basedir}/lib/org.json.jar"/>
-    <pathelement location="${basedir}/lib/stax-api-1.0.1.jar"/>
-    <pathelement location="${basedir}/lib/vecmath-1.3.1.jar"/>
-    <pathelement location="${basedir}/lib/wstx-asl-3.2.6.jar"/>
-    <pathelement location="${basedir}/lib/yaoqiang-bpmn-editor-2.1.21.jar"/>
-    <pathelement location="${basedir}/lib/mysql-connector-java-5.0.8-bin.jar"/>
-  </path>
-  
-  <path id="textseerprocesstools.runtime.production.module.classpath">
-    <pathelement location="${textseerprocesstools.output.dir}"/>
-    <pathelement location="${basedir}/lib/jgrapht-jdk1.6.jar"/>
-    <pathelement location="${basedir}/lib/log4j-1.2.16.jar"/>
-    <pathelement location="${basedir}/lib/orbital-core.jar"/>
-    <pathelement location="${basedir}/lib/orbital-ext.jar"/>
-    <pathelement location="${basedir}/lib/jgraph-5.8.3.1.jar"/>
-    <pathelement location="${basedir}/lib/jppf-client.jar"/>
-    <pathelement location="${basedir}/lib/jppf-common-node.jar"/>
-    <pathelement location="${basedir}/lib/jppf-common.jar"/>
-    <pathelement location="${basedir}/lib/jppf-server.jar"/>
-    <pathelement location="${basedir}/lib/log4j-1.2.15.jar"/>
-    <pathelement location="${basedir}/lib/slf4j-api-1.6.1.jar"/>
-    <pathelement location="${basedir}/lib/sqlite4java.jar"/>
-    <pathelement location="${basedir}/lib/collections-generic-4.01.jar"/>
-    <pathelement location="${basedir}/lib/colt.jar"/>
-    <pathelement location="${basedir}/lib/concurrent.jar"/>
-    <pathelement location="${basedir}/lib/gson-2.2.2.jar"/>
-    <pathelement location="${basedir}/lib/j3d-core-1.3.1.jar"/>
-    <pathelement location="${basedir}/lib/jbpt-0.2.363.jar"/>
-    <pathelement location="${basedir}/lib/jmxremote_optional.jar"/>
-    <pathelement location="${basedir}/lib/jung-3d-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-algorithms-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-api-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-graph-impl-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-io-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-jai-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-visualization-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/junit-4.10.jar"/>
-    <pathelement location="${basedir}/lib/org.json.jar"/>
-    <pathelement location="${basedir}/lib/stax-api-1.0.1.jar"/>
-    <pathelement location="${basedir}/lib/vecmath-1.3.1.jar"/>
-    <pathelement location="${basedir}/lib/wstx-asl-3.2.6.jar"/>
-    <pathelement location="${basedir}/lib/yaoqiang-bpmn-editor-2.1.21.jar"/>
-    <pathelement location="${basedir}/lib/mysql-connector-java-5.0.8-bin.jar"/>
-  </path>
-  
-  <path id="textseerprocesstools.module.classpath">
-    <pathelement location="${textseerprocesstools.output.dir}"/>
-    <path refid="${module.jdk.classpath.textseerprocesstools}"/>
-    <pathelement location="${basedir}/lib/jgrapht-jdk1.6.jar"/>
-    <pathelement location="${basedir}/lib/log4j-1.2.16.jar"/>
-    <pathelement location="${basedir}/lib/orbital-core.jar"/>
-    <pathelement location="${basedir}/lib/orbital-ext.jar"/>
-    <pathelement location="${basedir}/lib/jgraph-5.8.3.1.jar"/>
-    <pathelement location="${basedir}/lib/jppf-client.jar"/>
-    <pathelement location="${basedir}/lib/jppf-common-node.jar"/>
-    <pathelement location="${basedir}/lib/jppf-common.jar"/>
-    <pathelement location="${basedir}/lib/jppf-server.jar"/>
-    <pathelement location="${basedir}/lib/log4j-1.2.15.jar"/>
-    <pathelement location="${basedir}/lib/slf4j-api-1.6.1.jar"/>
-    <pathelement location="${basedir}/lib/sqlite4java.jar"/>
-    <pathelement location="${basedir}/lib/collections-generic-4.01.jar"/>
-    <pathelement location="${basedir}/lib/colt.jar"/>
-    <pathelement location="${basedir}/lib/concurrent.jar"/>
-    <pathelement location="${basedir}/lib/gson-2.2.2.jar"/>
-    <pathelement location="${basedir}/lib/j3d-core-1.3.1.jar"/>
-    <pathelement location="${basedir}/lib/jbpt-0.2.363.jar"/>
-    <pathelement location="${basedir}/lib/jmxremote_optional.jar"/>
-    <pathelement location="${basedir}/lib/jung-3d-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-algorithms-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-api-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-graph-impl-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-io-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-jai-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-visualization-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/junit-4.10.jar"/>
-    <pathelement location="${basedir}/lib/org.json.jar"/>
-    <pathelement location="${basedir}/lib/stax-api-1.0.1.jar"/>
-    <pathelement location="${basedir}/lib/vecmath-1.3.1.jar"/>
-    <pathelement location="${basedir}/lib/wstx-asl-3.2.6.jar"/>
-    <pathelement location="${basedir}/lib/yaoqiang-bpmn-editor-2.1.21.jar"/>
-    <pathelement location="${basedir}/lib/mysql-connector-java-5.0.8-bin.jar"/>
-  </path>
-  
-  <path id="textseerprocesstools.runtime.module.classpath">
-    <pathelement location="${textseerprocesstools.output.dir}"/>
-    <pathelement location="${basedir}/lib/jgrapht-jdk1.6.jar"/>
-    <pathelement location="${basedir}/lib/log4j-1.2.16.jar"/>
-    <pathelement location="${basedir}/lib/orbital-core.jar"/>
-    <pathelement location="${basedir}/lib/orbital-ext.jar"/>
-    <pathelement location="${basedir}/lib/jgraph-5.8.3.1.jar"/>
-    <pathelement location="${basedir}/lib/jppf-client.jar"/>
-    <pathelement location="${basedir}/lib/jppf-common-node.jar"/>
-    <pathelement location="${basedir}/lib/jppf-common.jar"/>
-    <pathelement location="${basedir}/lib/jppf-server.jar"/>
-    <pathelement location="${basedir}/lib/log4j-1.2.15.jar"/>
-    <pathelement location="${basedir}/lib/slf4j-api-1.6.1.jar"/>
-    <pathelement location="${basedir}/lib/sqlite4java.jar"/>
-    <pathelement location="${basedir}/lib/collections-generic-4.01.jar"/>
-    <pathelement location="${basedir}/lib/colt.jar"/>
-    <pathelement location="${basedir}/lib/concurrent.jar"/>
-    <pathelement location="${basedir}/lib/gson-2.2.2.jar"/>
-    <pathelement location="${basedir}/lib/j3d-core-1.3.1.jar"/>
-    <pathelement location="${basedir}/lib/jbpt-0.2.363.jar"/>
-    <pathelement location="${basedir}/lib/jmxremote_optional.jar"/>
-    <pathelement location="${basedir}/lib/jung-3d-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-algorithms-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-api-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-graph-impl-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-io-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-jai-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/jung-visualization-2.0.1.jar"/>
-    <pathelement location="${basedir}/lib/junit-4.10.jar"/>
-    <pathelement location="${basedir}/lib/org.json.jar"/>
-    <pathelement location="${basedir}/lib/stax-api-1.0.1.jar"/>
-    <pathelement location="${basedir}/lib/vecmath-1.3.1.jar"/>
-    <pathelement location="${basedir}/lib/wstx-asl-3.2.6.jar"/>
-    <pathelement location="${basedir}/lib/yaoqiang-bpmn-editor-2.1.21.jar"/>
-    <pathelement location="${basedir}/lib/mysql-connector-java-5.0.8-bin.jar"/>
-  </path>
-  
-  
-  <patternset id="excluded.from.module.textseerprocesstools">
-    <patternset refid="ignored.files"/>
-  </patternset>
-  
-  <patternset id="excluded.from.compilation.textseerprocesstools">
-    <patternset refid="excluded.from.module.textseerprocesstools"/>
-  </patternset>
-  
-  <path id="textseerprocesstools.module.sourcepath">
-    <dirset dir="${module.textseerprocesstools.basedir}">
-      <include name="src"/>
-    </dirset>
-  </path>
-  
-  
-  <target name="compile.module.textseerprocesstools" depends="compile.module.textseerprocesstools.production,compile.module.textseerprocesstools.tests" description="Compile module TextSeerProcessTools"/>
-  
-  <target name="compile.module.textseerprocesstools.production" description="Compile module TextSeerProcessTools; production classes">
-    <mkdir dir="${textseerprocesstools.output.dir}"/>
-    <javac destdir="${textseerprocesstools.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.textseerprocesstools}/javac">
-      <compilerarg line="${compiler.args.textseerprocesstools}"/>
-      <bootclasspath refid="textseerprocesstools.module.bootclasspath"/>
-      <classpath refid="textseerprocesstools.module.production.classpath"/>
-      <src refid="textseerprocesstools.module.sourcepath"/>
-      <patternset refid="excluded.from.compilation.textseerprocesstools"/>
-    </javac>
-    
-    <copy todir="${textseerprocesstools.output.dir}">
-      <fileset dir="${module.textseerprocesstools.basedir}/src">
-        <patternset refid="compiler.resources"/>
-        <type type="file"/>
-      </fileset>
-    </copy>
-  </target>
-  
-  <target name="compile.module.textseerprocesstools.tests" depends="compile.module.textseerprocesstools.production" description="compile module TextSeerProcessTools; test classes" unless="skip.tests"/>
-  
-  <target name="clean.module.textseerprocesstools" description="cleanup module">
-    <delete dir="${textseerprocesstools.output.dir}"/>
-    <delete dir="${textseerprocesstools.testoutput.dir}"/>
-  </target>
-  
-  <target name="init" description="Build initialization">
-    <!-- Perform any build initialization in this target -->
-  </target>
-  
-  <target name="clean" depends="clean.module.textseerprocesstools" description="cleanup all"/>
-  
-  <target name="build.modules" depends="init, clean, compile.module.textseerprocesstools" description="build all modules"/>
 
-<!-- Messy based on solutin at http://stackoverflow.com/questions/18875244/java-build-ant-file-with-external-jar-files -->
+
+    <property file="build.properties"/>
+    <!-- Uncomment the following property if no tests compilation is needed -->
+    <!--
+    <property name="skip.tests" value="true"/>
+     -->
+
+    <!-- Compiler options -->
+
+    <property name="compiler.debug" value="on"/>
+    <property name="compiler.generate.no.warnings" value="off"/>
+    <property name="compiler.args" value=""/>
+    <property name="compiler.max.memory" value="128m"/>
+    <patternset id="ignored.files">
+        <exclude name="**/CVS/**"/>
+        <exclude name="**/SCCS/**"/>
+        <exclude name="**/RCS/**"/>
+        <exclude name="**/rcs/**"/>
+        <exclude name="**/.DS_Store/**"/>
+        <exclude name="**/.svn/**"/>
+        <exclude name="**/.pyc/**"/>
+        <exclude name="**/.pyo/**"/>
+        <exclude name="**/*.pyc/**"/>
+        <exclude name="**/*.pyo/**"/>
+        <exclude name="**/.git/**"/>
+        <exclude name="**/*.hprof/**"/>
+        <exclude name="**/_svn/**"/>
+        <exclude name="**/.hg/**"/>
+        <exclude name="**/*.lib/**"/>
+        <exclude name="**/*~/**"/>
+        <exclude name="**/__pycache__/**"/>
+        <exclude name="**/.bundle/**"/>
+        <exclude name="**/*.rbc/**"/>
+        <exclude name="**/vssver.scc/**"/>
+        <exclude name="**/vssver2.scc/**"/>
+    </patternset>
+    <patternset id="library.patterns">
+        <include name="*.war"/>
+        <include name="*.ear"/>
+        <include name="*.apk"/>
+        <include name="*.zip"/>
+        <include name="*.swc"/>
+        <include name="*.ane"/>
+        <include name="*.egg"/>
+        <include name="*.jar"/>
+    </patternset>
+    <patternset id="compiler.resources">
+        <exclude name="**/?*.java"/>
+        <exclude name="**/?*.form"/>
+        <exclude name="**/?*.class"/>
+        <exclude name="**/?*.groovy"/>
+        <exclude name="**/?*.scala"/>
+        <exclude name="**/?*.flex"/>
+        <exclude name="**/?*.kt"/>
+        <exclude name="**/?*.clj"/>
+    </patternset>
+
+    <!-- JDK definitions -->
+
+    <property name="jdk.bin.1.7" value="${jdk.home.1.7}/bin"/>
+    <path id="jdk.classpath.1.7">
+        <fileset dir="${jdk.home.1.7}">
+            <include name="jre/lib/charsets.jar"/>
+            <include name="jre/lib/deploy.jar"/>
+            <include name="jre/lib/javaws.jar"/>
+            <include name="jre/lib/jce.jar"/>
+            <include name="jre/lib/jfr.jar"/>
+            <include name="jre/lib/jfxrt.jar"/>
+            <include name="jre/lib/jsse.jar"/>
+            <include name="jre/lib/management-agent.jar"/>
+            <include name="jre/lib/plugin.jar"/>
+            <include name="jre/lib/resources.jar"/>
+            <include name="jre/lib/rt.jar"/>
+            <include name="jre/lib/ext/access-bridge-64.jar"/>
+            <include name="jre/lib/ext/dnsns.jar"/>
+            <include name="jre/lib/ext/jaccess.jar"/>
+            <include name="jre/lib/ext/localedata.jar"/>
+            <include name="jre/lib/ext/sunec.jar"/>
+            <include name="jre/lib/ext/sunjce_provider.jar"/>
+            <include name="jre/lib/ext/sunmscapi.jar"/>
+            <include name="jre/lib/ext/zipfs.jar"/>
+        </fileset>
+    </path>
+
+    <property name="project.jdk.home" value="${jdk.home.1.7}"/>
+    <property name="project.jdk.bin" value="${jdk.bin.1.7}"/>
+    <property name="project.jdk.classpath" value="jdk.classpath.1.7"/>
+
+    <!-- Modules -->
+
+
+    <!-- Module TextSeerProcessTools -->
+
+    <dirname property="module.textseerprocesstools.basedir" file="${ant.file}"/>
+
+
+    <property name="module.jdk.home.textseerprocesstools" value="${project.jdk.home}"/>
+    <property name="module.jdk.bin.textseerprocesstools" value="${project.jdk.bin}"/>
+    <property name="module.jdk.classpath.textseerprocesstools" value="${project.jdk.classpath}"/>
+
+    <property name="compiler.args.textseerprocesstools" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+
+    <property name="textseerprocesstools.output.dir" value="${module.textseerprocesstools.basedir}/bin"/>
+    <property name="textseerprocesstools.testoutput.dir" value="${module.textseerprocesstools.basedir}/bin"/>
+
+    <path id="textseerprocesstools.module.bootclasspath">
+        <!-- Paths to be included in compilation bootclasspath -->
+    </path>
+
+    <path id="textseerprocesstools.module.production.classpath">
+        <path refid="${module.jdk.classpath.textseerprocesstools}"/>
+        <pathelement location="${basedir}/lib/jgrapht-jdk1.6.jar"/>
+        <pathelement location="${basedir}/lib/log4j-1.2.16.jar"/>
+        <pathelement location="${basedir}/lib/orbital-core.jar"/>
+        <pathelement location="${basedir}/lib/orbital-ext.jar"/>
+        <pathelement location="${basedir}/lib/jgraph-5.8.3.1.jar"/>
+        <pathelement location="${basedir}/lib/jppf-client.jar"/>
+        <pathelement location="${basedir}/lib/jppf-common-node.jar"/>
+        <pathelement location="${basedir}/lib/jppf-common.jar"/>
+        <pathelement location="${basedir}/lib/jppf-server.jar"/>
+        <pathelement location="${basedir}/lib/log4j-1.2.15.jar"/>
+        <pathelement location="${basedir}/lib/slf4j-api-1.6.1.jar"/>
+        <pathelement location="${basedir}/lib/sqlite4java.jar"/>
+        <pathelement location="${basedir}/lib/collections-generic-4.01.jar"/>
+        <pathelement location="${basedir}/lib/colt.jar"/>
+        <pathelement location="${basedir}/lib/concurrent.jar"/>
+        <pathelement location="${basedir}/lib/gson-2.2.2.jar"/>
+        <pathelement location="${basedir}/lib/j3d-core-1.3.1.jar"/>
+        <pathelement location="${basedir}/lib/jbpt-0.2.363.jar"/>
+        <pathelement location="${basedir}/lib/jmxremote_optional.jar"/>
+        <pathelement location="${basedir}/lib/jung-3d-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-algorithms-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-api-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-graph-impl-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-io-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-jai-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-visualization-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/junit-4.10.jar"/>
+        <pathelement location="${basedir}/lib/org.json.jar"/>
+        <pathelement location="${basedir}/lib/stax-api-1.0.1.jar"/>
+        <pathelement location="${basedir}/lib/vecmath-1.3.1.jar"/>
+        <pathelement location="${basedir}/lib/wstx-asl-3.2.6.jar"/>
+        <pathelement location="${basedir}/lib/yaoqiang-bpmn-editor-2.1.21.jar"/>
+        <pathelement location="${basedir}/lib/mysql-connector-java-5.0.8-bin.jar"/>
+    </path>
+
+    <path id="textseerprocesstools.runtime.production.module.classpath">
+        <pathelement location="${textseerprocesstools.output.dir}"/>
+        <pathelement location="${basedir}/lib/jgrapht-jdk1.6.jar"/>
+        <pathelement location="${basedir}/lib/log4j-1.2.16.jar"/>
+        <pathelement location="${basedir}/lib/orbital-core.jar"/>
+        <pathelement location="${basedir}/lib/orbital-ext.jar"/>
+        <pathelement location="${basedir}/lib/jgraph-5.8.3.1.jar"/>
+        <pathelement location="${basedir}/lib/jppf-client.jar"/>
+        <pathelement location="${basedir}/lib/jppf-common-node.jar"/>
+        <pathelement location="${basedir}/lib/jppf-common.jar"/>
+        <pathelement location="${basedir}/lib/jppf-server.jar"/>
+        <pathelement location="${basedir}/lib/log4j-1.2.15.jar"/>
+        <pathelement location="${basedir}/lib/slf4j-api-1.6.1.jar"/>
+        <pathelement location="${basedir}/lib/sqlite4java.jar"/>
+        <pathelement location="${basedir}/lib/collections-generic-4.01.jar"/>
+        <pathelement location="${basedir}/lib/colt.jar"/>
+        <pathelement location="${basedir}/lib/concurrent.jar"/>
+        <pathelement location="${basedir}/lib/gson-2.2.2.jar"/>
+        <pathelement location="${basedir}/lib/j3d-core-1.3.1.jar"/>
+        <pathelement location="${basedir}/lib/jbpt-0.2.363.jar"/>
+        <pathelement location="${basedir}/lib/jmxremote_optional.jar"/>
+        <pathelement location="${basedir}/lib/jung-3d-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-algorithms-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-api-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-graph-impl-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-io-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-jai-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-visualization-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/junit-4.10.jar"/>
+        <pathelement location="${basedir}/lib/org.json.jar"/>
+        <pathelement location="${basedir}/lib/stax-api-1.0.1.jar"/>
+        <pathelement location="${basedir}/lib/vecmath-1.3.1.jar"/>
+        <pathelement location="${basedir}/lib/wstx-asl-3.2.6.jar"/>
+        <pathelement location="${basedir}/lib/yaoqiang-bpmn-editor-2.1.21.jar"/>
+        <pathelement location="${basedir}/lib/mysql-connector-java-5.0.8-bin.jar"/>
+    </path>
+
+    <path id="textseerprocesstools.module.classpath">
+        <pathelement location="${textseerprocesstools.output.dir}"/>
+        <path refid="${module.jdk.classpath.textseerprocesstools}"/>
+        <pathelement location="${basedir}/lib/jgrapht-jdk1.6.jar"/>
+        <pathelement location="${basedir}/lib/log4j-1.2.16.jar"/>
+        <pathelement location="${basedir}/lib/orbital-core.jar"/>
+        <pathelement location="${basedir}/lib/orbital-ext.jar"/>
+        <pathelement location="${basedir}/lib/jgraph-5.8.3.1.jar"/>
+        <pathelement location="${basedir}/lib/jppf-client.jar"/>
+        <pathelement location="${basedir}/lib/jppf-common-node.jar"/>
+        <pathelement location="${basedir}/lib/jppf-common.jar"/>
+        <pathelement location="${basedir}/lib/jppf-server.jar"/>
+        <pathelement location="${basedir}/lib/log4j-1.2.15.jar"/>
+        <pathelement location="${basedir}/lib/slf4j-api-1.6.1.jar"/>
+        <pathelement location="${basedir}/lib/sqlite4java.jar"/>
+        <pathelement location="${basedir}/lib/collections-generic-4.01.jar"/>
+        <pathelement location="${basedir}/lib/colt.jar"/>
+        <pathelement location="${basedir}/lib/concurrent.jar"/>
+        <pathelement location="${basedir}/lib/gson-2.2.2.jar"/>
+        <pathelement location="${basedir}/lib/j3d-core-1.3.1.jar"/>
+        <pathelement location="${basedir}/lib/jbpt-0.2.363.jar"/>
+        <pathelement location="${basedir}/lib/jmxremote_optional.jar"/>
+        <pathelement location="${basedir}/lib/jung-3d-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-algorithms-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-api-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-graph-impl-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-io-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-jai-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-visualization-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/junit-4.10.jar"/>
+        <pathelement location="${basedir}/lib/org.json.jar"/>
+        <pathelement location="${basedir}/lib/stax-api-1.0.1.jar"/>
+        <pathelement location="${basedir}/lib/vecmath-1.3.1.jar"/>
+        <pathelement location="${basedir}/lib/wstx-asl-3.2.6.jar"/>
+        <pathelement location="${basedir}/lib/yaoqiang-bpmn-editor-2.1.21.jar"/>
+        <pathelement location="${basedir}/lib/mysql-connector-java-5.0.8-bin.jar"/>
+    </path>
+
+    <path id="textseerprocesstools.runtime.module.classpath">
+        <pathelement location="${textseerprocesstools.output.dir}"/>
+        <pathelement location="${basedir}/lib/jgrapht-jdk1.6.jar"/>
+        <pathelement location="${basedir}/lib/log4j-1.2.16.jar"/>
+        <pathelement location="${basedir}/lib/orbital-core.jar"/>
+        <pathelement location="${basedir}/lib/orbital-ext.jar"/>
+        <pathelement location="${basedir}/lib/jgraph-5.8.3.1.jar"/>
+        <pathelement location="${basedir}/lib/jppf-client.jar"/>
+        <pathelement location="${basedir}/lib/jppf-common-node.jar"/>
+        <pathelement location="${basedir}/lib/jppf-common.jar"/>
+        <pathelement location="${basedir}/lib/jppf-server.jar"/>
+        <pathelement location="${basedir}/lib/log4j-1.2.15.jar"/>
+        <pathelement location="${basedir}/lib/slf4j-api-1.6.1.jar"/>
+        <pathelement location="${basedir}/lib/sqlite4java.jar"/>
+        <pathelement location="${basedir}/lib/collections-generic-4.01.jar"/>
+        <pathelement location="${basedir}/lib/colt.jar"/>
+        <pathelement location="${basedir}/lib/concurrent.jar"/>
+        <pathelement location="${basedir}/lib/gson-2.2.2.jar"/>
+        <pathelement location="${basedir}/lib/j3d-core-1.3.1.jar"/>
+        <pathelement location="${basedir}/lib/jbpt-0.2.363.jar"/>
+        <pathelement location="${basedir}/lib/jmxremote_optional.jar"/>
+        <pathelement location="${basedir}/lib/jung-3d-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-algorithms-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-api-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-graph-impl-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-io-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-jai-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/jung-visualization-2.0.1.jar"/>
+        <pathelement location="${basedir}/lib/junit-4.10.jar"/>
+        <pathelement location="${basedir}/lib/org.json.jar"/>
+        <pathelement location="${basedir}/lib/stax-api-1.0.1.jar"/>
+        <pathelement location="${basedir}/lib/vecmath-1.3.1.jar"/>
+        <pathelement location="${basedir}/lib/wstx-asl-3.2.6.jar"/>
+        <pathelement location="${basedir}/lib/yaoqiang-bpmn-editor-2.1.21.jar"/>
+        <pathelement location="${basedir}/lib/mysql-connector-java-5.0.8-bin.jar"/>
+    </path>
+
+
+    <patternset id="excluded.from.module.textseerprocesstools">
+        <patternset refid="ignored.files"/>
+    </patternset>
+
+    <patternset id="excluded.from.compilation.textseerprocesstools">
+        <patternset refid="excluded.from.module.textseerprocesstools"/>
+    </patternset>
+
+    <path id="textseerprocesstools.module.sourcepath">
+        <dirset dir="${module.textseerprocesstools.basedir}">
+            <include name="src"/>
+        </dirset>
+    </path>
+
+
+    <target name="compile.module.textseerprocesstools"
+            depends="compile.module.textseerprocesstools.production,compile.module.textseerprocesstools.tests"
+            description="Compile module TextSeerProcessTools"/>
+
+    <target name="compile.module.textseerprocesstools.production"
+            description="Compile module TextSeerProcessTools; production classes">
+        <mkdir dir="${textseerprocesstools.output.dir}"/>
+        <javac destdir="${textseerprocesstools.output.dir}" debug="${compiler.debug}"
+               nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true"
+               executable="${module.jdk.bin.textseerprocesstools}/javac">
+            <compilerarg line="${compiler.args.textseerprocesstools}"/>
+            <bootclasspath refid="textseerprocesstools.module.bootclasspath"/>
+            <classpath refid="textseerprocesstools.module.production.classpath"/>
+            <src refid="textseerprocesstools.module.sourcepath"/>
+            <patternset refid="excluded.from.compilation.textseerprocesstools"/>
+        </javac>
+
+        <copy todir="${textseerprocesstools.output.dir}">
+            <fileset dir="${module.textseerprocesstools.basedir}/src">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile.module.textseerprocesstools.tests" depends="compile.module.textseerprocesstools.production"
+            description="compile module TextSeerProcessTools; test classes" unless="skip.tests"/>
+
+    <target name="clean.module.textseerprocesstools" description="cleanup module">
+        <delete dir="${textseerprocesstools.output.dir}"/>
+        <delete dir="${textseerprocesstools.testoutput.dir}"/>
+    </target>
+
+    <target name="init" description="Build initialization">
+        <!-- Perform any build initialization in this target -->
+    </target>
+
+    <target name="clean" depends="clean.module.textseerprocesstools" description="cleanup all"/>
+
+    <target name="build.modules" depends="init, clean, compile.module.textseerprocesstools"
+            description="build all modules"/>
+
+    <!-- Messy based on solutin at http://stackoverflow.com/questions/18875244/java-build-ant-file-with-external-jar-files -->
     <property name="lib-dir" value="lib"/>
 
     <path id="classpath">
@@ -321,7 +328,7 @@
         <java jar="build/jar/TextSeer.jar" classpath="." fork="true"/>
     </target>
 
-    <target name="jar" depends="all">
+    <target name="jar" depends="build.modules">
         <mkdir dir="build/jar"/>
         <manifestclasspath property="jar.classpath" jarfile="build/jar/TextSeer.jar">
             <classpath refid="classpath"/>
@@ -336,6 +343,5 @@
     </target>
 
 
-
-    <target name="all" depends="build.modules" description="build all"/>
+    <target name="all" depends="run" description="build all"/>
 </project>

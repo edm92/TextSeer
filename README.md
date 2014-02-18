@@ -5,7 +5,10 @@
 > TextSeer process tools provides a collection of functions and tools for use on process effect accumulation. Initial development was conducted by researchers at the University of Wollongong and has contributed to PhD and Masters projects.
 
 
-Please note that the codebase has been updated substantially and this readme file has been left behind. It will be updated soon.
+Please note that the codebase has been updated substantially. To run
+```
+    ant run
+```
 
 Basic users:
     > TextSeer is currently a set of functions that can be used to develop systems that take advantage of semantic effect accumulation. In the SRC directory in the base directory there are a number of examples for use of the library functions.

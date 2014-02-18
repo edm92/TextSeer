@@ -23,9 +23,9 @@ After trying 103 guesses I think the following are possible events that could ha
 The minimal scenarios are: 
 	 ( dr ) & ( ~cf ) 
 
- * 
- * @author edm92
  *
+ * @author Evan Morrison edm92@uowmail.edu.au http://www.fnord.be
+ * Apache License, Version 2.0, Apache License Version 2.0, January 2004 http://www.apache.org/licenses/
  */
 
 public class AbductiveExample {

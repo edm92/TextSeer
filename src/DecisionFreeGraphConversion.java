@@ -11,7 +11,23 @@ import be.fnord.util.processModel.util.GraphLoader;
 import be.fnord.util.processModel.util.GraphTransformer;
 
 /**
- * 
+ * This is an example of the decision free graph generation procedure. This will break down process models into instance
+ * level chunks that have no decision points.
+ *
+ * The following example uses Jung to decision free processes.
+ * Documented in Morrison et. al. 2014.
+ *
+ * Example
+ Got a trace: Trace<_3Start Event1,_8Parallel Gateway,_7Task,_6Para Exclusive Gateway,_27Para XOR Choice 1,_59Exclusive Gateway,_29Parallel Gateway Join,_11End Event3>
+ Got a trace: Trace<_3Start Event1,_8Parallel Gateway,_7Task,_6Para Exclusive Gateway,_31Para XOR Choice 2,_59Exclusive Gateway,_29Parallel Gateway Join,_11End Event3>
+ Got a trace: Trace<_38Start Event3,_39Task2,_40Inclusive Gateway,_43User Task,_47Inclusive Gateway2,_50End Event>
+ Got a trace: Trace<_38Start Event3,_39Task2,_40Inclusive Gateway,_45Service Task,_47Inclusive Gateway2,_50End Event>
+ Got a trace: Trace<_4Start Event2,_34Call Activity,_9Do More activities with the DB,_12Make a choice,_14Choice 1,_25End Event 2>
+ Got a trace: Trace<_4Start Event2,_34Call Activity,_9Do More activities with the DB,_12Make a choice,_16Choice 2 with reply from DB,_22End Event>
+ Got a trace: Trace<_53Start Event4,_37Sub-Process,_52Boundary Event,_56End Event5>
+ Got a trace: Trace<_53Start Event4,_37Sub-Process,_55End Event4>
+
+ *
  * @author Evan Morrison edm92@uowmail.edu.au http://www.fnord.be
  * Apache License, Version 2.0, Apache License Version 2.0, January 2004 http://www.apache.org/licenses/
  *

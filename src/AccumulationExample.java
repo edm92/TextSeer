@@ -11,8 +11,26 @@ import be.fnord.util.processModel.util.GraphChecker;
 import be.fnord.util.processModel.util.GraphLoader;
 import be.fnord.util.processModel.util.GraphTransformer;
 
+/**
+ * The accumulation example will demonstrate the effect accumulation process over a set of models
+ *
+ *
+ * Example Output:
+ Effect scenario resulting from acc: (b) & (c)
+ Checking if (b) & (c) is consistent : true
+ Effect scenario resulting from acc: (a) & (c)
+ Checking if (a) & (c) is consistent : true
+ Effect scenario resulting from acc: ((a & b)) & (~c)
+ Checking if ((a & b)) & (~c) is consistent : true
 
+
+ * @author Evan Morrison edm92@uowmail.edu.au http://www.fnord.be
+ * Apache License, Version 2.0, Apache License Version 2.0, January 2004 http://www.apache.org/licenses/
+
+ */
 public class AccumulationExample {
+
+
 
 	public static void main(String [] args){
 		// Setup the environment

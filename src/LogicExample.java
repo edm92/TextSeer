@@ -4,13 +4,29 @@ import be.fnord.util.logic.Accumulate;
 import be.fnord.util.logic.WFF;
 
 
+/**
+ * The following code demonstrates the logic engine powered mainly by Orbital Library
+ *
+ *
+ * Example Output
+ (p->q), (m-> p V q)} |= (m->q)? true
+ (p->q), (m-> p V q)} U ~(m->q)? true
+ Checking if ~(a & b) | ~c is consistent : true
+ Checking if ~(a & b) | ~c entails (a & b) -> ~c : true
+ Effect scenario resulting from acc: (~(a & b) | ~c) & ((a & b) -> ~c)
+ Checking if (~(a & b) | ~c) & ((a & b) -> ~c) is consistent : true
+ Effect scenario resulting from acc: (a & b)
+ Checking if (a & b) is consistent : true
+ Execution time was 424 ms.
+
+
+ * @author Evan Morrison edm92@uowmail.edu.au http://www.fnord.be
+ * Apache License, Version 2.0, Apache License Version 2.0, January 2004 http://www.apache.org/licenses/
+ */
 
 
 // Long effect to play with 
 // Effect e5 = new Effect(" (~a | ~b | c) & ~(~c | d) & (~c | e) & (a & b -> c) & (~e | ~f | g) & ((c & d) -> e) & (c & f -> g) & (a | d) & (f & g) & (b | ~a) & (p -> q) & ((l & m) -> p) & ((b & l) -> m) & ((a & p) -> l) & ((a & b) -> l)");
-
-
-
 public class LogicExample {
 
 	public static void main(String[] Args){

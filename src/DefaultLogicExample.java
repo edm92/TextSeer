@@ -13,7 +13,9 @@ import be.fnord.util.logic.defaultLogic.WorldSet;
 
 	I have made every attempt to test this reasoner; however, have not documented the decision proceedure yet so please take 
 	results with a grain of salt. 
- * @author edm92
+
+ * @author Evan Morrison edm92@uowmail.edu.au http://www.fnord.be
+ * Apache License, Version 2.0, Apache License Version 2.0, January 2004 http://www.apache.org/licenses/
  *
  */
 public class DefaultLogicExample {

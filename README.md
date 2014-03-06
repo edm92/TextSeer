@@ -63,6 +63,7 @@ Features:
 
 Updates
 -------
+ - 2014-03-07 -- Minor updates. Added deductive closure operation. Future TODO: Add config option to turn this off as it is computational expensive to run. 
  - 2014-02-18 -- Minor Updates. Added a build file finally. Work on both a MAS process simulator and WEB GUI frontend has begun and will be bought into the project over the coming months.
  - 2013-11-07 -- Started documenting code after adding default logic reasoner.
  - 2013-04-12 -- Bought in code for Model combination and loading BPMN2.0 files.

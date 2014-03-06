@@ -105,8 +105,11 @@ public class DefaultReasoner {
         // Take the max strings
         LinkedList<String> validExtensions = rules.applyRules(extensions, myOriginalWorld);
         HashSet<String> _validExtensions = new HashSet<String>();
-        for (String s : validExtensions)
-            _validExtensions.add(s);
+        for (String s : validExtensions){
+        	WFF _s = new WFF(s);
+        	_validExtensions.add(_s.getClosure());
+        }
+            
 //		HashSet<String> maxLenExtensions = rules.getLongestExtensions(_validExtensions);
 
 

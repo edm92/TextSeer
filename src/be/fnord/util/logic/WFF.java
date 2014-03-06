@@ -1,6 +1,8 @@
 package be.fnord.util.logic;
 
 import a.e;
+import be.fnord.util.logic.defaultLogic.DefaultRule;
+
 import com.merriampark.Gilleland.CombinationGenerator;
 import orbital.logic.imp.Formula;
 import orbital.logic.imp.Interpretation;
@@ -300,28 +302,90 @@ public class WFF implements Serializable {
     }
 
     /**
-     * Uhm.... Yes I know what this is supposed to do and no it doesn't do it.
-     * Will it be implemented???
-     *
-     * Uhmmm, aha yeah, sure.... one day?! Someone else is welcome to it if I don't get to it first.
-     *
+     * Given a particular WFF, we attempt to complete a deductive closure suggesting and testing 
+     * possible conclusion that could be made about a clause. This is by no means a sound and complete function
      * edm
      * @return deductive closure
+     * 
+     * 
+     * 
      */
     public String getClosure() {
-        try {
-            Logic logic = new ClassicalLogicS();
-            if (getFormula().length() < 1) return "";
-            formula = (Formula) logic.createExpression(getFormula());
-            Formula result = ClassicalLogicS.Utilities.conjunctiveForm(formula, true);
-            DefaultClausalFactory myFacts = new DefaultClausalFactory();
-            ClausalSet myClauses = myFacts.asClausalSet(result);
-            Formula f = myClauses.toFormula();
-            return f.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
+    	Formula formula;
+    	try{
+    	/// Step one lets get the signature -- all the symbols that are used in the wff 
+	    logic = new ClassicalLogicS();
+	    sigma = logic.scanSignature(this.formulaText);
+	    formula = (Formula) logic.createExpression(this.formulaText);
+    	}catch (Exception e){
+    		a.e.println("error", a.e.INFO);
+    	}
+	    Set<String> symbols = new HashSet<String>();
+	
+	    for (Iterator<?> i = sigma.iterator(); i.hasNext(); ) {
+	        Symbol o = (Symbol) i.next();
+	
+	        symbols.add(o.toString());
+	    }
+	    // Now we have symbols, lets store the symbols and their negation
+	    String[] elements = new String[symbols.size() * 2];
+	    int k = 0;
+	    int j = symbols.size();
+	    for (String s : symbols) {
+	        elements[k] = s;
+	        elements[k + j] = "~" + s;
+	        k++;
+	    }
+	    int[] indices;
+	    CombinationGenerator x = new CombinationGenerator(elements.length, symbols.size());
+	    StringBuffer combination;
+	    while (x.hasMore()) {
+	        combination = new StringBuffer();
+	        Set<String> _sym = new HashSet<String>();
+	        int eleCount = 0;
+	        indices = x.getNext();
+	        for (int i = 0; i < indices.length; i++) {
+	            if (!combination.toString().contains(elements[indices[i]].replace("~", ""))) {
+	                combination.append(elements[indices[i]] + " ");
+	                _sym.add(elements[indices[i]]);
+	                eleCount++;
+	            }
+	        }
+	        if (eleCount == symbols.size()) {
+	            /// We now have a sentence that is full of all of our symbols, lets test if it is consistent
+	        	String mSym = "";
+	        	for(String s : _sym)
+	        		mSym += s + " & ";
+	        	if(mSym.length() > 1) mSym = mSym.substring(0, mSym.length() - " & ".length());
+	        	
+	        	WFF testForm = new WFF(this.formulaText + " & ( " + mSym + " )");
+	        	if(testForm.isConsistent())
+	        	if(testForm.entails(this) && this.entails(testForm))
+	        		{
+	        			// Huzzah we have a closure, lets make it CNL
+		        		try {
+		                    Logic logic = new ClassicalLogicS();
+		                    if (testForm.getFormula().length() < 1) return "";
+		                    formula = (Formula) logic.createExpression(testForm.getFormula());
+		                    Formula result = ClassicalLogicS.Utilities.conjunctiveForm(formula, true);
+		                    DefaultClausalFactory myFacts = new DefaultClausalFactory();
+		                    ClausalSet myClauses = myFacts.asClausalSet(result);
+		                    Formula f = myClauses.toFormula();
+		                    return f.toString();
+		                } catch (Exception e) {
+		                    e.printStackTrace();
+		                }
+		               
+	        		};
+	        	
+//	        	boolean result = issat(_sym);
+//	            if (result)
+//	                return true;
+	        }
+	
+	    }
+    	
+	    return this.formulaText;   
     }
 
 

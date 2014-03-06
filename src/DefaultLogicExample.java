@@ -1,4 +1,5 @@
 import be.fnord.util.logic.DefaultReasoner;
+import be.fnord.util.logic.WFF;
 import be.fnord.util.logic.defaultLogic.DefaultRule;
 import be.fnord.util.logic.defaultLogic.RuleSet;
 import be.fnord.util.logic.defaultLogic.WorldSet;
@@ -21,6 +22,10 @@ import java.util.HashSet;
 public class DefaultLogicExample {
 
     public static void main(String[] args) {
+    	
+    	// Turn on the removal of empty effects from print statements
+    	a.e.HIDE_EMPTY_EFFECTS_IN_PRINT = true;
+    	
         long start = System.currentTimeMillis();
         a.e.println("Default logic examples. \n Most of the examples here are from  R. Reiter (1980). A logic for default reasoning. Artificial Intelligence, 13:81-132.\n Notes on output format - if you see the string eeee anywhere in the output take it as an EMPTY set or value.\n Default rules are written a:b ==> c  where a is the prerequisite, b is justification and c is conclusion.\n------------------------------------------------------------------------------------------------------------------------------\n\n");
 
@@ -107,7 +112,12 @@ public class DefaultLogicExample {
 
         a.e.println("Possible Extensions");
         for (String c : extensions) {
-            a.e.println("\t Ext: Th(W U (" + c + "))");    // Added for Graham
+            a.e.println("\t Ext: Th(W U (" + c + "))");    
+            // Added closure operator
+            a.e.incIndent();
+            WFF world_and_ext = new WFF("(( " + myWorld.getWorld() + " ) & (" + c + "))");
+            a.e.println("= " + world_and_ext.getClosure());
+            a.e.decIndent();
         }
         a.e.println("A family may decide to do one of two things, go to the beach or to a movie (C or D) on the weekend, depending on whether it is sunny (B) or not.");
 
@@ -151,7 +161,13 @@ public class DefaultLogicExample {
 
         a.e.println("Possible Extensions");
         for (String c : extensions) {
-            a.e.println("\t Ext: Th(W U (" + c + "))");    // Added for Graham
+            a.e.println("\t Ext: Th(W U (" + c + "))");    
+            // Added closure operator
+            a.e.incIndent();
+            WFF world_and_ext = new WFF("(( " + myWorld.getWorld() + " ) & (" + c + "))");
+            a.e.println("= " + world_and_ext.getClosure());
+            a.e.decIndent();
+
         }
 
     }
@@ -200,7 +216,13 @@ public class DefaultLogicExample {
 
         a.e.println("Possible Extensions");
         for (String c : extensions) {
-            a.e.println("\t Ext: Th(W U (" + c + "))");    // Added for Graham
+            a.e.println("\t Ext: Th(W U (" + c + "))");                
+            // Added closure operator
+            a.e.incIndent();
+            WFF world_and_ext = new WFF("(( " + myWorld.getWorld() + " ) & (" + c + "))");
+            a.e.println("= " + world_and_ext.getClosure());
+            a.e.decIndent();
+
         }
 
     }
@@ -245,7 +267,13 @@ public class DefaultLogicExample {
 
         a.e.println("Possible Extensions");
         for (String c : extensions) {
-            a.e.println("\t Ext: Th(W U (" + c + "))");    // Added for Graham
+            a.e.println("\t Ext: Th(W U (" + c + "))");    
+            // Added closure operator
+            a.e.incIndent();
+            WFF world_and_ext = new WFF("(( " + myWorld.getWorld() + " ) & (" + c + "))");
+            a.e.println("= " + world_and_ext.getClosure());
+            a.e.decIndent();
+
         }
 
         a.e.println("Though in Delgrande's paper the solutions is : Th(W U {A}) and Th(W U {~A, B}).");
@@ -290,7 +318,13 @@ public class DefaultLogicExample {
 
         a.e.println("Possible Extensions");
         for (String c : extensions) {
-            a.e.println("\t Ext: Th(W U (" + c + "))");    // Added for Graham
+            a.e.println("\t Ext: Th(W U (" + c + "))");   
+            // Added closure operator
+            a.e.incIndent();
+            WFF world_and_ext = new WFF("(( " + myWorld.getWorld() + " ) & (" + c + "))");
+            a.e.println("= " + world_and_ext.getClosure());
+            a.e.decIndent();
+
         }
     }
 
@@ -334,7 +368,13 @@ public class DefaultLogicExample {
 
         a.e.println("Possible Extensions");
         for (String c : extensions) {
-            a.e.println("\t Ext: Th(W U (" + c + "))");    // Added for Graham
+            a.e.println("\t Ext: Th(W U (" + c + "))");   
+            // Added closure operator
+            a.e.incIndent();
+            WFF world_and_ext = new WFF("(( " + myWorld.getWorld() + " ) & (" + c + "))");
+            a.e.println("= " + world_and_ext.getClosure());
+            a.e.decIndent();
+
         }
     }
 
@@ -385,7 +425,13 @@ public class DefaultLogicExample {
 
         a.e.println("Possible Extensions");
         for (String c : extensions) {
-            a.e.println("\t Ext: Th(W U (" + c + "))");    // Added for Graham
+            a.e.println("\t Ext: Th(W U (" + c + "))");   
+            // Added closure operator
+            a.e.incIndent();
+            WFF world_and_ext = new WFF("(( " + myWorld.getWorld() + " ) & (" + c + "))");
+            a.e.println("= " + world_and_ext.getClosure());
+            a.e.decIndent();
+
         }
     }
 
@@ -437,7 +483,13 @@ public class DefaultLogicExample {
 
         a.e.println("Possible Extensions");
         for (String c : extensions) {
-            a.e.println("\t Ext: Th(W U (" + c + "))");    // Added for Graham
+            a.e.println("\t Ext: Th(W U (" + c + "))");    
+            // Added closure operator
+            a.e.incIndent();
+            WFF world_and_ext = new WFF("(( " + myWorld.getWorld() + " ) & (" + c + "))");
+            a.e.println("= " + world_and_ext.getClosure());
+            a.e.decIndent();
+
         }
     }
 
@@ -471,7 +523,13 @@ public class DefaultLogicExample {
 
         a.e.println("Possible Extensions");
         for (String c : extensions) {
-            a.e.println("\t Ext: Th(W U (" + c + "))");    // Added for Graham
+            a.e.println("\t Ext: Th(W U (" + c + "))");  
+            // Added closure operator
+            a.e.incIndent();
+            WFF world_and_ext = new WFF("(( " + myWorld.getWorld() + " ) & (" + c + "))");
+            a.e.println("= " + world_and_ext.getClosure());
+            a.e.decIndent();
+
         }
     }
 
@@ -497,13 +555,20 @@ public class DefaultLogicExample {
 
         a.e.println("Possible Extensions ");
         for (String c : extensions) {
-            a.e.println("\t Ext: Th(W U (" + c + "))");    // Added for Graham
+            a.e.println("\t Ext: Th(W U (" + c + "))");  
+            // Added closure operator
+            a.e.incIndent();
+            WFF world_and_ext = new WFF("(( " + myWorld.getWorld() + " ) & (" + c + "))");
+            a.e.println("= " + world_and_ext.getClosure());
+            a.e.decIndent();
+
         }
     }
 
     // Example
     public static void example3() {
         WorldSet myWorld = new WorldSet();    // Empty World
+        myWorld.addFormula(a.e.EMPTY_EFFECT);
 
         DefaultRule rule1 = new DefaultRule();
         rule1.setPrerequisite("A");
@@ -533,7 +598,15 @@ public class DefaultLogicExample {
 
         a.e.println("Possible Extensions");
         for (String c : extensions) {
-            a.e.println("\t Ext: Th(W U (" + c + "))");    // Added for Graham
+            a.e.println("\t Ext: Th(W U (" + c + "))");    
+            // Added closure operator
+            a.e.incIndent();
+            
+            WFF world_and_ext = new WFF("(( " + myWorld.getWorld() + " ) & (" + c + "))");
+            a.e.println("world_and_ext = " + world_and_ext);
+            a.e.println("= " + world_and_ext.getClosure());
+            a.e.decIndent();
+
         }
     }
 
@@ -564,14 +637,22 @@ public class DefaultLogicExample {
 
         a.e.println("Possible Extensions");
         for (String c : extensions) {
-            a.e.println("\t Ext: Th(W U (" + c + "))");    // Added for Graham
+            a.e.println("\t Ext: Th(W U (" + c + "))");    
+            // Added closure operator
+            a.e.incIndent();
+            WFF world_and_ext = new WFF("(( " + myWorld.getWorld() + " ) & (" + c + "))");
+            a.e.println("= " + world_and_ext.getClosure());
+            a.e.decIndent();
+
         }
     }
 
     public static void example1() {
         WorldSet myWorld = new WorldSet();
+        myWorld.addFormula(a.e.EMPTY_EFFECT);
 
         myWorld.addFormula("B");        // B is true
+        myWorld.addFormula("(A -> Z)"); // Extra rule to test closure
         myWorld.addFormula("(C -> (D | A))");        // C implies either D or A or Both D and A
         myWorld.addFormula("((A & C) -> ~E)"); // A and C implies not E
 
@@ -610,7 +691,13 @@ public class DefaultLogicExample {
 
         a.e.println("Possible Extensions");
         for (String c : extensions) {
-            a.e.println("\t Ext: Th(W U (" + c + "))");    // Added for Graham
+            a.e.println("\t Ext: Th(W U (" + c + "))");  
+            // Added closure operator
+            a.e.incIndent();
+            WFF world_and_ext = new WFF("(( " + myWorld.getWorld() + " ) & (" + c + "))");
+            a.e.println("= " + world_and_ext.getClosure());
+            a.e.decIndent();
+
         }
     }
 

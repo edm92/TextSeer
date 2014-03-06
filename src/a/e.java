@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 public class e {
     public static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    public static boolean HIDE_EMPTY_EFFECTS_IN_PRINT = false;
+    
     // Global debugging display levels, in files these are generally propagated
     public static boolean __DEBUG = false;
     public static boolean __INFO = true;
@@ -96,6 +98,24 @@ public class e {
      * @return
      */
     public static String write(String msg) {
+    	if(HIDE_EMPTY_EFFECTS_IN_PRINT){
+	    	msg = msg.replace(a.e.EMPTY_EFFECT + " &", "");
+	    	msg = msg.replace(a.e.EMPTY_EFFECT + "&", "");
+	    	msg = msg.replace("& " + a.e.EMPTY_EFFECT, "");
+	    	msg = msg.replace("&" + a.e.EMPTY_EFFECT, "");
+	    	msg = msg.replace("( " + a.e.EMPTY_EFFECT + " ) &", "");
+	    	msg = msg.replace("( " + a.e.EMPTY_EFFECT + " )&", "");
+	    	msg = msg.replace("&( " + a.e.EMPTY_EFFECT + " )", "");
+	    	msg = msg.replace("& ( " + a.e.EMPTY_EFFECT + " )", "");
+	    	msg = msg.replace("( " + a.e.EMPTY_EFFECT + " )", "");
+	    	msg = msg.replace("(" + a.e.EMPTY_EFFECT + ") &", "");
+	    	msg = msg.replace("(" + a.e.EMPTY_EFFECT + ")&", "");
+	    	msg = msg.replace("&(" + a.e.EMPTY_EFFECT + ")", "");
+	    	msg = msg.replace("& (" + a.e.EMPTY_EFFECT + ")", "");
+	    	msg = msg.replace("(" + a.e.EMPTY_EFFECT + ")", "");
+	    	msg = msg.replace("( " + a.e.EMPTY_EFFECT + ")", "");
+	    	msg = msg.replace("(" + a.e.EMPTY_EFFECT + " )", "");
+    	}
         return dent() + msg;
     }
 

@@ -44,11 +44,19 @@ public class RuleSet {
                     newFormula = newFormula.substring((" " + a.e.AND + " ").length(), newFormula.length());
                 _result.add(newFormula);
             }
-        }
-        ;
+        };
 
         _result = removeInconsistent(_result, w);
-        return _result;
+        
+        // Get closure
+        LinkedList<String> __result = new LinkedList<String>();
+        for(String s: _result){
+        	WFF cl = new WFF(s);
+        	String r = cl.getClosure();
+        	__result.add(r);
+        }
+        
+        return __result;
     }
 
     public void addRule(DefaultRule _rule) {

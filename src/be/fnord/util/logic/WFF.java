@@ -13,6 +13,7 @@ import orbital.logic.sign.Symbol;
 import orbital.logic.sign.SymbolBase;
 import orbital.logic.sign.type.Types;
 import orbital.moon.logic.resolution.ClausalSet;
+import orbital.moon.logic.resolution.Clause;
 import orbital.moon.logic.resolution.DefaultClausalFactory;
 import org.apache.log4j.Logger;
 
@@ -332,6 +333,7 @@ public class WFF implements Serializable {
 	    int k = 0;
 	    int j = symbols.size();
 	    for (String s : symbols) {
+//	    	a.e.println("Symbol - " + s);
 	        elements[k] = s;
 	        elements[k + j] = "~" + s;
 	        k++;
@@ -339,6 +341,7 @@ public class WFF implements Serializable {
 	    int[] indices;
 	    CombinationGenerator x = new CombinationGenerator(elements.length, symbols.size());
 	    StringBuffer combination;
+	    String currentBest = "";
 	    while (x.hasMore()) {
 	        combination = new StringBuffer();
 	        Set<String> _sym = new HashSet<String>();
@@ -360,7 +363,10 @@ public class WFF implements Serializable {
 	        	
 	        	WFF testForm = new WFF(this.formulaText + " & ( " + mSym + " )");
 	        	if(testForm.isConsistent())
-	        	if(testForm.entails(this) && this.entails(testForm))
+	        	{
+	        		boolean part1 = testForm.entails(this);
+	        		boolean part2 = this.entails(testForm);
+	        	if( part1 && part2 )
 	        		{
 	        			// Huzzah we have a closure, lets make it CNL
 		        		try {
@@ -376,7 +382,11 @@ public class WFF implements Serializable {
 		                    e.printStackTrace();
 		                }
 		               
-	        		};
+	        		}else if(part1 ){
+	        			 if (testForm.getFormula().length() < 1) continue;
+	        			 	currentBest = testForm.getFormula();
+	        		}
+	        	}
 	        	
 //	        	boolean result = issat(_sym);
 //	            if (result)
@@ -384,8 +394,101 @@ public class WFF implements Serializable {
 	        }
 	
 	    }
-    	
+	    
+	    // We have found a closure that has less than all variables available to us. Lets reduce. 	  
+	    // We hack the reduction because the orbital ClausalSet class doesn't implement remove very well 
+	    if(currentBest.length() > 1) {
+	    	Logic logic = new ClassicalLogicS();
+            WFF newW = new WFF(currentBest);
+            try{
+            // New Sentence
+            formula = (Formula) logic.createExpression(newW.getFormula());
+            Formula result = ClassicalLogicS.Utilities.conjunctiveForm(formula, true);
+            DefaultClausalFactory myFacts = new DefaultClausalFactory();
+            ClausalSet myClauses = myFacts.asClausalSet(result);
+            ClausalSet myClauses3 = myFacts.asClausalSet(result);
+            
+            // Old sentence
+            Formula formula2 = (Formula) logic.createExpression(this.getFormula());
+            Formula result2 = ClassicalLogicS.Utilities.conjunctiveForm(formula2, true);
+            DefaultClausalFactory myFacts2 = new DefaultClausalFactory();
+            ClausalSet myClauses2 = myFacts2.asClausalSet(result2);
+            // Remove all repeated elemements
+            myClauses.removeAll(myClauses2);
+            Iterator<Clause> i = myClauses.iterator();
+            HashSet<String> myClosures = new HashSet<String>();
+            
+            while(i.hasNext()){    
+            	Clause c = i.next();
+            	Formula f = myClauses3.toFormula();
+            	String alt = "~" + c.toArray()[0];
+            	if( (c.toArray()[0].toString().trim().charAt(0)+"").compareTo("~") == 0) alt = c.toArray()[0].toString().substring(1, c.toArray()[0].toString().length()); 
+            	String newString = removeFromString(f.toString(), "" + c.toArray()[0]);
+            	newString = removeFromString(newString, "" + alt);
+            	if(newString.trim().charAt(newString.length()-1) == '&') newString = newString.trim().substring(0, newString.length() - 1);
+            	String s = new WFF(newString).getClosure();
+            	
+            	myClosures.add(s);
+            }
+            // Get the biggest
+            ClausalSet biggest = myClauses;
+            for(String s: myClosures){
+            	Formula formula4 = (Formula) logic.createExpression(new WFF(s).getFormula());
+                Formula result4 = ClassicalLogicS.Utilities.conjunctiveForm(formula4, true);
+                DefaultClausalFactory myFacts4 = new DefaultClausalFactory();
+                ClausalSet myClauses4 = myFacts4.asClausalSet(result4);
+                
+                Formula f = myClauses4.toFormula();
+                if(!new WFF("( " + f.toString() + " ) & (" + this.getFormula() +" )").isConsistent()) continue;
+                
+//                a.e.println("Comparing " + myClauses4.size() + " to " + biggest.size() + " - " + myClauses4 + " vs. " + biggest);
+                if(myClauses4.size() > biggest.size() ) biggest = myClauses4;
+            }
+            
+            // Lets make sure we have all the original stuff
+            Formula testForm = (Formula) logic.createExpression(this.getFormula());
+            Formula result9 = ClassicalLogicS.Utilities.conjunctiveForm(testForm, true);
+            DefaultClausalFactory myFacts9 = new DefaultClausalFactory();
+            ClausalSet myClauses9 = myFacts9.asClausalSet(result9);
+            biggest.addAll(myClauses9);
+            
+            Formula f = biggest.toFormula();
+            return f.toString();
+            
+            }catch(Exception e){
+            	// Do nothing
+            };            
+	    }
 	    return this.formulaText;   
+    }
+    
+    /**
+     * Function to remove elements from our formula. Only implemented this way because orbial clausalset removal doesn't work very well :(
+     * edm
+     * @param in
+     * @param Char
+     * @return
+     */
+    public String removeFromString(String in, String Char){
+    	
+    	String newString = in.replaceAll("& " + Char, "");
+	   	 newString = newString.replaceAll("&" + Char, "");
+	   	 newString = newString.replaceAll(Char + " &", "");
+	   	 newString = newString.replaceAll(Char + "&", "");
+	   	 newString = newString.replaceAll("\\| " + Char, "");
+	   	 newString = newString.replaceAll("\\|" + Char, "");
+	   	 newString = newString.replaceAll(Char + " \\|", "");
+	   	 newString = newString.replaceAll(Char + "\\|", "");
+	   	 newString = newString.replaceAll("-> " + Char, "");
+	   	 newString = newString.replaceAll("->" + Char, "");
+	   	 newString = newString.replaceAll(Char + " ->", "");
+	   	 newString = newString.replaceAll(Char + "->", "");
+	   	newString = newString.replaceAll("  ", " ");	// Trimming
+	   	newString = newString.replaceAll("( )", "");
+	   	newString = newString.replaceAll("  ", " ");
+	   	 newString = newString.replaceAll(Char + "", "");
+	   	 
+	   	 return newString;
     }
 
 

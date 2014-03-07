@@ -34,10 +34,10 @@ public class LogicExample {
         // Create new effect scenarios
         WFF e1 = new WFF("~(a & b) | ~c");            // Used to demonstrate accumulation
         WFF e2 = new WFF("(a & b) -> ~c");            // Used to demonstrate accumulation
-        WFF cl = new WFF("(((a | b) -> (c & d)) & a & ~b & (b -> ~c)) ");
-        WFF c2 = new WFF("( B & (A -> Z) & (C -> (D | A)) ) & A & B & C & D");
-        a.e.println("Closure of " + c2 + "=\n\t\t" + c2.getClosure());
-        a.e.println("Is consistent? = " + c2.isConsistent());
+        WFF cl = new WFF("(B & (~A | ~C | ~E) & C & ~E & Z & (Z | ~A) & (A & C) & (D | A | ~C) & A)");
+        WFF c2 = new WFF("(( B & (A -> Z) & (C -> (D | A)) & ((A & C) -> ~E) ) & (C & A))");
+        a.e.println("Closure of " + cl + "=\n\t\t" + cl.getClosure());
+        a.e.println("Is consistent? = " + cl.isConsistent());
         if(true)
         return;
 //

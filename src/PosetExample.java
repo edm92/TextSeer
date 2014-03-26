@@ -1,7 +1,14 @@
 import be.fnord.collections.Pair;
 import be.fnord.collections.Poset;
 
-
+/**
+ * Java implementation of a poset. 
+ * For a copy of the literate description of this function see
+ * https://sites.google.com/a/fnord.be/flight-of-the-fnord/blog/literatejavaposets/java-poset.pdf
+ * @author Evan Morrison edm92@uowmail.edu.au http://www.fnord.be
+ *         Apache License, Version 2.0, Apache License Version 2.0, January 2004 http://www.apache.org/licenses/
+ *
+ */
 public class PosetExample {
 	static <T> Pair<T,T> P(T a, T b){
 		return new Pair<T,T>(a,b);

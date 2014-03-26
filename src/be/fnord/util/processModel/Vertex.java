@@ -28,6 +28,7 @@ public class Vertex extends Graph<Vertex, Edge> {
 
     private String WFF = "";
     private WFF immWFF = new WFF();
+    private WFF cumWFF = new WFF(); // Include cumulative effects
 
     public Vertex corresponding = null;
     public LinkedList<String> boundaryRefs = new LinkedList<String>();

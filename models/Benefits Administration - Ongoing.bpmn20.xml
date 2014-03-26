@@ -1,135 +1,291 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn"
-             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
-             typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
-             targetNamespace="http://www.activiti.org/test">
-    <process id="BenefitsAdministration-Ongoing" name="Benefits Administration - Ongoing">
-        <documentation>Place documentation for the 'Benefits Administration - Ongoing' process here.</documentation>
-        <startEvent id="startevent1" name="Start"></startEvent>
-        <userTask id="usertask1" name="Review employee assignments" activiti:assignee="kermit"></userTask>
-        <sequenceFlow id="flow1" name="" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
-        <userTask id="usertask2" name="Correct  employee eligibility info" activiti:assignee="kermit"></userTask>
-        <sequenceFlow id="flow2" name="" sourceRef="usertask1" targetRef="usertask2"></sequenceFlow>
-        <userTask id="usertask3" name="Determine population" activiti:assignee="kermit"></userTask>
-        <sequenceFlow id="flow3" name="" sourceRef="usertask2" targetRef="usertask3"></sequenceFlow>
-        <userTask id="usertask4" name="Assign coverage to a group id" activiti:assignee="kermit"></userTask>
-        <sequenceFlow id="flow4" name="" sourceRef="usertask3" targetRef="usertask4"></sequenceFlow>
-        <userTask id="usertask5" name="Use an open enrollment definition id" activiti:assignee="kermit"></userTask>
-        <sequenceFlow id="flow5" name="" sourceRef="usertask4" targetRef="usertask5"></sequenceFlow>
-        <userTask id="usertask6" name="Generate enrollment forms" activiti:assignee="kermit"></userTask>
-        <sequenceFlow id="flow6" name="" sourceRef="usertask5" targetRef="usertask6"></sequenceFlow>
-        <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
-        <sequenceFlow id="flow7" name="" sourceRef="usertask6" targetRef="exclusivegateway1"></sequenceFlow>
-        <userTask id="usertask7" name="Do not assign to coverage" activiti:assignee="kermit"></userTask>
-        <sequenceFlow id="flow8" name="Not Eligible" sourceRef="exclusivegateway1" targetRef="usertask7"></sequenceFlow>
-        <endEvent id="endevent1" name="End"></endEvent>
-        <sequenceFlow id="flow9" name="" sourceRef="usertask7" targetRef="endevent1"></sequenceFlow>
-        <userTask id="usertask8" name="Assign to coverage" activiti:assignee="kermit"></userTask>
-        <sequenceFlow id="flow10" name="Eligble" sourceRef="exclusivegateway1" targetRef="usertask8"></sequenceFlow>
-        <userTask id="usertask9" name="Finalized/Enrolled" activiti:assignee="kermit"></userTask>
-        <sequenceFlow id="flow11" name="" sourceRef="usertask8" targetRef="usertask9"></sequenceFlow>
-        <userTask id="usertask10" name="Issue confirmation statements" activiti:assignee="kermit"></userTask>
-        <sequenceFlow id="flow12" name="" sourceRef="usertask9" targetRef="usertask10"></sequenceFlow>
-        <endEvent id="endevent2" name="End"></endEvent>
-        <sequenceFlow id="flow13" name="" sourceRef="usertask10" targetRef="endevent2"></sequenceFlow>
-    </process>
-    <bpmndi:BPMNDiagram id="BPMNDiagram_BenefitsAdministration-Ongoing">
-        <bpmndi:BPMNPlane bpmnElement="BenefitsAdministration-Ongoing" id="BPMNPlane_BenefitsAdministration-Ongoing">
-            <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
-                <omgdc:Bounds height="35" width="35" x="60" y="80"></omgdc:Bounds>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="usertask1" id="BPMNShape_usertask1">
-                <omgdc:Bounds height="91" width="105" x="110" y="52"></omgdc:Bounds>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="usertask2" id="BPMNShape_usertask2">
-                <omgdc:Bounds height="91" width="105" x="230" y="52"></omgdc:Bounds>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="usertask3" id="BPMNShape_usertask3">
-                <omgdc:Bounds height="91" width="105" x="350" y="52"></omgdc:Bounds>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="usertask4" id="BPMNShape_usertask4">
-                <omgdc:Bounds height="91" width="105" x="470" y="52"></omgdc:Bounds>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="usertask5" id="BPMNShape_usertask5">
-                <omgdc:Bounds height="91" width="105" x="590" y="52"></omgdc:Bounds>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="usertask6" id="BPMNShape_usertask6">
-                <omgdc:Bounds height="91" width="105" x="710" y="52"></omgdc:Bounds>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
-                <omgdc:Bounds height="40" width="40" x="854" y="77"></omgdc:Bounds>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="usertask7" id="BPMNShape_usertask7">
-                <omgdc:Bounds height="55" width="105" x="977" y="70"></omgdc:Bounds>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
-                <omgdc:Bounds height="35" width="35" x="1099" y="80"></omgdc:Bounds>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="usertask8" id="BPMNShape_usertask8">
-                <omgdc:Bounds height="55" width="105" x="822" y="180"></omgdc:Bounds>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="usertask9" id="BPMNShape_usertask9">
-                <omgdc:Bounds height="55" width="105" x="822" y="260"></omgdc:Bounds>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="usertask10" id="BPMNShape_usertask10">
-                <omgdc:Bounds height="55" width="105" x="822" y="340"></omgdc:Bounds>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="endevent2" id="BPMNShape_endevent2">
-                <omgdc:Bounds height="35" width="35" x="982" y="350"></omgdc:Bounds>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
-                <omgdi:waypoint x="95" y="97"></omgdi:waypoint>
-                <omgdi:waypoint x="110" y="97"></omgdi:waypoint>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
-                <omgdi:waypoint x="215" y="97"></omgdi:waypoint>
-                <omgdi:waypoint x="230" y="97"></omgdi:waypoint>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
-                <omgdi:waypoint x="335" y="97"></omgdi:waypoint>
-                <omgdi:waypoint x="350" y="97"></omgdi:waypoint>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
-                <omgdi:waypoint x="455" y="97"></omgdi:waypoint>
-                <omgdi:waypoint x="470" y="97"></omgdi:waypoint>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
-                <omgdi:waypoint x="575" y="97"></omgdi:waypoint>
-                <omgdi:waypoint x="590" y="97"></omgdi:waypoint>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
-                <omgdi:waypoint x="695" y="97"></omgdi:waypoint>
-                <omgdi:waypoint x="710" y="97"></omgdi:waypoint>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
-                <omgdi:waypoint x="815" y="97"></omgdi:waypoint>
-                <omgdi:waypoint x="854" y="97"></omgdi:waypoint>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
-                <omgdi:waypoint x="894" y="97"></omgdi:waypoint>
-                <omgdi:waypoint x="977" y="97"></omgdi:waypoint>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
-                <omgdi:waypoint x="1082" y="97"></omgdi:waypoint>
-                <omgdi:waypoint x="1099" y="97"></omgdi:waypoint>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
-                <omgdi:waypoint x="874" y="117"></omgdi:waypoint>
-                <omgdi:waypoint x="874" y="180"></omgdi:waypoint>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
-                <omgdi:waypoint x="874" y="235"></omgdi:waypoint>
-                <omgdi:waypoint x="874" y="260"></omgdi:waypoint>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
-                <omgdi:waypoint x="874" y="315"></omgdi:waypoint>
-                <omgdi:waypoint x="874" y="340"></omgdi:waypoint>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
-                <omgdi:waypoint x="927" y="367"></omgdi:waypoint>
-                <omgdi:waypoint x="982" y="367"></omgdi:waypoint>
-            </bpmndi:BPMNEdge>
-        </bpmndi:BPMNPlane>
-    </bpmndi:BPMNDiagram>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:yaoqiang="http://bpmn.sourceforge.net" exporter="Yaoqiang BPMN Editor" exporterVersion="2.1.31" expressionLanguage="http://www.w3.org/1999/XPath" id="_1395719364963" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://bpmn.sourceforge.net/schemas/BPMN20.xsd">
+  <process id="BenefitsAdministration-Ongoing" isClosed="false" isExecutable="true" name="Benefits Administration - Ongoing" processType="None">
+    <startEvent id="startevent1" isInterrupting="true" name="Start" parallelMultiple="false">
+      <outgoing>flow1</outgoing>
+    </startEvent>
+    <userTask activiti:assignee="kermit" completionQuantity="1" id="usertask1" implementation="##unspecified" isForCompensation="false" name="Review employee assignments" startQuantity="1">
+      <documentation id="usertask1_D_1" textFormat="text/plain"><![CDATA[_JSONEFFECT{
+  "Name": "Review employee assignments",
+  "Type": "activity",
+  
+  "QOS": {
+    "COST": "$20",
+    "TIME": "5m",
+    "SKILL": "LVL2"
+  },
+  
+  "EFFECT": [
+    "A & B",
+    "A & D"
+  ],
+  
+  "CONSTRAINT": [
+      "~C",
+      "~F",
+      "~G"
+      ],
+      
+    "GOAL": [
+        "A" 
+        ],
+    "RESOURCE":{
+        "COMPUTER-CPU": "10"
+    }
+}]]></documentation>
+      <incoming>flow1</incoming>
+      <outgoing>flow2</outgoing>
+    </userTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="usertask1"/>
+    <userTask activiti:assignee="kermit" completionQuantity="1" id="usertask2" implementation="##unspecified" isForCompensation="false" name="Correct  employee eligibility info" startQuantity="1">
+      <incoming>flow2</incoming>
+      <outgoing>flow3</outgoing>
+    </userTask>
+    <sequenceFlow id="flow2" sourceRef="usertask1" targetRef="usertask2"/>
+    <userTask activiti:assignee="kermit" completionQuantity="1" id="usertask3" implementation="##unspecified" isForCompensation="false" name="Determine population" startQuantity="1">
+      <incoming>flow3</incoming>
+      <outgoing>flow4</outgoing>
+    </userTask>
+    <sequenceFlow id="flow3" sourceRef="usertask2" targetRef="usertask3"/>
+    <userTask activiti:assignee="kermit" completionQuantity="1" id="usertask4" implementation="##unspecified" isForCompensation="false" name="Assign coverage to a group id" startQuantity="1">
+      <incoming>flow4</incoming>
+      <outgoing>flow5</outgoing>
+    </userTask>
+    <sequenceFlow id="flow4" sourceRef="usertask3" targetRef="usertask4"/>
+    <userTask activiti:assignee="kermit" completionQuantity="1" id="usertask5" implementation="##unspecified" isForCompensation="false" name="Use an open enrollment definition id" startQuantity="1">
+      <incoming>flow5</incoming>
+      <outgoing>flow6</outgoing>
+    </userTask>
+    <sequenceFlow id="flow5" sourceRef="usertask4" targetRef="usertask5"/>
+    <userTask activiti:assignee="kermit" completionQuantity="1" id="usertask6" implementation="##unspecified" isForCompensation="false" name="Generate enrollment forms" startQuantity="1">
+      <incoming>flow6</incoming>
+      <outgoing>flow7</outgoing>
+    </userTask>
+    <sequenceFlow id="flow6" sourceRef="usertask5" targetRef="usertask6"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway1" name="Exclusive Gateway">
+      <incoming>flow7</incoming>
+      <outgoing>flow8</outgoing>
+      <outgoing>flow10</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="flow7" sourceRef="usertask6" targetRef="exclusivegateway1"/>
+    <userTask activiti:assignee="kermit" completionQuantity="1" id="usertask7" implementation="##unspecified" isForCompensation="false" name="Do not assign to coverage" startQuantity="1">
+      <incoming>flow8</incoming>
+      <outgoing>flow14</outgoing>
+    </userTask>
+    <sequenceFlow id="flow8" name="Not Eligible" sourceRef="exclusivegateway1" targetRef="usertask7"/>
+    <userTask activiti:assignee="kermit" completionQuantity="1" id="usertask8" implementation="##unspecified" isForCompensation="false" name="Assign to coverage" startQuantity="1">
+      <incoming>flow10</incoming>
+      <outgoing>flow11</outgoing>
+    </userTask>
+    <sequenceFlow id="flow10" name="Eligble" sourceRef="exclusivegateway1" targetRef="usertask8"/>
+    <userTask activiti:assignee="kermit" completionQuantity="1" id="usertask9" implementation="##unspecified" isForCompensation="false" name="Finalized/Enrolled" startQuantity="1">
+      <incoming>flow11</incoming>
+      <outgoing>flow12</outgoing>
+    </userTask>
+    <sequenceFlow id="flow11" sourceRef="usertask8" targetRef="usertask9"/>
+    <userTask activiti:assignee="kermit" completionQuantity="1" id="usertask10" implementation="##unspecified" isForCompensation="false" name="Issue confirmation statements" startQuantity="1">
+      <incoming>flow12</incoming>
+      <outgoing>flow13</outgoing>
+    </userTask>
+    <sequenceFlow id="flow12" sourceRef="usertask9" targetRef="usertask10"/>
+    <endEvent id="endevent2" name="End">
+      <incoming>flow15</incoming>
+    </endEvent>
+    <sequenceFlow id="flow13" sourceRef="usertask10" targetRef="exclusivegateway2"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway2" name="Exclusive Gateway">
+      <incoming>flow13</incoming>
+      <incoming>flow14</incoming>
+      <outgoing>flow15</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="flow14" sourceRef="usertask7" targetRef="exclusivegateway2"/>
+    <sequenceFlow id="flow15" sourceRef="exclusivegateway2" targetRef="endevent2"/>
+  </process>
+  <bpmndi:BPMNDiagram documentation="background=#FFFFFF;count=1;horizontalcount=1;orientation=0;width=597.6;height=842.4;imageableWidth=587.6;imageableHeight=832.4;imageableX=5.0;imageableY=5.0" id="Yaoqiang_Diagram-_1" name="New Diagram">
+    <bpmndi:BPMNPlane bpmnElement="BenefitsAdministration-Ongoing">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="Yaoqiang-startevent1">
+        <omgdc:Bounds height="32.0" width="32.0" x="60.0" y="80.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask1" id="Yaoqiang-usertask1">
+        <omgdc:Bounds height="91.0" width="105.0" x="110.0" y="52.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="91.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask2" id="Yaoqiang-usertask2">
+        <omgdc:Bounds height="91.0" width="105.0" x="230.0" y="52.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="91.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask3" id="Yaoqiang-usertask3">
+        <omgdc:Bounds height="91.0" width="105.0" x="350.0" y="52.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="91.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask4" id="Yaoqiang-usertask4">
+        <omgdc:Bounds height="91.0" width="105.0" x="470.0" y="52.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="91.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask5" id="Yaoqiang-usertask5">
+        <omgdc:Bounds height="91.0" width="105.0" x="590.0" y="52.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="91.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask6" id="Yaoqiang-usertask6">
+        <omgdc:Bounds height="91.0" width="105.0" x="710.0" y="52.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="91.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="Yaoqiang-exclusivegateway1" isMarkerVisible="false">
+        <omgdc:Bounds height="42.0" width="42.0" x="854.0" y="77.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="42.0" width="42.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask7" id="Yaoqiang-usertask7">
+        <omgdc:Bounds height="55.0" width="105.0" x="977.0" y="70.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask8" id="Yaoqiang-usertask8">
+        <omgdc:Bounds height="55.0" width="105.0" x="822.0" y="180.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask9" id="Yaoqiang-usertask9">
+        <omgdc:Bounds height="55.0" width="105.0" x="822.0" y="260.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask10" id="Yaoqiang-usertask10">
+        <omgdc:Bounds height="55.0" width="105.0" x="822.0" y="340.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent2" id="Yaoqiang-endevent2">
+        <omgdc:Bounds height="32.0" width="32.0" x="1100.0" y="350.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="Yaoqiang-exclusivegateway2" isMarkerVisible="false">
+        <omgdc:Bounds height="42.0" width="42.0" x="1009.0" y="220.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="42.0" width="42.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow15" id="Yaoqiang-flow15" sourceElement="exclusivegateway2" targetElement="endevent2">
+        <omgdi:waypoint x="1029.0" y="260.5"/>
+        <omgdi:waypoint x="1029.0" y="367.0"/>
+        <omgdi:waypoint x="1100.5312805773287" y="367.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow14" id="Yaoqiang-flow14" sourceElement="usertask7" targetElement="exclusivegateway2">
+        <omgdi:waypoint x="1030.0" y="125.0"/>
+        <omgdi:waypoint x="1030.0" y="220.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="Yaoqiang-flow13" sourceElement="usertask10" targetElement="exclusivegateway2">
+        <omgdi:waypoint x="927.5" y="367.0"/>
+        <omgdi:waypoint x="1028.0" y="367.0"/>
+        <omgdi:waypoint x="1028.0" y="259.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="Yaoqiang-flow12" sourceElement="usertask9" targetElement="usertask10">
+        <omgdi:waypoint x="874.5" y="315.0"/>
+        <omgdi:waypoint x="874.5" y="340.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="Yaoqiang-flow11" sourceElement="usertask8" targetElement="usertask9">
+        <omgdi:waypoint x="874.5" y="235.0"/>
+        <omgdi:waypoint x="874.5" y="260.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="Yaoqiang-flow10" sourceElement="exclusivegateway1" targetElement="usertask8">
+        <omgdi:waypoint x="875.0" y="118.5"/>
+        <omgdi:waypoint x="875.0" y="180.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="Yaoqiang-flow8" sourceElement="exclusivegateway1" targetElement="usertask7">
+        <omgdi:waypoint x="896.5" y="98.0"/>
+        <omgdi:waypoint x="977.5" y="97.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="Yaoqiang-flow7" sourceElement="usertask6" targetElement="exclusivegateway1">
+        <omgdi:waypoint x="815.5" y="97.5"/>
+        <omgdi:waypoint x="854.5" y="98.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="Yaoqiang-flow6" sourceElement="usertask5" targetElement="usertask6">
+        <omgdi:waypoint x="695.5" y="97.5"/>
+        <omgdi:waypoint x="710.5" y="97.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="Yaoqiang-flow5" sourceElement="usertask4" targetElement="usertask5">
+        <omgdi:waypoint x="575.5" y="97.5"/>
+        <omgdi:waypoint x="590.5" y="97.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="Yaoqiang-flow4" sourceElement="usertask3" targetElement="usertask4">
+        <omgdi:waypoint x="455.5" y="97.5"/>
+        <omgdi:waypoint x="470.5" y="97.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="Yaoqiang-flow3" sourceElement="usertask2" targetElement="usertask3">
+        <omgdi:waypoint x="335.5" y="97.5"/>
+        <omgdi:waypoint x="350.5" y="97.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="Yaoqiang-flow2" sourceElement="usertask1" targetElement="usertask2">
+        <omgdi:waypoint x="215.5" y="97.5"/>
+        <omgdi:waypoint x="230.5" y="97.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="Yaoqiang-flow1" sourceElement="startevent1" targetElement="usertask1">
+        <omgdi:waypoint x="92.5" y="96.0"/>
+        <omgdi:waypoint x="110.5" y="97.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
 </definitions>

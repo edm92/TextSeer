@@ -159,6 +159,7 @@ public class GraphLoader {
     public static final int CallActivity = "org.yaoqiang.bpmn.model.elements.activities.CallActivity".hashCode();
     public static final int SubProcess = "org.yaoqiang.bpmn.model.elements.activities.SubProcess".hashCode();
     public static final int Documentation = "org.yaoqiang.bpmn.model.elements.core.foundation.Documentation".hashCode();
+    public static final int BPMNPlane = "org.yaoqiang.bpmn.model.elements.bpmndi.BPMNPlane".hashCode(); // Useless
 
     public static String getType(int _type) {
         if (_type == ExclusiveGateway) return "ExclusiveGateway";
@@ -451,6 +452,11 @@ public class GraphLoader {
             MessageFlow r = (MessageFlow) _ele;
             TEdge myEdge = new TEdge(r.getId(), r.getName(), r.getSourceRef(), r.getTargetRef(), SequenceFlow, _ele);
             tEdges.put(r.getId(), myEdge);
+            return;
+        }
+        if( hashCode == BPMNPlane){
+            // Can't see why this is important?
+            // Ignoring
             return;
         }
 

@@ -21,7 +21,14 @@ public class BPMN2ModelLoadingExample {
         //// Real start of program below	/////
         /////////////////////////////////////////
 
+        Graph<Vertex, Edge> g1 = GraphLoader.loadModel("models/Benefits Administration - Ongoing.bpmn20.xml");
+        System.out.println("G1-" + g1);
+        GraphChecker g1Checker = new GraphChecker();
+        System.out.println("G1 Test: " + g1Checker.CheckGraph(g1));
 
+        System.out.println("Doc = " + g1.documentation );
+
+/* 2014-03-25 Commented during updated
         Graph<Vertex, Edge> g1 = GraphLoader.loadModel("models/proc1.bpmn20.xml");
         System.out.println("G1-" + g1);
 
@@ -34,6 +41,7 @@ public class BPMN2ModelLoadingExample {
         GraphChecker g2Checker = new GraphChecker();
         System.out.println("G1 Test: " + g1Checker.CheckGraph(g1));
         System.out.println("G2 Test: " + g2Checker.CheckGraph(g2));
+*/
 
         // The jbpt algorithms appear mangled for their DirectedGraphAlgorithms, to use these functions
         // we need to recreate all edges with a new interface. Something to do later

@@ -35,5 +35,6 @@
 	<classpathentry kind="lib" path="lib/wstx-asl-3.2.6.jar"/>
 	<classpathentry kind="lib" path="lib/yaoqiang-bpmn-editor-2.1.21.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.8-bin.jar"/>
+	<classpathentry kind="lib" path="lib/categories.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

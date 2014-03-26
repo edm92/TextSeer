@@ -57,7 +57,7 @@ public class WFF implements Serializable {
     ;
 
     public void setFormula(String newFormula) {
-        if (newFormula == null) formulaText = e.EMPTY_FORMULA;
+        if (newFormula == null || newFormula.trim().length() < 1) formulaText = e.EMPTY_FORMULA;
         else formulaText = newFormula;
         try {
             formula = (Formula) logic.createExpression(formulaText);
@@ -65,6 +65,8 @@ public class WFF implements Serializable {
         } catch (Exception e) {
             //e.printStackTrace();
         }
+
+//        if(formulaText.compareTo(e.EMPTY_FORMULA) != 0) a.e.println("Setting a new formula" + newFormula);
     }
 
     ;

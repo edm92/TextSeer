@@ -1,11 +1,15 @@
 package be.fnord.util.processModel;
 
+import be.fnord.util.QUAL.JSONEFFECT;
 import be.fnord.util.logic.WFF;
 import be.fnord.util.processModel.util.GraphLoader;
 
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.UUID;
+
+import com.google.gson.Gson;
 
 /**
  * @author Evan Morrison edm92@uowmail.edu.au http://www.fnord.be
@@ -28,7 +32,8 @@ public class Vertex extends Graph<Vertex, Edge> {
 
     private String WFF = "";
     private WFF immWFF = new WFF();
-    private WFF cumWFF = new WFF(); // Include cumulative effects
+    public LinkedHashSet<WFF> cumWFF = new LinkedHashSet<WFF>(); // Include cumulative effects
+    private JSONEFFECT jsEFF = null; // Extended effects
 
     public Vertex corresponding = null;
     public LinkedList<String> boundaryRefs = new LinkedList<String>();
@@ -81,7 +86,14 @@ public class Vertex extends Graph<Vertex, Edge> {
     ;
 
     public void setWFF(String _WFF) {
-        WFF = _WFF;
+    	// New effects
+    	if(_WFF.contains("_JSONEFFECT")){
+    		_WFF = _WFF.replaceAll("_JSONEFFECT", "").trim();
+    		Gson gson = new Gson();
+    		jsEFF = gson.fromJson(_WFF, JSONEFFECT.class); 
+    		WFF = jsEFF.getEffect();
+    	}else
+    		WFF = _WFF;
     }
 
     public void addWFF(String _WFF) {

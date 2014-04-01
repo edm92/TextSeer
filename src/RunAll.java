@@ -12,7 +12,7 @@ public class RunAll {
 
         AbductiveExample.main(args);
         AccumulationExample.main(args);
-//        BPMN2ModelLoadingExample.main(args);
+        BPMN2ModelLoadingExample.main(args);
         DecisionFreeGraphConversion.main(args);
         DefaultLogicExample.main(args);
         LogicExample.main(args);

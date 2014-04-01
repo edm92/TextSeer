@@ -23,7 +23,7 @@ public class Graph<v extends Vertex, e extends Edge> extends DefaultDirectedGrap
     public static final int MAX_PATH_LENGTH = 100; // Set higher if your graph isn't working out
 
 
-    public HashSet<WFF> WFFs;
+//    public HashSet<WFF> WFFs; // Deleted on 1/4
     public String filename = "";
     public String documentation = "";
     //	public String name = "";

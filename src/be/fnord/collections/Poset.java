@@ -86,7 +86,7 @@ public class Poset {
 		}
 		
 		public <T> boolean lt(T a, T b){
-			if(leq(a,b) && !eq(a,b)) return true;
+			if(leq(a,b) && !leq(b,a)) return true;
 			else return false;
 		}
 

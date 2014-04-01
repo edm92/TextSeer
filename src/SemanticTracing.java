@@ -45,8 +45,9 @@ public class SemanticTracing {
         LinkedList<Trace> traces = new LinkedList<Trace>();
         // For details of below refer to Decision free graph conversion and
         // model loading
+        GraphLoader gLoader = new GraphLoader();
         Graph<Vertex, Edge> g1 =
-                GraphLoader.loadModel(
+        		gLoader.loadModel(
                         pathOfModel, a.e.DONT_SAVE_MESSAGES_AND_PARTICIPANTS);
         LinkedList<Graph<Vertex, Edge>> _decisionless =
                 GraphTransformer.makeDecisionFree(g1);

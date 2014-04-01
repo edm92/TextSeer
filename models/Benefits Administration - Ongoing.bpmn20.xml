@@ -6,38 +6,52 @@
     </startEvent>
     <userTask activiti:assignee="kermit" completionQuantity="1" id="usertask1" implementation="##unspecified" isForCompensation="false" name="Review employee assignments" startQuantity="1">
       <documentation id="usertask1_D_1" textFormat="text/plain"><![CDATA[_JSONEFFECT{
-  "Name": "Review employee assignments",
-  "Type": "activity",
-  
-  "QOS": {
-    "COST": "$20",
-    "TIME": "5m",
-    "SKILL": "LVL2"
-  },
-  
-  "EFFECT": [
-    "A & B",
-    "A & D"
-  ],
-  
-  "CONSTRAINT": [
-      "~C",
-      "~F",
-      "~G"
-      ],
-      
-    "GOAL": [
-        "A" 
-        ],
-    "RESOURCE":{
-        "COMPUTER-CPU": "10"
-    }
+    "Name": "TestName",
+    "Type": "Activity",
+    "QOS": {
+        "COST": "$10",
+        "TIME": "10m",
+        "SKILL": "LVL80"
+    },
+    "EFFECT": [
+        "A",
+        "B",
+        "C"
+    ],
+    "CONSTRAINT": [
+        "~A",
+        "B",
+        "C"
+    ],
+    "GOAL": [],
+    "RESOURCE": []
 }]]></documentation>
       <incoming>flow1</incoming>
       <outgoing>flow2</outgoing>
     </userTask>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="usertask1"/>
     <userTask activiti:assignee="kermit" completionQuantity="1" id="usertask2" implementation="##unspecified" isForCompensation="false" name="Correct  employee eligibility info" startQuantity="1">
+      <documentation id="usertask2_D_1" textFormat="text/plain"><![CDATA[_JSONEFFECT{
+  "Name": "TestName",
+  "Type": "Activity",
+  "QOS": {
+    "COST": "$10",
+    "TIME": "10m",
+    "SKILL": "LVL80"
+  },
+  "EFFECT": [
+    "A & B",
+    "B & ~C",
+    "~C & D"
+  ],
+  "CONSTRAINT": [
+    "~A",
+    "B",
+    "C"
+  ],
+  "GOAL": [],
+  "RESOURCE": []
+}]]></documentation>
       <incoming>flow2</incoming>
       <outgoing>flow3</outgoing>
     </userTask>

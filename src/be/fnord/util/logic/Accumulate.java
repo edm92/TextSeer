@@ -55,6 +55,8 @@ public class Accumulate implements Serializable {
                     Accumulate acc = new Accumulate(); // Needed because of
                     // semi-static variables
                     intEff.addAll(acc.pairwise_acc(ce, v.getWFF(), kb, true));
+                    if(intEff != null)
+                    v.cumWFF.addAll(intEff);	// Copy current intimediate effect to our cummulative effects
 
                 }
             }

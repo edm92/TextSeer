@@ -33,11 +33,11 @@ public class GraphLoader {
     public static final boolean __DEBUG = a.e.__DEBUG;
 
 
-    public static Graph<Vertex, Edge> loadModel(String filename) {
+    public Graph<Vertex, Edge> loadModel(String filename) {
         return loadModel(filename, a.e.NO_FLAGS);
     }
 
-    public static Graph<Vertex, Edge> loadModel(String filename, int flags) {
+    public Graph<Vertex, Edge> loadModel(String filename, int flags) {
         Graph<Vertex, Edge> myModel = new Graph<Vertex, Edge>(Edge.class);
         Document document = null;
         document = BPMNModelUtils.parseDocument(filename, true, new LinkedList<ErrorMessage>());
@@ -191,7 +191,7 @@ public class GraphLoader {
      * Updated converter function for all XMLElements
      * used when processing value elements of myCodec.getBPMNElementMap()
      */
-    public static void saveElement(XMLElement _ele, int getMessages, String documentation) {
+    public void saveElement(XMLElement _ele, int getMessages, String documentation) {
         String _name = _ele.getClass().getCanonicalName();
         int hashCode = _name.hashCode();
         if (hashCode == BPMNShape) {

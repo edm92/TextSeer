@@ -38,8 +38,9 @@ public class DecisionFreeGraphConversion {
         //// Real start of program below	/////
         /////////////////////////////////////////
 
+        GraphLoader gLoader = new GraphLoader();
 //		Graph<Vertex,Edge> g1 = GraphLoader.loadModel("models/MultiGateTest.bpmn20.xml", a.e.DONT_SAVE_MESSAGES_AND_PARTICIPANTS);
-        Graph<Vertex, Edge> g1 = GraphLoader.loadModel("models/Model1.bpmn20.xml", a.e.DONT_SAVE_MESSAGES_AND_PARTICIPANTS);
+        Graph<Vertex, Edge> g1 = gLoader.loadModel("models/Model1.bpmn20.xml", a.e.DONT_SAVE_MESSAGES_AND_PARTICIPANTS);
 //		System.out.println("G1-" + g1);
         GraphChecker gc = new GraphChecker();
         if (!gc.CheckEventsAndGateways(g1)) a.e.println("Issue checking events and gateways");

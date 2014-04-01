@@ -64,7 +64,8 @@ public class AccumulationExample {
     public static LinkedList<Trace> loadModel() {
         LinkedList<Trace> traces = new LinkedList<Trace>();
         // For details of below refer to Decision free graph conversion and model loading
-        Graph<Vertex, Edge> g1 = GraphLoader.loadModel("models/Model1.bpmn20.xml", a.e.DONT_SAVE_MESSAGES_AND_PARTICIPANTS);
+        GraphLoader gLoader = new GraphLoader();
+        Graph<Vertex, Edge> g1 = gLoader.loadModel("models/Benefits Administration - Ongoing.bpmn20.xml", a.e.DONT_SAVE_MESSAGES_AND_PARTICIPANTS);
         LinkedList<Graph<Vertex, Edge>> _decisionless = GraphTransformer.makeDecisionFree(g1);
         LinkedList<Graph<Vertex, Edge>> decisionless = GraphTransformer.removeDupesFromDecisionFreeGraphs(_decisionless);
         for (Graph<Vertex, Edge> g : decisionless) {

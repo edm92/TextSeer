@@ -9,9 +9,9 @@ public class Qos {
 	public String SKILL;
 	
 	public Qos(){
-		COST = "$10";
-		TIME = "10m";
-		SKILL = "LVL80";
+		COST = "";
+		TIME = "";
+		SKILL = "";
 	}
 	
 	public String getCOST() {

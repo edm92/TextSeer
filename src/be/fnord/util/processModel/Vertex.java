@@ -33,7 +33,7 @@ public class Vertex extends Graph<Vertex, Edge> {
     private String WFF = "";
     private WFF immWFF = new WFF();
     public LinkedHashSet<WFF> cumWFF = new LinkedHashSet<WFF>(); // Include cumulative effects
-    private JSONEFFECT jsEFF = null; // Extended effects
+    public JSONEFFECT jsEFF = null; // Extended effects
 
     public Vertex corresponding = null;
     public LinkedList<String> boundaryRefs = new LinkedList<String>();

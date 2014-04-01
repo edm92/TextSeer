@@ -28,8 +28,8 @@ public class JSONEFFECT {
 		Name = "TestName";
 		Type = "Activity";
 		QOS = new Qos();
-		EFFECT = new String[] {"A", "B","C"};
-		CONSTRAINT = new String [] {"~A", "B", "C"};
+		EFFECT = new String[] {};
+		CONSTRAINT = new String [] {};
 		GOAL = new String [] {};
 		RESOURCE = new String []{};
 		

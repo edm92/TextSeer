@@ -11,7 +11,7 @@ import java.util.LinkedHashSet;
  *
  * @author Xiong Wen (xw926@uowmail.edu.au)
  */
-public class Accumulate_4ST extends Accumulate {
+public class Accumulate_4ST extends EffectAccumulate {
 
     private static final long serialVersionUID = 1L;
     private static final boolean _DEBUG = false; // a.e.__DEBUG;

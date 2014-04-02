@@ -27,7 +27,7 @@ import java.util.Set;
  *
  * @author edm92
  */
-public class Accumulate implements Serializable {
+public class EffectAccumulate implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private transient Formula formula;
@@ -52,7 +52,7 @@ public class Accumulate implements Serializable {
             for (WFF ce : currentEff) {
                 if (!v.getWFF().isEmpty()) {
                     intEff.remove(ce);
-                    Accumulate acc = new Accumulate(); // Needed because of
+                    EffectAccumulate acc = new EffectAccumulate(); // Needed because of
                     // semi-static variables
                     intEff.addAll(acc.pairwise_acc(ce, v.getWFF(), kb, true));
                     if(intEff != null)

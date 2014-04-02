@@ -27,6 +27,12 @@ public class JSONEFFECT {
 		return _result;
 	}
 	
+	public boolean isEmpty(){
+		if(Name.length() > 0 && Type.length() > 0) return false;
+		
+		return true;
+	}
+	
 	// Accumulate 
 	public LinkedHashSet<JSONEFFECT> pairwise_acc(JSONEFFECT source, JSONEFFECT target, String KB) {
 		JSONEFFECT _result = target.copy();

@@ -1,4 +1,6 @@
-import be.fnord.util.logic.Accumulate;
+import be.fnord.util.QUAL.JSONEFFECT;
+import be.fnord.util.QUAL.QOSAccumulate;
+import be.fnord.util.logic.EffectAccumulate;
 import be.fnord.util.logic.WFF;
 import be.fnord.util.processModel.Edge;
 import be.fnord.util.processModel.Graph;
@@ -37,7 +39,8 @@ public class AccumulationExample {
         // Store our traces in a list
         LinkedList<Trace> traces = loadModel();    // Loading a model and convert into a set of traces
 
-        Accumulate acc = new Accumulate();
+        EffectAccumulate acc = new EffectAccumulate();
+        QOSAccumulate acc2 = new QOSAccumulate();
 
 
         // Iterate through each trace.
@@ -48,11 +51,19 @@ public class AccumulationExample {
 //					a.e.println("Vertex effect " + v.getWFF());
 //				}
                 LinkedHashSet<WFF> _ee = acc.trace_acc(t, "((a & b) -> ~c)");
+                LinkedHashSet<JSONEFFECT> _ee2 = acc2.trace_acc(t, "");
                 // Display Results
                 for (WFF e : _ee) {
                     if (e.isEmpty()) continue;
                     System.out.println("Effect scenario resulting from acc: " + e);
                     System.out.println("Checking if " + e + " is consistent : " + e.issat());
+
+                }
+             // Display Results
+                for (JSONEFFECT e : _ee2) {
+                    if (e.isEmpty()) continue;
+                    System.out.println("Effect scenario resulting from acc: " + e);
+                    
 
                 }
             }

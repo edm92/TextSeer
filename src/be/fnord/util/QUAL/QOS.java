@@ -13,6 +13,7 @@ import be.fnord.util.QUAL.Prefs.PREF_FUNC;
 
 /**
  * Created by edm92 on 25/03/2014.
+ * TODO add an isempty command
  */
 public class Qos {
 	public String COST;

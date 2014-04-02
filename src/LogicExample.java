@@ -1,4 +1,4 @@
-import be.fnord.util.logic.Accumulate;
+import be.fnord.util.logic.EffectAccumulate;
 import be.fnord.util.logic.WFF;
 
 import java.util.LinkedHashSet;
@@ -53,7 +53,7 @@ public class LogicExample {
         System.out.println("Checking if " + e1 + " entails " + e2 + " : " + e1.entails(e2));
 
         // Accumulation class is a non-static class
-        Accumulate acc = new Accumulate();
+        EffectAccumulate acc = new EffectAccumulate();
         // Do accumulation
         LinkedHashSet<WFF> resultEffects = acc.pairwise_acc(e1, e2, "~e", true);
 

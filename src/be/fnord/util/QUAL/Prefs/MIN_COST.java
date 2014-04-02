@@ -45,7 +45,7 @@ public class MIN_COST extends Preferences<Float> implements PREF_FUNC{
 			_b = (Double)bb;
 		}	
 		
-		return _a >= _b;
+		return _a <= _b;
 	}
 	
 	public static void main(String [] args){
@@ -88,7 +88,7 @@ public class MIN_COST extends Preferences<Float> implements PREF_FUNC{
 			_a = (Double)aa;
 			_b = (Double)bb;
 		}	
-		return ((_a + _b)%top) + "";
+		return ((_a + _b)) + "";
 	}
 }
 

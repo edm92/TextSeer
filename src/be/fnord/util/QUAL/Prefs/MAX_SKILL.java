@@ -7,7 +7,7 @@ import java.util.TreeSet;
 import be.fnord.collections.Pair;
 import be.fnord.collections.Poset;
 
-public class MAX_HIGH_MED_LOW extends Preferences implements PREF_FUNC{
+public class MAX_SKILL extends Preferences implements PREF_FUNC{
     
     public enum hml{
     	HIGH("HIGH"), MED("MED"), LOW("LOW");
@@ -38,7 +38,7 @@ public class MAX_HIGH_MED_LOW extends Preferences implements PREF_FUNC{
 	static hml bot = hml.LOW;
 	Poset hmlSet; 
 	
-	public MAX_HIGH_MED_LOW(){
+	public MAX_SKILL(){
 		super();
 		setup();
 	}
@@ -52,17 +52,15 @@ public class MAX_HIGH_MED_LOW extends Preferences implements PREF_FUNC{
 		s.add(hml.LOW.toString());
 		hmlSet = new Poset(); 
 		hmlSet.List(
-				P(hml.HIGH , hml.MED),
-				P(hml.MED , hml.LOW)
+				P(hml.HIGH.toString() , hml.MED.toString()),
+				P(hml.MED.toString() , hml.LOW.toString())
 				);
-
-	
 	}
 
 	
 
 	public static void main(String [] args){
-		MAX_HIGH_MED_LOW m = new MAX_HIGH_MED_LOW();
+		MAX_SKILL m = new MAX_SKILL();
 		a.e.println("isBetter(bot,top) = " + m.compare(bot,top));
 		a.e.println("isBetter(top,bot) = " + m.compare(top,bot));
 		a.e.println("isBetter(top,MED) = " + m.compare(top,hml.MED));

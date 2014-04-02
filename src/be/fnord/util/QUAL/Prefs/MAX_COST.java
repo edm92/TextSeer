@@ -10,9 +10,7 @@ public class MAX_COST extends Preferences<Float> implements PREF_FUNC{
 	public MAX_COST(){
 		super();
 	}
-	
-	
-	
+		
 	public <T> boolean compare(T aa, T bb){
 		double _a = 0;
 		double _b = 0; 

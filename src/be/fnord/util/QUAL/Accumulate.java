@@ -49,14 +49,13 @@ public class Accumulate {
 
     public LinkedHashSet<JSONEFFECT> pairwise_acc(
     		JSONEFFECT source, JSONEFFECT target, String KB, boolean distrobute) {
-
+    	// Do distribution stuff here
         return pairwise_acc(source, target, KB);
     }
 
     private LinkedHashSet<JSONEFFECT> pairwise_acc(JSONEFFECT source, JSONEFFECT target, String KB) {
-    	LinkedHashSet<JSONEFFECT> _result = null;
-		 
-		return _result;
+    	
+		return source.pairwise_acc(source, target, KB);
     	
     }
 

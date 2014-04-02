@@ -90,6 +90,10 @@ public class e {
         ;
         return result;
     }
+    
+    public static String err(String msg){
+    	return println(msg, DEBUG);
+    }
 
     /**
      * Simple toString function, input a message and all indenting is done before returning

@@ -11,19 +11,40 @@ public class MAX_COST extends Preferences<Float> implements PREF_FUNC{
 		super();
 	}
 	
-	public <T> boolean compare(T a, T b){
+	
+	
+	public <T> boolean compare(T aa, T bb){
 		double _a = 0;
 		double _b = 0; 
-		if(a == null || b == null) return false;
-		if( a.getClass().equals(Integer.class) ){
-			_a = (double) ((Integer)a + .0);
-			_b = (double) ((Integer)b + .0);
-		}else if(a.getClass().equals(Float.class)){
-			_a = (double) ((Float)a + .0);
-			_b = (double) ((Float)b + .0);
-		}else if(a.getClass().equals(Double.class)){
-			_a = (Double)a;
-			_b = (Double)b;
+		if(aa == null || bb == null) return false;
+		if( aa.getClass().equals(String.class) ){
+			try{
+				String _aa = (String)aa;
+				String _bb = (String)bb;
+				_aa = _aa.replaceAll("\\$", "").trim();
+				_aa = _aa.replaceAll(",", "").trim();
+				_aa = _aa.replaceAll("c", "").trim();
+				
+				_bb = _bb.replaceAll("\\$", "").trim();
+				_bb = _bb.replaceAll(",", "").trim();
+				_bb = _bb.replaceAll("c", "").trim();
+				
+				_a = Double.parseDouble((String) _aa);
+				_b = Double.parseDouble((String) _bb);
+				
+			}catch(Exception e){
+				a.e.err("error in input " + e);
+			}
+		}else
+		if( aa.getClass().equals(Integer.class) ){
+			_a = (double) ((Integer)aa + .0);
+			_b = (double) ((Integer)bb + .0);
+		}else if(aa.getClass().equals(Float.class)){
+			_a = (double) ((Float)aa + .0);
+			_b = (double) ((Float)bb + .0);
+		}else if(aa.getClass().equals(Double.class)){
+			_a = (Double)aa;
+			_b = (Double)bb;
 		}	
 		
 		return _a >= _b;
@@ -31,26 +52,43 @@ public class MAX_COST extends Preferences<Float> implements PREF_FUNC{
 	
 	public static void main(String [] args){
 		MAX_COST m = new MAX_COST();
-		a.e.println("isBetter(1,2) = " + m.compare(1,2));
-		a.e.println("isBetter(2,1) = " + m.compare(2,1));
-		a.e.println("Combine(2,1) = " + m.combine(2,1));
-		if(m.compare(bot,top)) a.e.println("Bot rules" + top);
-		if(m.compare(top,bot)) a.e.println("Top rules" + top);
+		a.e.println("isBetter($10,$20.50) = " + m.compare("$10","$20.50"));
+		a.e.println("isBetter($10.01,$10) = " + m.compare("$10.01","10"));
+		a.e.println("Combine($10.25,20.75) = " + m.combine("$10.25","20.75"));
+		if(m.compare(bot,top)) a.e.println("Bot rules " + top);
+		if(m.compare(top,bot)) a.e.println("Top rules " + top);
 	}
 
 	@Override
-	public <T> String combine(T a, T b) {
+	public <T> String combine(T aa, T bb) {
 		double _a = 0;
 		double _b = 0; 
-		if( a.getClass().equals(Integer.class) ){
-			_a = (double) ((Integer)a + .0);
-			_b = (double) ((Integer)b + .0);
-		}else if(a.getClass().equals(Float.class)){
-			_a = (Double)a;
-			_b = (Double)b;
-		}else if(a.getClass().equals(Double.class)){
-			_a = (Double)a;
-			_b = (Double)b;
+		if( aa.getClass().equals(String.class) ){
+			try{
+				String _aa = (String)aa;
+				String _bb = (String)bb;
+				_aa = _aa.replaceAll("\\$", "").trim();
+				_aa = _aa.replaceAll(",", "").trim();
+				_aa = _aa.replaceAll("c", "").trim();
+				
+				_bb = _bb.replaceAll("\\$", "").trim();
+				_bb = _bb.replaceAll(",", "").trim();
+				_bb = _bb.replaceAll("c", "").trim();
+				_a = Double.parseDouble((String) _aa);
+				_b = Double.parseDouble((String) _bb);
+			}catch(Exception e){
+				a.e.err("error in input " + e);
+			}
+		}else
+		if( aa.getClass().equals(Integer.class) ){
+			_a = (double) ((Integer)aa + .0);
+			_b = (double) ((Integer)bb + .0);
+		}else if(aa.getClass().equals(Float.class)){
+			_a = (Double)aa;
+			_b = (Double)bb;
+		}else if(aa.getClass().equals(Double.class)){
+			_a = (Double)aa;
+			_b = (Double)bb;
 		}	
 		return ((_a + _b)%top) + "";
 	}

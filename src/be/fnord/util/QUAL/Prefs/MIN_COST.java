@@ -2,23 +2,34 @@ package be.fnord.util.QUAL.Prefs;
 
 import be.fnord.util.QUAL.Prefs.Ranges.type;
 
-public class MAX_PERCENT extends Preferences<Float> implements PREF_FUNC{
+public class MIN_COST extends Preferences<Float> implements PREF_FUNC{
 	type range = Ranges.type.POS_REAL_NUM;
-	static double top = 1;
-	static double bot = 0;
+	static float top = 0;
+	static float bot = Ranges.INFTY;
 	
-	public MAX_PERCENT(){
+	public MIN_COST(){
 		super();
 	}
-	
+		
 	public <T> boolean compare(T aa, T bb){
 		double _a = 0;
 		double _b = 0; 
 		if(aa == null || bb == null) return false;
 		if( aa.getClass().equals(String.class) ){
 			try{
-				_a = Double.parseDouble((String) aa);
-				_b = Double.parseDouble((String) bb);
+				String _aa = (String)aa;
+				String _bb = (String)bb;
+				_aa = _aa.replaceAll("\\$", "").trim();
+				_aa = _aa.replaceAll(",", "").trim();
+				_aa = _aa.replaceAll("c", "").trim();
+				
+				_bb = _bb.replaceAll("\\$", "").trim();
+				_bb = _bb.replaceAll(",", "").trim();
+				_bb = _bb.replaceAll("c", "").trim();
+				
+				_a = Double.parseDouble((String) _aa);
+				_b = Double.parseDouble((String) _bb);
+				
 			}catch(Exception e){
 				a.e.err("error in input " + e);
 			}
@@ -38,12 +49,12 @@ public class MAX_PERCENT extends Preferences<Float> implements PREF_FUNC{
 	}
 	
 	public static void main(String [] args){
-		MAX_PERCENT m = new MAX_PERCENT();
-		a.e.println("isBetter(.1,.2) = " + m.compare(.1,.2));
-		a.e.println("isBetter(.2,.1) = " + m.compare(.2,.1));
-		a.e.println("Combine(.2,.1) = " + m.combine(.2,.1));
-		if(m.compare(bot,top)) a.e.println("Bot rules" + top);
-		if(m.compare(top,bot)) a.e.println("Top rules" + top);
+		MIN_COST m = new MIN_COST();
+		a.e.println("isBetter($10,$20.50) = " + m.compare("$10","$20.50"));
+		a.e.println("isBetter($10.01,$10) = " + m.compare("$10.01","10"));
+		a.e.println("Combine($10.25,20.75) = " + m.combine("$10.25","20.75"));
+		if(m.compare(bot,top)) a.e.println("Bot rules " + top);
+		if(m.compare(top,bot)) a.e.println("Top rules " + top);
 	}
 
 	@Override
@@ -52,8 +63,17 @@ public class MAX_PERCENT extends Preferences<Float> implements PREF_FUNC{
 		double _b = 0; 
 		if( aa.getClass().equals(String.class) ){
 			try{
-				_a = Double.parseDouble((String) aa);
-				_b = Double.parseDouble((String) bb);
+				String _aa = (String)aa;
+				String _bb = (String)bb;
+				_aa = _aa.replaceAll("\\$", "").trim();
+				_aa = _aa.replaceAll(",", "").trim();
+				_aa = _aa.replaceAll("c", "").trim();
+				
+				_bb = _bb.replaceAll("\\$", "").trim();
+				_bb = _bb.replaceAll(",", "").trim();
+				_bb = _bb.replaceAll("c", "").trim();
+				_a = Double.parseDouble((String) _aa);
+				_b = Double.parseDouble((String) _bb);
 			}catch(Exception e){
 				a.e.err("error in input " + e);
 			}
@@ -62,14 +82,13 @@ public class MAX_PERCENT extends Preferences<Float> implements PREF_FUNC{
 			_a = (double) ((Integer)aa + .0);
 			_b = (double) ((Integer)bb + .0);
 		}else if(aa.getClass().equals(Float.class)){
-			_a = (double) ((Float)aa + .0);
-			_b = (double) ((Float)bb + .0);
+			_a = (Double)aa;
+			_b = (Double)bb;
 		}else if(aa.getClass().equals(Double.class)){
 			_a = (Double)aa;
 			_b = (Double)bb;
 		}	
-		double _com = ((_a * _b));
-		return _com%top + "";
+		return ((_a + _b)%top) + "";
 	}
 }
 

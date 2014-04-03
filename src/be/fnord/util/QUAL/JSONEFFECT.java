@@ -81,5 +81,11 @@ public class JSONEFFECT {
 		RESOURCE = new String []{};
 		
 	}
+	
+	public String toString(){
+		String _result = "";
+		_result = "QOS:" + QOS + "; EFFECT:" + EFFECT + "; CONSTRAINT: " + CONSTRAINT + "; GOAL: " + GOAL + "; RESOURCE: " +RESOURCE +";";
+		return _result;
+	}
 
 }

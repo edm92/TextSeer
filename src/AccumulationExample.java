@@ -78,12 +78,14 @@ public class AccumulationExample {
         GraphLoader gLoader = new GraphLoader();
         Graph<Vertex, Edge> g1 = gLoader.loadModel("models/Benefits Administration - Ongoing.bpmn20.xml", a.e.DONT_SAVE_MESSAGES_AND_PARTICIPANTS);
         LinkedList<Graph<Vertex, Edge>> _decisionless = GraphTransformer.makeDecisionFree(g1);
+        
         LinkedList<Graph<Vertex, Edge>> decisionless = GraphTransformer.removeDupesFromDecisionFreeGraphs(_decisionless);
         for (Graph<Vertex, Edge> g : decisionless) {
             GraphChecker gcc = new GraphChecker();
             boolean isgood = gcc.CheckGraph(g);
             if (isgood) {
                 LinkedList<Trace> _traces = GraphTransformer.createTrace(g);
+                a.e.println(_traces.toString());
                 traces.addAll(_traces);
             }
 

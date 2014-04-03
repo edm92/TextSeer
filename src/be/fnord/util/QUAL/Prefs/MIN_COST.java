@@ -15,7 +15,10 @@ public class MIN_COST extends Preferences<Float> implements PREF_FUNC{
 		double _a = 0;
 		double _b = 0; 
 		if(aa == null || bb == null) return false;
+		
 		if( aa.getClass().equals(String.class) ){
+			if(aa.toString().trim().length() < 1) return false;
+			if(bb.toString().trim().length() < 1) return true;
 			try{
 				String _aa = (String)aa;
 				String _bb = (String)bb;
@@ -26,7 +29,8 @@ public class MIN_COST extends Preferences<Float> implements PREF_FUNC{
 				_bb = _bb.replaceAll("\\$", "").trim();
 				_bb = _bb.replaceAll(",", "").trim();
 				_bb = _bb.replaceAll("c", "").trim();
-				
+				if(_aa.length() < 1) return false;
+				if(_bb.length() < 1) return true;
 				_a = Double.parseDouble((String) _aa);
 				_b = Double.parseDouble((String) _bb);
 				
@@ -72,6 +76,8 @@ public class MIN_COST extends Preferences<Float> implements PREF_FUNC{
 				_bb = _bb.replaceAll("\\$", "").trim();
 				_bb = _bb.replaceAll(",", "").trim();
 				_bb = _bb.replaceAll("c", "").trim();
+				if(_aa.length() < 1) return _bb;
+				if(_bb.length() < 1) return _aa;
 				_a = Double.parseDouble((String) _aa);
 				_b = Double.parseDouble((String) _bb);
 			}catch(Exception e){

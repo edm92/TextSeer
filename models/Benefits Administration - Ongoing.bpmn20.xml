@@ -83,13 +83,34 @@
       <outgoing>flow7</outgoing>
     </userTask>
     <sequenceFlow id="flow6" sourceRef="usertask5" targetRef="usertask6"/>
-    <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway1" name="Exclusive Gateway">
+    <exclusiveGateway gatewayDirection="Diverging" id="exclusivegateway1" name="Exclusive Gateway">
       <incoming>flow7</incoming>
       <outgoing>flow8</outgoing>
       <outgoing>flow10</outgoing>
     </exclusiveGateway>
     <sequenceFlow id="flow7" sourceRef="usertask6" targetRef="exclusivegateway1"/>
     <userTask activiti:assignee="kermit" completionQuantity="1" id="usertask7" implementation="##unspecified" isForCompensation="false" name="Do not assign to coverage" startQuantity="1">
+      <documentation id="usertask7_D_1" textFormat="text/plain"><![CDATA[_JSONEFFECT{
+    "Name": "TestName",
+    "Type": "Activity",
+    "QOS": {
+        "COST": "$10",
+        "TIME": "PT10M",
+        "SKILL": "MED"
+    },
+    "EFFECT": [
+        "A",
+        "B",
+        "C"
+    ],
+    "CONSTRAINT": [
+        "~A",
+        "B",
+        "C"
+    ],
+    "GOAL": [],
+    "RESOURCE": []
+}]]></documentation>
       <incoming>flow8</incoming>
       <outgoing>flow14</outgoing>
     </userTask>
@@ -105,6 +126,27 @@
     </userTask>
     <sequenceFlow id="flow11" sourceRef="usertask8" targetRef="usertask9"/>
     <userTask activiti:assignee="kermit" completionQuantity="1" id="usertask10" implementation="##unspecified" isForCompensation="false" name="Issue confirmation statements" startQuantity="1">
+      <documentation id="usertask10_D_1" textFormat="text/plain"><![CDATA[_JSONEFFECT{
+    "Name": "TestName",
+    "Type": "Activity",
+    "QOS": {
+        "COST": "$10",
+        "TIME": "PT20M",
+        "SKILL": "MED"
+    },
+    "EFFECT": [
+        "A",
+        "B",
+        "C"
+    ],
+    "CONSTRAINT": [
+        "~A",
+        "B",
+        "C"
+    ],
+    "GOAL": [],
+    "RESOURCE": []
+}]]></documentation>
       <incoming>flow12</incoming>
       <outgoing>flow13</outgoing>
     </userTask>
@@ -113,7 +155,7 @@
       <incoming>flow15</incoming>
     </endEvent>
     <sequenceFlow id="flow13" sourceRef="usertask10" targetRef="exclusivegateway2"/>
-    <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway2" name="Exclusive Gateway">
+    <exclusiveGateway gatewayDirection="Diverging" id="exclusivegateway2" name="Exclusive Gateway">
       <incoming>flow13</incoming>
       <incoming>flow14</incoming>
       <outgoing>flow15</outgoing>
@@ -165,7 +207,7 @@
           <omgdc:Bounds height="34.8359375" width="86.0" x="719.5" y="82.08203125"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="Yaoqiang-exclusivegateway1" isMarkerVisible="false">
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="Yaoqiang-exclusivegateway1" isMarkerVisible="true">
         <omgdc:Bounds height="42.0" width="42.0" x="854.0" y="77.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="19.8359375" width="100.0" x="825.0" y="121.0"/>
@@ -201,7 +243,7 @@
           <omgdc:Bounds height="19.8359375" width="24.0" x="1104.0" y="390.08203125"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="Yaoqiang-exclusivegateway2" isMarkerVisible="false">
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="Yaoqiang-exclusivegateway2" isMarkerVisible="true">
         <omgdc:Bounds height="42.0" width="42.0" x="1009.0" y="220.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="19.8359375" width="100.0" x="980.0" y="264.0"/>
@@ -223,11 +265,11 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow13" id="Yaoqiang-flow13">
-        <omgdi:waypoint x="927.078947368421" y="367.0"/>
-        <omgdi:waypoint x="1028.0" y="367.0"/>
-        <omgdi:waypoint x="1028.0" y="259.63157894736844"/>
+        <omgdi:waypoint x="927.078947368421" y="367.5"/>
+        <omgdi:waypoint x="977.921052631579" y="239.5526315789474"/>
+        <omgdi:waypoint x="1010.2368421052631" y="239.5526315789474"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="19.8359375" width="6.0" x="1025.0" y="353.8583470394737"/>
+          <omgdc:Bounds height="19.8359375" width="6.0" x="974.921052631579" y="302.8715049342106"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow12" id="Yaoqiang-flow12">

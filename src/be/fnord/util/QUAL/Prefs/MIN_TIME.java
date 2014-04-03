@@ -35,6 +35,7 @@ public class MIN_TIME extends Preferences<Float> implements PREF_FUNC{
 	}
 	
 	public DateTime Convert(String t){
+		if(t.length() < 1) t = top;
 		DateTime dt = DateTime.now();
 		dt = dt.plus(Period.parse(t));
 		return dt;
@@ -70,7 +71,7 @@ public class MIN_TIME extends Preferences<Float> implements PREF_FUNC{
 		DateTime _df = _result.minus(dt.getMillis());
 		
 		Period result = new Period(_df.getMillis());
-		System.out.println("Result = " + result);
+//		System.out.println("Result = " + result);
 		return result.toString();
 	}
 	

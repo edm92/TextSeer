@@ -82,9 +82,39 @@ public class JSONEFFECT {
 		
 	}
 	
+	public String toDSTring(){
+		String _result = "";
+		_result = "QOS:" + QOS + "; EFFECT:";
+		for(String s : EFFECT) _result += s + ",";
+		if(EFFECT.length > 0) _result = _result.substring(0,_result.length()-1);
+		_result += ";\n "+ a.e.dent() + "CONSTRAINT: ";
+		for(String s : CONSTRAINT) _result += s + ",";
+		if(CONSTRAINT.length > 0) _result = _result.substring(0,_result.length()-1);				
+		_result += ";\n"+ a.e.dent() +"GOAL: ";
+		for(String s : GOAL) _result += s + ",";
+		if(GOAL.length > 0) _result = _result.substring(0,_result.length()-1);
+		_result += ";\n" + a.e.dent() + "RESOURCE: ";
+		for(String s : GOAL) _result += s + ",";
+		if(GOAL.length > 0) _result = _result.substring(0,_result.length()-1);
+		_result += ";";
+		return _result;
+	}
+	
 	public String toString(){
 		String _result = "";
-		_result = "QOS:" + QOS + "; EFFECT:" + EFFECT + "; CONSTRAINT: " + CONSTRAINT + "; GOAL: " + GOAL + "; RESOURCE: " +RESOURCE +";";
+		_result = "QOS:" + QOS + "; EFFECT:";
+		for(String s : EFFECT) _result += s + ",";
+		if(EFFECT.length > 0) _result = _result.substring(0,_result.length()-1);
+		_result += "; CONSTRAINT: ";
+		for(String s : CONSTRAINT) _result += s + ",";
+		if(CONSTRAINT.length > 0) _result = _result.substring(0,_result.length()-1);
+		_result += "; GOAL: ";
+		for(String s : GOAL) _result += s + ",";
+		if(GOAL.length > 0) _result = _result.substring(0,_result.length()-1);
+		_result += "; RESOURCE: ";
+		for(String s : GOAL) _result += s + ",";
+		if(GOAL.length > 0) _result = _result.substring(0,_result.length()-1);
+		_result += ";";
 		return _result;
 	}
 

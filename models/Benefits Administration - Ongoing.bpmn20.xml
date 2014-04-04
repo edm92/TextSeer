@@ -26,9 +26,7 @@
         "C"
     ],
     "CONSTRAINT": [
-        "~A",
-        "B",
-        "C"
+        "~A & B & C"
     ],
     "GOAL": [],
     "RESOURCE": []
@@ -48,13 +46,11 @@
     },
     "EFFECT": [
         "A",
-        "B",
+        "~B",
         "C"
     ],
     "CONSTRAINT": [
-        "~A",
-        "B",
-        "C"
+        "A & B & C"
     ],
     "GOAL": [],
     "RESOURCE": []
@@ -99,14 +95,11 @@
         "SKILL": "MED"
     },
     "EFFECT": [
-        "A",
-        "B",
-        "C"
+        "A & B & C"
     ],
     "CONSTRAINT": [
         "~A",
-        "B",
-        "C"
+        "~C"
     ],
     "GOAL": [],
     "RESOURCE": []
@@ -140,9 +133,7 @@
         "C"
     ],
     "CONSTRAINT": [
-        "~A",
-        "B",
-        "C"
+        "A"
     ],
     "GOAL": [],
     "RESOURCE": []

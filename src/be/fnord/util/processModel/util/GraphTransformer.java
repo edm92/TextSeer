@@ -164,10 +164,10 @@ public class GraphTransformer {
         TreeSet<String> vertices = new TreeSet<String>();
         TreeSet<String> edges = new TreeSet<String>();
         for (Vertex v : in.vertexSet()) {
-            vertices.add((v.toString().length() < 4 ? v.toString().substring(0, v.toString().length()) : v.toString().substring(0, 4)).trim());
+            vertices.add((v.toString().length() > 3 ? v.toString().substring(0, v.toString().length()) : v.toString().substring(0, 4)).trim());
         }
         for (Edge e : in.edgeSet()) {
-            edges.add((e.id.toString().length() < 4 ? e.id.toString().substring(0, e.id.toString().length()) : e.id.toString().substring(0, 4)).trim());
+            edges.add((e.id.toString().length() > 3 ? e.id.toString().substring(0, e.id.toString().length()) : e.id.toString().substring(0, 4)).trim());
         }
 
         for (String s : vertices.descendingSet())
@@ -177,7 +177,7 @@ public class GraphTransformer {
             for (String s : edges.descendingSet())
                 result += s;
 
-
+//        a.e.println("Results = " + result); 
         return result;
     }
 

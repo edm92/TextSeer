@@ -41,7 +41,7 @@ public class AccumulationExample {
 
         EffectAccumulate acc = new EffectAccumulate();
         QOSAccumulate acc2 = new QOSAccumulate();
-
+        a.e.incIndent();
 
         // Iterate through each trace.
         if (traces != null) {
@@ -55,19 +55,19 @@ public class AccumulationExample {
                 // Display Results
                 for (WFF e : _ee) {
                     if (e.isEmpty()) continue;
-                    System.out.println("Effect scenario resulting from acc: " + e);
-                    System.out.println("Checking if " + e + " is consistent : " + e.issat());
+//                    WFF newE = new WFF(e.getClosure());	// Clean up the result a little bit 
+                    a.e.println("Effect scenario resulting from acc: " + e);                    
+                    a.e.println("\tChecking if " + e + " is consistent : " + e.issat());
 
                 }
              // Display Results
                 for (JSONEFFECT e : _ee2) {
                     if (e.isEmpty()) continue;
-                    System.out.println("Effect scenario resulting from acc: " + e);
-                    
-
+                    a.e.println("QOS Based Effect scenario resulting from acc: " + e);
                 }
             }
         }
+        a.e.decIndent();
 
 
     }
@@ -85,7 +85,7 @@ public class AccumulationExample {
             boolean isgood = gcc.CheckGraph(g);
             if (isgood) {
                 LinkedList<Trace> _traces = GraphTransformer.createTrace(g);
-                a.e.println(_traces.toString());
+//                a.e.println(_traces.toString());
                 traces.addAll(_traces);
             }
 

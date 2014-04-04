@@ -72,8 +72,8 @@ public class JSONEFFECT {
 	}
 	
 	public JSONEFFECT(){
-		Name = "TestName";
-		Type = "Activity";
+		Name = "";
+		Type = "";
 		QOS = new Qos();
 		EFFECT = new String[] {};
 		CONSTRAINT = new String [] {};
@@ -102,6 +102,7 @@ public class JSONEFFECT {
 	
 	public String toString(){
 		String _result = "";
+		_result += "(" +Name + " " + Type + ")";
 		_result = "QOS:" + QOS + "; EFFECT:";
 		for(String s : EFFECT) _result += s + ",";
 		if(EFFECT.length > 0) _result = _result.substring(0,_result.length()-1);

@@ -145,7 +145,7 @@ public class GraphTransformer {
                 hashedDecisionFreeGraphs.add(key);
                 deDuped.add(g);
             }
-            else a.e.println("Found duped graph " + key);
+            else if(__DEBUG) a.e.println("Found duped graph " + key);
         }
 
         return deDuped;

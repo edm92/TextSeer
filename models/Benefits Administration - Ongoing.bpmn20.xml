@@ -95,7 +95,7 @@
         "SKILL": "MED"
     },
     "EFFECT": [
-        "A & B & C"
+        "~C"
     ],
     "CONSTRAINT": [
         "~A",
@@ -128,9 +128,7 @@
         "SKILL": "MED"
     },
     "EFFECT": [
-        "A",
-        "B",
-        "C"
+        "A"
     ],
     "CONSTRAINT": [
         "A"

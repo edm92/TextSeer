@@ -15,7 +15,7 @@ public class _TESTJSON {
 		
 		System.out.println("json = " + json);
 		
-		JSONEFFECT obj2 = gson.fromJson(json, JSONEFFECT.class);   
+//		JSONEFFECT obj2 = gson.fromJson(json, JSONEFFECT.class);   
 
 	}
 

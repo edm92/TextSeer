@@ -1,13 +1,12 @@
 package be.fnord.util.QUAL.Prefs;
 
-import java.util.Set;
 import java.util.TreeSet;
 
 
 import be.fnord.util.functions.Poset.Pair;
 import be.fnord.util.functions.Poset.Poset;
 
-public class MIN_SKILL extends Preferences implements PREF_FUNC{
+public class MIN_SKILL extends Preferences<String> implements PREF_FUNC{
     
     public enum hml{
     	HIGH("HIGH"), MED("MED"), LOW("LOW");
@@ -45,6 +44,7 @@ public class MIN_SKILL extends Preferences implements PREF_FUNC{
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	public void setup(){		
 		TreeSet<String> s = new TreeSet<String>();
 		s.add(hml.HIGH.toString());

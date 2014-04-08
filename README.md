@@ -72,7 +72,6 @@ Updates
 Todo
 -------
  - Get rid of jbpt - it is stupid!
- - Bug found when loading multiple models. Traces are stored ?
  - Finish distance functions
  - Add compliance checking functions
  - Add realization functions

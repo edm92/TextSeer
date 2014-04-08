@@ -3,13 +3,10 @@ package be.fnord.util.QUAL;
 import java.util.LinkedHashSet;
 import org.apache.log4j.Logger;
 
-
-import be.fnord.util.logic.WFF;
 import be.fnord.util.processModel.Trace;
 import be.fnord.util.processModel.Vertex;
 
 public class QOSAccumulate {
-    private static final long serialVersionUID = 1L;
 
     protected transient static Logger logger = Logger.getLogger("QUALAccumulation");
 

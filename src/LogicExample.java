@@ -28,7 +28,8 @@ import java.util.LinkedHashSet;
 // Effect e5 = new Effect(" (~a | ~b | c) & ~(~c | d) & (~c | e) & (a & b -> c) & (~e | ~f | g) & ((c & d) -> e) & (c & f -> g) & (a | d) & (f & g) & (b | ~a) & (p -> q) & ((l & m) -> p) & ((b & l) -> m) & ((a & p) -> l) & ((a & b) -> l)");
 public class LogicExample {
 
-    public static void main(String[] Args) {
+    @SuppressWarnings("unused")
+	public static void main(String[] Args) {
         // Example of Effect Accumulation
         long start = System.currentTimeMillis();
         // Create new effect scenarios

@@ -1,6 +1,5 @@
 package be.fnord.util.processModel;
 
-import be.fnord.util.logic.WFF;
 import be.fnord.util.processModel.visual.jungViewer;
 import org.apache.log4j.Logger;
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -217,7 +216,6 @@ public class Graph<v extends Vertex, e extends Edge> extends DefaultDirectedGrap
         return result + "}]" + a.e.endl;
     }
 
-    @SuppressWarnings("deprecation")
     public boolean addV(Vertex myV) {
         if (!existingVertices.contains(myV.toString())) {
 

@@ -1,8 +1,6 @@
 package be.fnord.util.QUAL;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
-
 import be.fnord.util.QUAL.Prefs.MAX_COST;
 import be.fnord.util.QUAL.Prefs.MAX_SKILL;
 import be.fnord.util.QUAL.Prefs.MAX_TIME;

@@ -1,5 +1,9 @@
 package be.fnord.util.processModel.util;
 
+import be.fnord.util.processModel.Edge;
+import be.fnord.util.processModel.Graph;
+import be.fnord.util.processModel.Vertex;
+
 
 /**
  * The following functions demonstrate various distance functions. 
@@ -10,7 +14,9 @@ package be.fnord.util.processModel.util;
 public class Distance {
 
 	// Syntactic distances first
-	
+	public int distance(Graph<Vertex,Edge> a, Graph<Vertex,Edge> b){
+		return 0;
+	}
 	
 	
 	// Semantic distances

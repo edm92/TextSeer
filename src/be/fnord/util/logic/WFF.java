@@ -1,8 +1,6 @@
 package be.fnord.util.logic;
 
 import a.e;
-import be.fnord.util.logic.defaultLogic.DefaultRule;
-
 import com.merriampark.Gilleland.CombinationGenerator;
 import orbital.logic.imp.Formula;
 import orbital.logic.imp.Interpretation;
@@ -313,7 +311,8 @@ public class WFF implements Serializable {
      * 
      * 
      */
-    public String getClosure() {
+    @SuppressWarnings("unchecked")
+	public String getClosure() {
     	Formula formula;
     	try{
     	/// Step one lets get the signature -- all the symbols that are used in the wff 

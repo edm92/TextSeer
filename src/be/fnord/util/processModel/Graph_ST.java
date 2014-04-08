@@ -13,7 +13,9 @@ import org.jgrapht.graph.DefaultDirectedGraph;
  */
 public class Graph_ST<v extends Vertex_ST, e extends Edge_ST> extends DefaultDirectedGraph<Vertex_ST, Edge_ST> implements org.jgrapht.Graph<Vertex_ST, Edge_ST> {
 
-    public static boolean __DEBUG = a.e.__DEBUG;
+	private static final long serialVersionUID = -7342427886299612645L;
+
+	public static boolean __DEBUG = a.e.__DEBUG;
 
     protected transient static Logger logger = Logger.getLogger("GraphClass");
     public static boolean SKIP_EMPTY_WFF_PATHS = true;

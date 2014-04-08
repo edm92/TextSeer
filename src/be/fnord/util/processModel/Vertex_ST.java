@@ -12,7 +12,9 @@ import java.util.UUID;
 
 public class Vertex_ST extends Graph<Vertex, Edge> {
 
-    private static int uniqueID = 0;
+	private static final long serialVersionUID = -4505887246692894685L;
+
+	private static int uniqueID = 0;
 
     public String id = "";
     public String taskName = "";

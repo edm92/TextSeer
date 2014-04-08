@@ -1,4 +1,4 @@
-package be.fnord.collections;
+package be.fnord.util.functions.Poset;
 import java.util.*; 
 
 

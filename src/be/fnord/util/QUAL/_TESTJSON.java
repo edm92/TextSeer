@@ -8,7 +8,7 @@ public class _TESTJSON {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		// 
 		JSONEFFECT js = new JSONEFFECT();
 		Gson gson = new Gson();
 		String json = gson.toJson(js);  

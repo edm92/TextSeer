@@ -1,10 +1,11 @@
-import be.fnord.collections.functions.OrderConstrainedPartitionList;
-import be.fnord.collections.functions.PartitionList;
-import be.fnord.collections.functions.PartitionListElement;
-import be.fnord.collections.functions.PartitionListItem;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+
+import be.fnord.util.functions.OCP.OrderConstrainedPartitionList;
+import be.fnord.util.functions.OCP.PartitionList;
+import be.fnord.util.functions.OCP.PartitionListElement;
+import be.fnord.util.functions.OCP.PartitionListItem;
 
 
 public class OrderConstrainedPermutationExample {

@@ -3,8 +3,6 @@ package be.fnord.util.processModel;
 import be.fnord.util.logic.WFF;
 import be.fnord.util.processModel.visual.jungViewer;
 import org.apache.log4j.Logger;
-import org.jbpt.pm.*;
-import org.jbpt.pm.bpmn.Task;
 import org.jgrapht.graph.DefaultDirectedGraph;
 
 import java.util.*;
@@ -41,8 +39,6 @@ public class Graph<v extends Vertex, e extends Edge> extends DefaultDirectedGrap
     public char currentWFF = 'a';
 //	public t trueStart;
 //	public t trueEnd;
-
-    ProcessModel jbptProcess = new ProcessModel();
 
     // List of all graphs
     public static TreeMap<String, Graph<Vertex, Edge>> allGraphs = new TreeMap<String, Graph<Vertex, Edge>>();
@@ -102,7 +98,7 @@ public class Graph<v extends Vertex, e extends Edge> extends DefaultDirectedGrap
 
     /**
      * Copy a graph from the start vertex.
-     * TODO purhaps implement a copy function for vertex and edges
+     * 
      */
     public void copyInGraph(Graph<Vertex, Edge> g, Vertex start) {
         copyInGraph(g, start, null);
@@ -170,8 +166,6 @@ public class Graph<v extends Vertex, e extends Edge> extends DefaultDirectedGrap
     }
 
     public TreeMap<String, Graph<v, e>> processPools = new TreeMap<String, Graph<v, e>>();
-    public TreeMap<String, FlowNode> jbptNodeElements = new TreeMap<String, FlowNode>();
-    public TreeMap<String, FlowNode> jbptFlowElements = new TreeMap<String, FlowNode>();
     public LinkedList<String> existingVertices = new LinkedList<String>();
     public TreeMap<String, Vertex> vertexRef = new TreeMap<String, Vertex>();
     public TreeMap<String, String> vertexIDRef = new TreeMap<String, String>();
@@ -226,23 +220,6 @@ public class Graph<v extends Vertex, e extends Edge> extends DefaultDirectedGrap
     @SuppressWarnings("deprecation")
     public boolean addV(Vertex myV) {
         if (!existingVertices.contains(myV.toString())) {
-            if (myV.isAND) {
-                Gateway newGate = new AndGateway(myV.getName());
-                jbptProcess.addGateway(newGate);
-                jbptNodeElements.put(myV.getName(), newGate);
-            } else if (myV.isXOR) {
-                Gateway newGate = new XorGateway(myV.getName());
-                jbptProcess.addGateway(newGate);
-                jbptNodeElements.put(myV.getName(), newGate);
-            } else if (myV.isOR) {
-                Gateway newGate = new OrGateway(myV.getName());
-                jbptProcess.addGateway(newGate);
-                jbptNodeElements.put(myV.getName(), newGate);
-            } else {
-                Task newTask = new Task(myV.getName());
-                jbptProcess.addTask(newTask);
-                jbptNodeElements.put(myV.getName(), newTask);
-            }
 
 
             existingVertices.add(myV.toString());
@@ -292,9 +269,6 @@ public class Graph<v extends Vertex, e extends Edge> extends DefaultDirectedGrap
                 return false;
             }
 
-            FlowNode jbptSrc = jbptNodeElements.get(src.getName());
-            FlowNode jbptTrg = jbptNodeElements.get(trg.getName());
-            jbptProcess.addControlFlow(jbptSrc, jbptTrg);
 
 
             if (__DEBUG && a.e.__HIGHDETAILS) a.e.println(src.name + " " + this.inDegreeOf(src));

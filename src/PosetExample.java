@@ -1,5 +1,5 @@
-import be.fnord.collections.Pair;
-import be.fnord.collections.Poset;
+import be.fnord.util.functions.Poset.Pair;
+import be.fnord.util.functions.Poset.Poset;
 
 /**
  * Java implementation of a poset. 

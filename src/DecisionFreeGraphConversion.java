@@ -44,9 +44,9 @@ public class DecisionFreeGraphConversion {
 //		System.out.println("G1-" + g1);
         GraphChecker gc = new GraphChecker();
         if (!gc.CheckEventsAndGateways(g1)) a.e.println("Issue checking events and gateways");
-
-        LinkedList<Graph<Vertex, Edge>> _decisionless = GraphTransformer.makeDecisionFree(g1);
-        LinkedList<Graph<Vertex, Edge>> decisionless = GraphTransformer.removeDupesFromDecisionFreeGraphs(_decisionless);
+        GraphTransformer gt = new GraphTransformer();
+        LinkedList<Graph<Vertex, Edge>> _decisionless = gt.makeDecisionFree(g1);
+        LinkedList<Graph<Vertex, Edge>> decisionless = gt.removeDupesFromDecisionFreeGraphs(_decisionless);
 
         for (Graph<Vertex, Edge> g : decisionless) {
             GraphChecker gcc = new GraphChecker();
@@ -55,7 +55,7 @@ public class DecisionFreeGraphConversion {
 //			a.e.println("Checking if well formed results in a return of : " + isgood);
             if (isgood) {
                 // Create some traces
-                LinkedList<Trace> traces = GraphTransformer.createTrace(g);
+                LinkedList<Trace> traces = gt.createTrace(g);
                 for (Trace trace : traces) {
                     a.e.println("Got a trace: " + trace.toString());
                 }

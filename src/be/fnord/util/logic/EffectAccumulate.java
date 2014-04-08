@@ -398,10 +398,10 @@ public class EffectAccumulate implements Serializable {
     // ClausalSet myClauses = myFacts.asClausalSet(result);
     // System.out.println("Output:" + myClauses + ";" + result);
     // } catch (IllegalArgumentException e) {
-    // // TODO Auto-generated catch block
+    // // 
     // e.printStackTrace();
     // } catch (ParseException e) {
-    // // TODO Auto-generated catch block
+    // // 
     // e.printStackTrace();
     // }
 

@@ -4,8 +4,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 
-import be.fnord.collections.Pair;
-import be.fnord.collections.Poset;
+import be.fnord.util.functions.Poset.Pair;
+import be.fnord.util.functions.Poset.Poset;
 
 public class MIN_SKILL extends Preferences implements PREF_FUNC{
     

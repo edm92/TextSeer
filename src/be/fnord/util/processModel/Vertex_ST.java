@@ -42,7 +42,7 @@ public class Vertex_ST extends Graph<Vertex, Edge> {
 
     public static void main(String[] args) {
 
-        // TODO Auto-generated method stub
+        // 
         Vertex_ST test = new Vertex_ST();
         test.taskName = "newTask";
         test.immWFF = "immediate effect";

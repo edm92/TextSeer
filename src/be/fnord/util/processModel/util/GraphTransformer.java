@@ -22,7 +22,7 @@ public class GraphTransformer {
     public static boolean __DEBUG = a.e.__DEBUG;
     public static boolean __INFO = a.e.__INFO;
 
-    public static LinkedList<Trace> createTraces(LinkedList<Graph<Vertex, Edge>> models) {
+    public LinkedList<Trace> createTraces(LinkedList<Graph<Vertex, Edge>> models) {
         LinkedList<Trace> results = new LinkedList<Trace>();
         for (Graph<Vertex, Edge> g : models) {
 
@@ -36,7 +36,7 @@ public class GraphTransformer {
     /**
      * Create Traces
      */
-    public static LinkedList<Trace> createTrace(Graph<Vertex, Edge> g) {
+    public LinkedList<Trace> createTrace(Graph<Vertex, Edge> g) {
         LinkedList<Trace> __results = new LinkedList<Trace>();
 
         // All input models should be decision free models, so we need to first check for parallel gateways.
@@ -62,7 +62,7 @@ public class GraphTransformer {
         return results;
     }
 
-    private static void createTrace(Graph<Vertex, Edge> g,
+    private void createTrace(Graph<Vertex, Edge> g,
                                     Trace currentTrace,
                                     Vertex currentNode, Vertex compareEnd) {
 
@@ -105,7 +105,7 @@ public class GraphTransformer {
     }
 
 
-    public static LinkedList<Trace> removeDupesFromTraces(LinkedList<Trace> duped) {
+    public LinkedList<Trace> removeDupesFromTraces(LinkedList<Trace> duped) {
         if (a.e.DEFAULT_DEDUPING_LEVEL == a.e.NO_DEDUPING) return duped;
 
         LinkedList<Trace> deDuped = new LinkedList<Trace>();
@@ -131,7 +131,7 @@ public class GraphTransformer {
      * @param duped
      * @return
      */
-    public static LinkedList<Graph<Vertex, Edge>> removeDupesFromDecisionFreeGraphs(LinkedList<Graph<Vertex, Edge>> duped) {
+    public LinkedList<Graph<Vertex, Edge>> removeDupesFromDecisionFreeGraphs(LinkedList<Graph<Vertex, Edge>> duped) {
 
         if (a.e.DEFAULT_DEDUPING_LEVEL == a.e.NO_DEDUPING) return duped;
 
@@ -159,7 +159,7 @@ public class GraphTransformer {
      * @param in
      * @return String representing a hash of a particular graph based on the edges and nodes.
      */
-    public static String hashDecisionFreeGraph(Graph<Vertex, Edge> in) {
+    public String hashDecisionFreeGraph(Graph<Vertex, Edge> in) {
         String result = "";
         TreeSet<String> vertices = new TreeSet<String>();
         TreeSet<String> edges = new TreeSet<String>();
@@ -188,7 +188,7 @@ public class GraphTransformer {
      * @param g Input graph
      * @return LinkedList<PGraph<Vertex,Edge>>
      */
-    public static LinkedList<Graph<Vertex, Edge>> makeDecisionFree(Graph<Vertex, Edge> g) {
+    public LinkedList<Graph<Vertex, Edge>> makeDecisionFree(Graph<Vertex, Edge> g) {
         LinkedList<Graph<Vertex, Edge>> result = new LinkedList<Graph<Vertex, Edge>>();
         LinkedList<String> startEvents = new LinkedList<String>();
         LinkedList<String> joinGates = new LinkedList<String>();
@@ -326,7 +326,7 @@ public class GraphTransformer {
         return result;
     }
 
-    public static LinkedList<Graph<Vertex, Edge>> merge(LinkedList<Graph<Vertex, Edge>> startFrags, LinkedList<Graph<Vertex, Edge>> endFrags, Vertex endOfPred, Vertex gateway, Vertex startOfSucc) {
+    public LinkedList<Graph<Vertex, Edge>> merge(LinkedList<Graph<Vertex, Edge>> startFrags, LinkedList<Graph<Vertex, Edge>> endFrags, Vertex endOfPred, Vertex gateway, Vertex startOfSucc) {
         LinkedList<Graph<Vertex, Edge>> results = new LinkedList<Graph<Vertex, Edge>>();
         for (Graph<Vertex, Edge> predFrag : startFrags) {
             for (Graph<Vertex, Edge> succFrag : endFrags) {
@@ -346,7 +346,7 @@ public class GraphTransformer {
     }
 
 
-    public static Graph<Vertex, Edge> seqComp(Graph<Vertex, Edge> lhs, Graph<Vertex, Edge> rhs) {
+    public Graph<Vertex, Edge> seqComp(Graph<Vertex, Edge> lhs, Graph<Vertex, Edge> rhs) {
         Graph<Vertex, Edge> result = new Graph<Vertex, Edge>(Edge.class);
 
 

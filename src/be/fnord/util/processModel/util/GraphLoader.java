@@ -2,6 +2,7 @@ package be.fnord.util.processModel.util;
 
 import be.fnord.util.processModel.Edge;
 import be.fnord.util.processModel.Graph;
+import be.fnord.util.processModel.Trace;
 import be.fnord.util.processModel.Vertex;
 import be.fnord.yaoqiang.extend.eDefinitions;
 import org.w3c.dom.Document;
@@ -32,12 +33,26 @@ import java.util.UUID;
 public class GraphLoader {
     public static final boolean __DEBUG = a.e.__DEBUG;
 
+    private static TreeMap<String, TEdge> tEdges = new TreeMap<String, TEdge>();
+    private static TreeMap<String, TNode> tNodes = new TreeMap<String, TNode>();
+    private static String ProcessName = "";
 
+    public static void reset(){
+    	// Reset the allgraphs thingy
+    	Graph.allGraphs = new TreeMap<String, Graph<Vertex, Edge>>();
+    	Trace.allTraces = new TreeMap<String, Trace>();
+    	Trace.successStores = new TreeMap<String, LinkedList<Vertex>>();
+    	tEdges = new TreeMap<String, TEdge>();
+    	tNodes = new TreeMap<String, TNode>();
+    }
+    
     public Graph<Vertex, Edge> loadModel(String filename) {
+
         return loadModel(filename, a.e.NO_FLAGS);
     }
 
     public Graph<Vertex, Edge> loadModel(String filename, int flags) {
+    	reset(); // 
         Graph<Vertex, Edge> myModel = new Graph<Vertex, Edge>(Edge.class);
         Document document = null;
         document = BPMNModelUtils.parseDocument(filename, true, new LinkedList<ErrorMessage>());
@@ -182,9 +197,6 @@ public class GraphLoader {
         return "unknown";
     }
 
-    private static TreeMap<String, TEdge> tEdges = new TreeMap<String, TEdge>();
-    private static TreeMap<String, TNode> tNodes = new TreeMap<String, TNode>();
-    private static String ProcessName = "";
 
 
     /**

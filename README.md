@@ -5,9 +5,9 @@
 > TextSeer process tools provides a collection of functions and tools for use on process effect accumulation. Initial development was conducted by researchers at the University of Wollongong and has contributed to PhD and Masters projects.
 
 
-Please note that the codebase has been updated substantially. To run
+Please note that the codebase has been updated substantially. 
 ```
-    ant run
+    mvn build? Need to test
 ```
 
 Basic users:

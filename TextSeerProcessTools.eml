@@ -101,4 +101,19 @@
 	<lib name="mysql-connector-java-5.0.8-bin.jar" scope="COMPILE">
 		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/mysql-connector-java-5.0.8-bin.jar!/"/>
 	</lib>
+	<lib name="gson-2.2.4.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/gson-2.2.4.jar!/"/>
+	</lib>
+	<lib name="joda-time-2.3.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/joda-time-2.3.jar!/"/>
+	</lib>
+	<lib name="stanford-corenlp-3.3.1.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/stanford-corenlp-3.3.1.jar!/"/>
+	</lib>
+	<lib name="stanford-corenlp-3.3.1-models.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/stanford-corenlp-3.3.1-models.jar!/"/>
+	</lib>
+	<lib name="ws4j-1.0.1.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/ws4j-1.0.1.jar!/"/>
+	</lib>
 </component>

@@ -1,5 +1,6 @@
 package a;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,6 +13,7 @@ import java.util.logging.Logger;
  */
 public class e {
     public static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    
 
     public static boolean HIDE_EMPTY_EFFECTS_IN_PRINT = false;
     
@@ -215,6 +217,7 @@ public class e {
      * Init Function, not assumed to be executed
      */
     static boolean __initDone = false;
+    static boolean __measureInitDone = false;
 
     public e() {
         if (!__initDone) {
@@ -222,4 +225,6 @@ public class e {
             __initDone = true;
         }
     }
+    
+   
 }

@@ -22,6 +22,7 @@ public class Settings {
     public static String _home = System.getProperty("user.home");
     public static String _currentDir = System.getProperty("user.dir");
 
+
     public static enum OS {WIN, MAC, LIN, ALT}
 
     ;

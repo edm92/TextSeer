@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TextSeerProcessTools.iml" filepath="$PROJECT_DIR$/TextSeerProcessTools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/textseer.iml" filepath="$PROJECT_DIR$/textseer.iml" />
     </modules>
   </component>
 </project>

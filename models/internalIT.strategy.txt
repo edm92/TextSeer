@@ -1,0 +1,3 @@
+FG: HappyEmployees
+OO: MIN-TIME
+PL: EncourageHolidayUsage -> IncreaseStaffSkills => IncreaseServiceQuality

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- XES version 1.0 -->
+<!-- Created by Fluxicon Nitro (http://fluxicon.com/nitro/ -->
+<!-- (c) 2010 Fluxicon Process Laboratories / http://fluxicon.com/ -->
+<log xes.version="1.0" xmlns="http://www.xes-standard.org" xes.creator="Fluxicon Nitro">
+    <extension name="Concept" prefix="concept" uri="http://www.xes-standard.org/concept.xesext"/>
+    <extension name="Lifecycle" prefix="lifecycle" uri="http://www.xes-standard.org/lifecycle.xesext"/>
+    <global scope="trace">
+        <string key="concept:name" value="name"/>
+    </global>
+    <global scope="event">
+        <string key="concept:name" value="name"/>
+        <string key="lifecycle:transition" value="transition"/>
+        <string key="Action_Identifier" value="string"/>
+    </global>
+    <classifier name="Activity" keys="Action_Identifier"/>
+    <classifier name="MXML legacy classifier" keys="concept:name lifecycle:transition"/>
+    <string key="lifecycle:model" value="standard"/>
+    <string key="creator" value="Fluxicon Nitro"/>
+    <string key="library" value="Fluxicon Octane"/>
+    <trace>
+        <string key="concept:name" value="Case8"/>
+        <string key="creator" value="Fluxicon Nitro"/>
+        <event>
+            <string key="concept:name" value="B"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="B"/>
+        </event>
+        <event>
+            <string key="concept:name" value="E"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="E"/>
+        </event>
+        <event>
+            <string key="concept:name" value="N"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="N"/>
+        </event>
+        <event>
+            <string key="concept:name" value="M"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="M"/>
+        </event>
+        <event>
+            <string key="concept:name" value="F"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="F"/>
+        </event>
+        <event>
+            <string key="concept:name" value="G"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="G"/>
+        </event>
+        <event>
+            <string key="concept:name" value="H"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="H"/>
+        </event>
+    </trace>
+    <trace>
+        <string key="concept:name" value="Case7"/>
+        <string key="creator" value="Fluxicon Nitro"/>
+        <event>
+            <string key="concept:name" value="B"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="B"/>
+        </event>
+        <event>
+            <string key="concept:name" value="E"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="E"/>
+        </event>
+        <event>
+            <string key="concept:name" value="M"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="M"/>
+        </event>
+        <event>
+            <string key="concept:name" value="N"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="N"/>
+        </event>
+        <event>
+            <string key="concept:name" value="F"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="F"/>
+        </event>
+        <event>
+            <string key="concept:name" value="G"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="G"/>
+        </event>
+        <event>
+            <string key="concept:name" value="H"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="H"/>
+        </event>
+    </trace>
+    <trace>
+        <string key="concept:name" value="Case6"/>
+        <string key="creator" value="Fluxicon Nitro"/>
+        <event>
+            <string key="concept:name" value="B"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="B"/>
+        </event>
+        <event>
+            <string key="concept:name" value="E"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="E"/>
+        </event>
+        <event>
+            <string key="concept:name" value="F"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="F"/>
+        </event>
+        <event>
+            <string key="concept:name" value="N"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="N"/>
+        </event>
+        <event>
+            <string key="concept:name" value="M"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="M"/>
+        </event>
+        <event>
+            <string key="concept:name" value="G"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="G"/>
+        </event>
+        <event>
+            <string key="concept:name" value="H"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="H"/>
+        </event>
+    </trace>
+    <trace>
+        <string key="concept:name" value="Case5"/>
+        <string key="creator" value="Fluxicon Nitro"/>
+        <event>
+            <string key="concept:name" value="B"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="B"/>
+        </event>
+        <event>
+            <string key="concept:name" value="E"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="E"/>
+        </event>
+        <event>
+            <string key="concept:name" value="F"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="F"/>
+        </event>
+        <event>
+            <string key="concept:name" value="M"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="M"/>
+        </event>
+        <event>
+            <string key="concept:name" value="N"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="N"/>
+        </event>
+        <event>
+            <string key="concept:name" value="G"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="G"/>
+        </event>
+        <event>
+            <string key="concept:name" value="H"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="H"/>
+        </event>
+    </trace>
+    <trace>
+        <string key="concept:name" value="Case4"/>
+        <string key="creator" value="Fluxicon Nitro"/>
+        <event>
+            <string key="concept:name" value="B"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="B"/>
+        </event>
+        <event>
+            <string key="concept:name" value="F"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="F"/>
+        </event>
+        <event>
+            <string key="concept:name" value="E"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="E"/>
+        </event>
+        <event>
+            <string key="concept:name" value="M"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="M"/>
+        </event>
+        <event>
+            <string key="concept:name" value="N"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="N"/>
+        </event>
+        <event>
+            <string key="concept:name" value="G"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="G"/>
+        </event>
+        <event>
+            <string key="concept:name" value="H"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="H"/>
+        </event>
+    </trace>
+    <trace>
+        <string key="concept:name" value="Case3"/>
+        <string key="creator" value="Fluxicon Nitro"/>
+        <event>
+            <string key="concept:name" value="B"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="B"/>
+        </event>
+        <event>
+            <string key="concept:name" value="F"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="F"/>
+        </event>
+        <event>
+            <string key="concept:name" value="E"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="E"/>
+        </event>
+        <event>
+            <string key="concept:name" value="M"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="M"/>
+        </event>
+        <event>
+            <string key="concept:name" value="N"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="N"/>
+        </event>
+        <event>
+            <string key="concept:name" value="G"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="G"/>
+        </event>
+        <event>
+            <string key="concept:name" value="H"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="H"/>
+        </event>
+    </trace>
+    <trace>
+        <string key="concept:name" value="Case2"/>
+        <string key="creator" value="Fluxicon Nitro"/>
+        <event>
+            <string key="concept:name" value="B"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="B"/>
+        </event>
+        <event>
+            <string key="concept:name" value="E"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="E"/>
+        </event>
+        <event>
+            <string key="concept:name" value="N"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="N"/>
+        </event>
+        <event>
+            <string key="concept:name" value="M"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="M"/>
+        </event>
+        <event>
+            <string key="concept:name" value="G"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="G"/>
+        </event>
+        <event>
+            <string key="concept:name" value="F"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="F"/>
+        </event>
+        <event>
+            <string key="concept:name" value="H"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="H"/>
+        </event>
+    </trace>
+    <trace>
+        <string key="concept:name" value="Case1"/>
+        <string key="creator" value="Fluxicon Nitro"/>
+        <event>
+            <string key="concept:name" value="B"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="B"/>
+        </event>
+        <event>
+            <string key="concept:name" value="E"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="E"/>
+        </event>
+        <event>
+            <string key="concept:name" value="M"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="M"/>
+        </event>
+        <event>
+            <string key="concept:name" value="N"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="N"/>
+        </event>
+        <event>
+            <string key="concept:name" value="G"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="G"/>
+        </event>
+        <event>
+            <string key="concept:name" value="F"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="F"/>
+        </event>
+        <event>
+            <string key="concept:name" value="H"/>
+            <string key="lifecycle:transition" value="complete"/>
+            <string key="Action_Identifier" value="H"/>
+        </event>
+    </trace>
+</log>

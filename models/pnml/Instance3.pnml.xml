@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<pnml>
+    <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+        <name>
+            <text>Petrinet from Anonymous log imported from Instance3.xes , mined with AlphaMiner</text>
+        </name>
+        <page id="node0">
+            <place id="node1">
+                <name>
+                    <text>{[G+complete]} --&gt; {[H+complete]}</text>
+                </name>
+                <graphics>
+                    <position x="531.25" y="61.0"/>
+                    <dimension x="12.5" y="12.5"/>
+                </graphics>
+            </place>
+            <place id="node2">
+                <name>
+                    <text>{[B+complete]} --&gt; {[F+complete]}</text>
+                </name>
+                <graphics>
+                    <position x="443.75" y="123.0"/>
+                    <dimension x="12.5" y="12.5"/>
+                </graphics>
+            </place>
+            <place id="node3">
+                <name>
+                    <text>{[F+complete]} --&gt; {[X+complete]}</text>
+                </name>
+                <graphics>
+                    <position x="531.25" y="121.0"/>
+                    <dimension x="12.5" y="12.5"/>
+                </graphics>
+            </place>
+            <place id="node4">
+                <name>
+                    <text>{[B+complete]} --&gt; {[E+complete]}</text>
+                </name>
+                <graphics>
+                    <position x="443.75" y="94.0"/>
+                    <dimension x="12.5" y="12.5"/>
+                </graphics>
+            </place>
+            <place id="node5">
+                <name>
+                    <text>{[E+complete]} --&gt; {[X+complete]}</text>
+                </name>
+                <graphics>
+                    <position x="531.25" y="94.0"/>
+                    <dimension x="12.5" y="12.5"/>
+                </graphics>
+            </place>
+            <place id="node6">
+                <name>
+                    <text>{[Q+complete, M+complete]} --&gt; {[G+complete]}</text>
+                </name>
+                <graphics>
+                    <position x="443.75" y="61.0"/>
+                    <dimension x="12.5" y="12.5"/>
+                </graphics>
+            </place>
+            <place id="node7">
+                <name>
+                    <text>{[N+complete]} --&gt; {[V+complete, Z+complete]}</text>
+                </name>
+                <graphics>
+                    <position x="268.75" y="87.0"/>
+                    <dimension x="12.5" y="12.5"/>
+                </graphics>
+            </place>
+            <place id="node8">
+                <name>
+                    <text>{[V+complete, Z+complete]} --&gt; {[Q+complete]}</text>
+                </name>
+                <graphics>
+                    <position x="356.25" y="88.0"/>
+                    <dimension x="12.5" y="12.5"/>
+                </graphics>
+            </place>
+            <place id="node9">
+                <name>
+                    <text>{[X+complete, H+complete]} --&gt; {[Y+complete]}</text>
+                </name>
+                <graphics>
+                    <position x="618.75" y="88.0"/>
+                    <dimension x="12.5" y="12.5"/>
+                </graphics>
+            </place>
+            <place id="node10">
+                <name>
+                    <text>{[A+complete]} --&gt; {[B+complete, C+complete]}</text>
+                </name>
+                <graphics>
+                    <position x="93.75" y="90.5"/>
+                    <dimension x="12.5" y="12.5"/>
+                </graphics>
+            </place>
+            <place id="node11">
+                <name>
+                    <text>{[C+complete]} --&gt; {[N+complete, M+complete]}</text>
+                </name>
+                <graphics>
+                    <position x="181.25" y="74.5"/>
+                    <dimension x="12.5" y="12.5"/>
+                </graphics>
+            </place>
+            <place id="node12">
+                <name>
+                    <text>Start</text>
+                </name>
+                <graphics>
+                    <position x="6.25" y="89.0"/>
+                    <dimension x="12.5" y="12.5"/>
+                </graphics>
+                <initialMarking>
+                    <text>1</text>
+                </initialMarking>
+            </place>
+            <place id="node13">
+                <name>
+                    <text>End</text>
+                </name>
+                <graphics>
+                    <position x="706.25" y="88.0"/>
+                    <dimension x="12.5" y="12.5"/>
+                </graphics>
+            </place>
+            <transition id="node14">
+                <name>
+                    <text>A+complete</text>
+                </name>
+                <graphics>
+                    <position x="50.0" y="89.0"/>
+                    <dimension x="25.0" y="20.0"/>
+                    <fill color="#FFFFFF"/>
+                </graphics>
+            </transition>
+            <transition id="node15">
+                <name>
+                    <text>N+complete</text>
+                </name>
+                <graphics>
+                    <position x="225.0" y="84.5"/>
+                    <dimension x="25.0" y="20.0"/>
+                    <fill color="#FFFFFF"/>
+                </graphics>
+            </transition>
+            <transition id="node16">
+                <name>
+                    <text>Y+complete</text>
+                </name>
+                <graphics>
+                    <position x="662.5" y="88.0"/>
+                    <dimension x="25.0" y="20.0"/>
+                    <fill color="#FFFFFF"/>
+                </graphics>
+            </transition>
+            <transition id="node17">
+                <name>
+                    <text>M+complete</text>
+                </name>
+                <graphics>
+                    <position x="400.0" y="53.0"/>
+                    <dimension x="25.0" y="20.0"/>
+                    <fill color="#FFFFFF"/>
+                </graphics>
+            </transition>
+            <transition id="node18">
+                <name>
+                    <text>H+complete</text>
+                </name>
+                <graphics>
+                    <position x="575.0" y="71.0"/>
+                    <dimension x="25.0" y="20.0"/>
+                    <fill color="#FFFFFF"/>
+                </graphics>
+            </transition>
+            <transition id="node19">
+                <name>
+                    <text>B+complete</text>
+                </name>
+                <graphics>
+                    <position x="400.0" y="123.0"/>
+                    <dimension x="25.0" y="20.0"/>
+                    <fill color="#FFFFFF"/>
+                </graphics>
+            </transition>
+            <transition id="node20">
+                <name>
+                    <text>C+complete</text>
+                </name>
+                <graphics>
+                    <position x="137.5" y="79.5"/>
+                    <dimension x="25.0" y="20.0"/>
+                    <fill color="#FFFFFF"/>
+                </graphics>
+            </transition>
+            <transition id="node21">
+                <name>
+                    <text>Q+complete</text>
+                </name>
+                <graphics>
+                    <position x="400.0" y="88.0"/>
+                    <dimension x="25.0" y="20.0"/>
+                    <fill color="#FFFFFF"/>
+                </graphics>
+            </transition>
+            <transition id="node22">
+                <name>
+                    <text>F+complete</text>
+                </name>
+                <graphics>
+                    <position x="487.5" y="123.0"/>
+                    <dimension x="25.0" y="20.0"/>
+                    <fill color="#FFFFFF"/>
+                </graphics>
+            </transition>
+            <transition id="node23">
+                <name>
+                    <text>V+complete</text>
+                </name>
+                <graphics>
+                    <position x="312.5" y="106.0"/>
+                    <dimension x="25.0" y="20.0"/>
+                    <fill color="#FFFFFF"/>
+                </graphics>
+            </transition>
+            <transition id="node24">
+                <name>
+                    <text>E+complete</text>
+                </name>
+                <graphics>
+                    <position x="487.5" y="88.0"/>
+                    <dimension x="25.0" y="20.0"/>
+                    <fill color="#FFFFFF"/>
+                </graphics>
+            </transition>
+            <transition id="node25">
+                <name>
+                    <text>G+complete</text>
+                </name>
+                <graphics>
+                    <position x="487.5" y="53.0"/>
+                    <dimension x="25.0" y="20.0"/>
+                    <fill color="#FFFFFF"/>
+                </graphics>
+            </transition>
+            <transition id="node26">
+                <name>
+                    <text>X+complete</text>
+                </name>
+                <graphics>
+                    <position x="575.0" y="106.0"/>
+                    <dimension x="25.0" y="20.0"/>
+                    <fill color="#FFFFFF"/>
+                </graphics>
+            </transition>
+            <transition id="node27">
+                <name>
+                    <text>Z+complete</text>
+                </name>
+                <graphics>
+                    <position x="312.5" y="71.0"/>
+                    <dimension x="25.0" y="20.0"/>
+                    <fill color="#FFFFFF"/>
+                </graphics>
+            </transition>
+            <arc id="arc28" source="node8" target="node21">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc29" source="node4" target="node24">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc30" source="node10" target="node20">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc31" source="node7" target="node23">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc32" source="node7" target="node27">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc33" source="node20" target="node11">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc34" source="node11" target="node15">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc35" source="node2" target="node22">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc36" source="node17" target="node6">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc37" source="node5" target="node26">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc38" source="node19" target="node4">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc39" source="node24" target="node5">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc40" source="node26" target="node9">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc41" source="node21" target="node6">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc42" source="node10" target="node19">
+                <name>
+                    <text>1</text>
+                </name>
+                <graphics>
+                    <position x="137.5" y="104.5"/>
+                    <position x="181.25" y="117.0"/>
+                    <position x="225.0" y="119.5"/>
+                    <position x="268.75" y="127.0"/>
+                    <position x="312.5" y="131.0"/>
+                    <position x="356.25" y="127.5"/>
+                </graphics>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc43" source="node25" target="node1">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc44" source="node19" target="node2">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc45" source="node16" target="node13">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc46" source="node18" target="node9">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc47" source="node14" target="node10">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc48" source="node12" target="node14">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc49" source="node11" target="node17">
+                <name>
+                    <text>1</text>
+                </name>
+                <graphics>
+                    <position x="225.0" y="59.5"/>
+                    <position x="268.75" y="49.0"/>
+                    <position x="312.5" y="45.0"/>
+                    <position x="356.25" y="48.5"/>
+                </graphics>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc50" source="node6" target="node25">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc51" source="node22" target="node3">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc52" source="node23" target="node8">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc53" source="node9" target="node16">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc54" source="node15" target="node7">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc55" source="node3" target="node26">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc56" source="node1" target="node18">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+            <arc id="arc57" source="node27" target="node8">
+                <name>
+                    <text>1</text>
+                </name>
+                <arctype>
+                    <text>normal</text>
+                </arctype>
+            </arc>
+        </page>
+    </net>
+</pnml>

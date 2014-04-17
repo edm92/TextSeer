@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="WINDOWS-1252" standalone="yes"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             exporter="Yaoqiang BPMN Editor" exporterVersion="2.1.21" expressionLanguage="http://www.w3.org/1999/XPath"
-             id="_1360732606875" name="" targetNamespace="http://sourceforge.net/bpmn/definitions/_1360732606875"
-             typeLanguage="http://www.w3.org/2001/XMLSchema"
-             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://bpmn.sourceforge.net/schemas/BPMN20.xsd"/>

@@ -3,21 +3,15 @@ package be.fnord.util.functions.language;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.BeforeClass;
-
 import be.fnord.util.functions.Poset.Pair;
-
-
 import edu.cmu.lti.jawjaw.pobj.POS;
 import edu.cmu.lti.jawjaw.pobj.Synset;
-import edu.cmu.lti.jawjaw.util.Configuration;
 import edu.cmu.lti.jawjaw.util.WordNetUtil;
 import edu.cmu.lti.lexical_db.ILexicalDatabase;
 import edu.cmu.lti.lexical_db.NictWordNet;
 import edu.cmu.lti.lexical_db.data.Concept;
 import edu.cmu.lti.ws4j.RelatednessCalculator;
 import edu.cmu.lti.ws4j.impl.Path;
-import edu.cmu.lti.ws4j.util.WS4JConfiguration;
 
 public class WordSim {
 	private static RelatednessCalculator rc;
@@ -52,18 +46,23 @@ public class WordSim {
 	 * @return
 	 */
 	public double getSim(String _a, String _b){
-		WordSim sim = new WordSim();
+		_a = _a.toLowerCase().trim();
+		_b = _b.toLowerCase().trim();
+		if(_a.compareTo(_b) == 0) return 1;
+//		WordSim sim = new WordSim();
 		double currentBest = 0;
 		for(String s: types)
 			try{
-			Pair<List<Concept>,List<Concept>> mySyms = sim.MakeSyns(_a, _b, s);
-			double score = rc.calcRelatednessOfSynset(mySyms.getFirst().get(1), mySyms.getSecond().get(0)).getScore();
+			Pair<List<Concept>,List<Concept>> mySyms = MakeSyns(_a, _b, s);
+//			a.e.println(_a + " " + mySyms.getFirst());
+			double score = rc.calcRelatednessOfSynset(mySyms.getFirst().get(0), mySyms.getSecond().get(0)).getScore();
 			if(currentBest < score) currentBest = score;
-			a.e.println("Sim = " + rc.calcRelatednessOfSynset(mySyms.getFirst().get(1), mySyms.getSecond().get(0)).getScore()) ;
+//			a.e.println("Sim = " + rc.calcRelatednessOfSynset(mySyms.getFirst().get(1), mySyms.getSecond().get(0)).getScore()) ;
+//			a.e.println("Sim = " + score +" " + currentBest + " " + _a + " " + _b + ":" + s);
 			}catch(Exception e){
-				
+//				
 				// Ignore
-//				a.e.println("Error");
+//				a.e.println("Error " + e );
 			}
 //		a.e.println("Best score overall is " + currentBest);
 		return currentBest;
@@ -71,7 +70,10 @@ public class WordSim {
 	
 	public Pair<List<Concept>,List<Concept>> MakeSyns(String _a, String _b, String _type){
 		List<Concept> _n1Synsets = toSynsets(_a, _type);
+		
 		List<Concept> _n2Synsets = toSynsets(_b, _type);
+//		a.e.println("_n1SynSet for " + _a + "(" + _type + ") is " + _n1Synsets.toString());
+//		a.e.println("_n1SynSet for " + _b + "(" + _type + ") is " + _n2Synsets.toString());
 		Pair<List<Concept>,List<Concept>> _result = new Pair<List<Concept>,List<Concept>>(_n1Synsets,_n2Synsets);
 		return _result;
 	}

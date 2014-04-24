@@ -33,6 +33,9 @@ public class e {
 
     // Default print level
     static final int __DEFAULTDISPLAY = INFO;
+    
+    // NLP Settings
+    public static final double MIN_MATCH_REQUIRED = 0.01; // Min sentence similarity match to bother with. 
 
     // Process Model loading
     public static final int NO_FLAGS = 0;

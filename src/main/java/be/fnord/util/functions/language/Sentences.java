@@ -15,7 +15,14 @@ import edu.stanford.nlp.util.logging.RedwoodConfiguration;
 
 
 public class Sentences {
-	public static final double MIN_MATCH_SENTENCE_SCORE = 0.01; // 
+	public static final double MIN_MATCH_SENTENCE_SCORE = a.e.MIN_MATCH_REQUIRED; //
+	public static final double IMPORTANCE_OF_SENTENCES = 1;	// Not used yet
+	public static final boolean __DEBUG = true;
+	
+	public enum ALG {
+		SIMPLE_COMPARE_ALG,
+		SIMPLE_COMPARE_WITH_MANYTOONE;
+	}
 	
 	LinkedList<String> sentences = new LinkedList<String>();
 	
@@ -25,40 +32,133 @@ public class Sentences {
 		return sentences; 
 	} 
 
-	/**
-	 * 
-	 * Stemming from http://preciselyconcise.com/apis_and_installations/snowball_stemmer.php
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		
 		Sentences s = new Sentences();
-		HashMap<String, LinkedList<SimSet>> hm = s.DoSimCheck(s.List("My kingdom for a horse!", "My kingdom for a cow", "This is a first sentence.",
-				"This is a second one.", "My horse kingdom!"
-				));
 		
-		for(String str : hm.keySet()){
-			System.out.println("Result " + str + "=" + hm.get(str));
-		}
-		a.e.println("Applying similarity algorithms");
-		HashMap<String, String> simple = s.simpleMatchClosest(hm);
-		for(String str : simple.keySet()){
-			a.e.println(str + " ~~ " + simple.get(str));
+		LinkedList<String> Proc1 = s.List(
+				"My kingdom for a horse!", 
+				"My kingdom for a cow", 
+				"This is a first sentence.",
+				"This is a second one.", 
+				"My horse kingdom!"
+				);
+		
+		LinkedList<String> Proc2 = s.List(
+				"My kingdom for a horsey!", 
+				"My kingdom for a cowey", 
+				"This is my sentence number one.",
+				"This is my sentence number two.", 
+				"My horsey kingdom!"
+				);
+		
+		HashMap<String, LinkedList<String>> myFinal = 
+				s.compareTwoSetsOfSentences(Proc1, Proc2, ALG.SIMPLE_COMPARE_WITH_MANYTOONE);
+		a.e.println("Results: ");
+		a.e.incIndent();
+		a.e.println(myFinal.toString());
+		a.e.decIndent();
+		
+			
+	}
+	
+	public HashMap<String, LinkedList<String>> compareTwoSetsOfSentences(
+			LinkedList<String> Proc1, 
+			LinkedList<String> Proc2, 
+			ALG ALG_TO_RUN){
+		HashMap<String, LinkedList<String>> result = new HashMap<String, LinkedList<String>> ();
+		
+		LinkedList<String> cleanProc1 = new LinkedList<String>();
+		LinkedList<String> cleanProc2 = new LinkedList<String>();
+		
+		for(String str: Proc1)
+			cleanProc1.add(Clean(str));
+		for(String str: Proc2)
+			cleanProc2.add(Clean(str));		
+		
+		sentences.addAll(Proc1);
+		sentences.addAll(Proc2);
+		
+		HashMap<String, LinkedList<SimSet>> hm = DoSimCheck(sentences);
+		hm = fixTwoProcSimSet(hm, cleanProc1, cleanProc2);
+		
+		HashMap<String, String> simple = null;
+		if(ALG_TO_RUN == ALG.SIMPLE_COMPARE_ALG)				
+				simple = simpleMatchClosest(hm, cleanProc1 , cleanProc2 , !INCLUDE_MANY_TO_ONE_MATCHES);
+		else
+			if(ALG_TO_RUN == ALG.SIMPLE_COMPARE_WITH_MANYTOONE)
+				simple = simpleMatchClosest(hm, cleanProc1 , cleanProc2 ,  INCLUDE_MANY_TO_ONE_MATCHES);
+		
+		
+		if(__DEBUG){
+			for(String str : hm.keySet()){
+				System.out.println("Result " + str + "=" + hm.get(str));
+			}
+			a.e.println("Applying similarity algorithms");
+			a.e.incIndent();  
+			
+			for(String str : simple.keySet()){
+				a.e.println(str + " ~~ " + simple.get(str));
+			}
+			a.e.decIndent();
+			
 		}
 		
+		return result;
+	}
+	
+	public HashMap<String, LinkedList<SimSet>> fixTwoProcSimSet(HashMap<String, LinkedList<SimSet>> _in,
+			LinkedList<String> proc1, LinkedList<String> proc2){
+		HashMap<String, LinkedList<SimSet>> result = new HashMap<String, LinkedList<SimSet>>();
+		
+		for(String str: proc1){
+			if(_in.containsKey(str)){
+				LinkedList<SimSet> current = _in.get(str);
+				LinkedList<SimSet> _newCurrent = new LinkedList<SimSet>(); 
+				for(SimSet sims : current){
+					if(sims.sent1.compareToIgnoreCase(str) == 0){
+						if(!proc1.contains(sims.sent2)){
+							_newCurrent.add(sims);
+						}
+					}
+				}
+				result.put(str, _newCurrent);
+			}
+		}
+		for(String str: proc2){
+			if(_in.containsKey(str)){
+				LinkedList<SimSet> current = _in.get(str);
+				LinkedList<SimSet> _newCurrent = new LinkedList<SimSet>(); 
+				for(SimSet sims : current){
+					if(sims.sent1.compareToIgnoreCase(str) == 0){
+						if(!proc2.contains(sims.sent2)){
+							_newCurrent.add(sims);
+						}
+					}
+				}
+				result.put(str, _newCurrent);
+			}
+		}
 
 		
+		return result;
 	}
+	
+
 	
 	/**
 	 * Finds the best matches and just returns them
 	 * @param _in
+	 * @param MANYTOONE Give either INCLUDE_MANY_TO_ONE_MATCHES or !INCLUDE_MANY_TO_ONE_MATCHES
 	 * @return
 	 */
-	public HashMap<String, String> simpleMatchClosest(HashMap<String, LinkedList<SimSet>> _in){
+	public HashMap<String, String> simpleMatchClosest(HashMap<String, LinkedList<SimSet>> _in,
+			LinkedList<String> _sentences1,
+			LinkedList<String> _sentences2,
+			boolean MANYTOONE){
 		HashMap<String,String> _result = new HashMap<String,String>();
 		HashMap<String,Double> _dresult = new HashMap<String,Double>();
-		
+		HashMap<String,String> _Bresult =  new HashMap<String,String>();
 		for(String key : _in.keySet()){
 			double dBest = 0;
 			String sBest = "";
@@ -69,14 +169,18 @@ public class Sentences {
 				}
 			}
 			if(_result.containsKey(key) || _result.containsKey(sBest)){
-				a.e.println("Found overlap " + key + " " + sBest); // todo Fix here
+//				a.e.println("Found overlap " + key + " " + sBest); // todo Fix here
+				_Bresult.put(key, sBest);
 			}else{
 				_result.put(key, sBest);
 				_dresult.put(key, dBest);
 			}
 		}
+		if(MANYTOONE)		
+			return _Bresult;
+		
 		LinkedList<String> remove = new LinkedList<String>();
-		HashMap<String,String> add = new HashMap<String, String>();
+		HashMap<String, String> add = new HashMap<String, String>();
 		
 		// Lets make sure that we can go backwards and forwards
 		for(String key : _result.keySet()){
@@ -105,8 +209,13 @@ public class Sentences {
 		for(String s: remove)
 			_result.remove(s);
 		
+		
 		return _result;
+		
 	}
+	
+	
+
 	
 	class SimSet{
 		public String sent1 = "";
@@ -181,7 +290,7 @@ public class Sentences {
 		WordSim sim = new WordSim();
 		ArrayList<String> _aList = Tokenize(_a);
 		ArrayList<String> _bList = Tokenize(_b);
-		int words = ((_aList.size() > 0 ? _aList.size() : 1) + (_bList.size() > 0 ? _bList.size() : 1)) / 2;
+		double words = ((_aList.size() > 0 ? _aList.size() : 1) + (_bList.size() > 0 ? _bList.size() : 1)) / 2;
 		for(String WFFL : _aList)	// Word from first list 
 			for(String WFSL : _bList){ // Word from second list
 				double currentBest = sim.getSim(WFFL,WFSL);
@@ -192,7 +301,8 @@ public class Sentences {
 		
 //		a.e.println("Worst case " + cumulativeSim + " words " + words);
 		
-		return cumulativeSim / words ;
+		
+		return cumulativeSim / IMPORTANCE_OF_SENTENCES ;
 	}
 	
 	public String Clean(String in){
@@ -250,5 +360,9 @@ public class Sentences {
 		return out;
 	}
 
+
+	private static final boolean INCLUDE_MANY_TO_ONE_MATCHES = false;
 }
+
+
 

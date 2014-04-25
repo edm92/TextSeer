@@ -11,6 +11,7 @@ package be.fnord.util.functions.Poset;
 public class Pair<A, B> {
     private A first;
     private B second;
+    public int extra = 1;	// Really bad hack for sentence similarity
 
     public Pair(A first, B second) {
     	super();

@@ -71,7 +71,7 @@ import java.util.Vector;
 public class Stopwords {
     
   /** The hash set containing the list of stopwords */
-  protected HashSet m_Words = null;
+  protected HashSet<String> m_Words = null;
 
   /** The default stopwords object (stoplist based on Rainbow) */
   protected static Stopwords m_Stopwords;
@@ -86,7 +86,7 @@ public class Stopwords {
    * initializes the stopwords (based on Rainbow).
    */
   public Stopwords() {
-	    m_Words = new HashSet();
+	    m_Words = new HashSet<String>();
 	    // Using Lucerne stopwords
 	    add("a");
 	    add("an");
@@ -128,7 +128,7 @@ public class Stopwords {
   }
   
   public void _Stopwords() {
-    m_Words = new HashSet();
+    m_Words = new HashSet<String>();
 
     //Stopwords list from Rainbow
     add("a");
@@ -704,12 +704,12 @@ public class Stopwords {
    *
    * @return the enumeration over all stopwords
    */
-  public Enumeration elements() {
-    Iterator    iter;
-    Vector      list;
+  public Enumeration<String> elements() {
+    Iterator<String>    iter;
+    Vector<String>      list;
 
     iter = m_Words.iterator();
-    list = new Vector();
+    list = new Vector<String>();
 
     while (iter.hasNext())
       list.add(iter.next());
@@ -791,7 +791,7 @@ public class Stopwords {
    * @throws Exception if writing fails
    */
   public void write(BufferedWriter writer) throws Exception {
-    Enumeration   enm;
+    Enumeration<String>   enm;
 
     // header
     writer.write("# generated " + new Date());
@@ -814,7 +814,7 @@ public class Stopwords {
    * @return the current stopwords
    */
   public String toString() {
-    Enumeration   enm;
+    Enumeration<String>   enm;
     StringBuffer  result;
 
     result = new StringBuffer();
@@ -834,7 +834,7 @@ public class Stopwords {
    * @param str the word to test
    * @return true if the word is a stopword
    */
-  public static boolean isStopword(String str) {
+  public boolean isStopword(String str) {
     return m_Stopwords.is(str.toLowerCase());
   }
   

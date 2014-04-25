@@ -49,6 +49,7 @@ public class WordSim {
 		_a = _a.toLowerCase().trim();
 		_b = _b.toLowerCase().trim();
 		if(_a.compareTo(_b) == 0) return 1;
+		
 //		WordSim sim = new WordSim();
 		double currentBest = 0;
 		for(String s: types)

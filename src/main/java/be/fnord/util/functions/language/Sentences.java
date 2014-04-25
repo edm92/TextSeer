@@ -4,9 +4,7 @@ package be.fnord.util.functions.language;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Scanner;
 
 import be.fnord.util.functions.Poset.Pair;
@@ -17,8 +15,12 @@ import edu.stanford.nlp.util.logging.RedwoodConfiguration;
 public class Sentences {
 	public static final double MIN_MATCH_SENTENCE_SCORE = a.e.MIN_MATCH_REQUIRED; //
 	public static final double IMPORTANCE_OF_SENTENCES = 1;	// Not used yet
-	public static final boolean __DEBUG = true;
-	
+	public static final boolean __DEBUG = false;
+	public static String RANDOM_RANGE[] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
+        "l", "m", "n","o","p","q","r","s","t","u","v","w","x","y","z",
+        "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+        "0","1","2","3","4","5","6","7","8","9"};
+	public int currentRange = 0;
 	public enum ALG {
 		SIMPLE_COMPARE_ALG,
 		SIMPLE_COMPARE_WITH_MANYTOONE;
@@ -37,36 +39,49 @@ public class Sentences {
 		Sentences s = new Sentences();
 		
 		LinkedList<String> Proc1 = s.List(
-				"My kingdom for a horse!", 
-				"My kingdom for a cow", 
-				"This is a first sentence.",
-				"This is a second one.", 
-				"My horse kingdom!"
-				);
+				"task one", "task two");
+//				"My kingdom for a horse!", 
+//				"My kingdom for a cow", 
+//				"This is a first sentence.",
+//				"This is a second one.", 
+//				"My horse kingdom!"
+//				);
 		
 		LinkedList<String> Proc2 = s.List(
-				"My kingdom for a horsey!", 
-				"My kingdom for a cowey", 
-				"This is my sentence number one.",
-				"This is my sentence number two.", 
-				"My horsey kingdom!"
-				);
+				"task two", "task one");
+//				"My kingdom for a horsey!", 
+//				"My kingdom for a cowey", 
+//				"This is my sentence number one.",
+//				"This is my sentence number two.", 
+//				"My horsey kingdom!"
+//				);
 		
-		HashMap<String, LinkedList<String>> myFinal = 
-				s.compareTwoSetsOfSentences(Proc1, Proc2, ALG.SIMPLE_COMPARE_WITH_MANYTOONE);
+		Pair<String,String> myNewSentences = 
+				s.CreateStringOfTwoSetsOfSentences(Proc1, Proc2, ALG.SIMPLE_COMPARE_ALG);
 		a.e.println("Results: ");
 		a.e.incIndent();
-		a.e.println(myFinal.toString());
+		a.e.println(myNewSentences.toString());
 		a.e.decIndent();
+		
+		DamerauLevenshtein d = new DamerauLevenshtein(myNewSentences.getFirst(),myNewSentences.getSecond());
+		int numChar = myNewSentences.extra ;
+		double sim = 1 - ((double)d.getSimilarity() / (double)numChar);
+		
+		a.e.println("Result : " + sim );
 		
 			
 	}
 	
-	public HashMap<String, LinkedList<String>> compareTwoSetsOfSentences(
+	public HashMap<String, String> cleanedString = new HashMap<String,String>();
+	public HashMap<String, LinkedList<String>> charMapping = new HashMap<String,LinkedList<String>>();
+	public HashMap<String, String> revCharMapping = new HashMap<String, String>();
+	
+	public Pair<String,String> CreateStringOfTwoSetsOfSentences(
+			
 			LinkedList<String> Proc1, 
 			LinkedList<String> Proc2, 
 			ALG ALG_TO_RUN){
-		HashMap<String, LinkedList<String>> result = new HashMap<String, LinkedList<String>> ();
+//		HashMap<String, LinkedList<String>> result = new HashMap<String, LinkedList<String>> ();
 		
 		LinkedList<String> cleanProc1 = new LinkedList<String>();
 		LinkedList<String> cleanProc2 = new LinkedList<String>();
@@ -75,6 +90,11 @@ public class Sentences {
 			cleanProc1.add(Clean(str));
 		for(String str: Proc2)
 			cleanProc2.add(Clean(str));		
+		
+		for(String str: cleanProc1)
+			cleanedString.put(str, Proc1.get(cleanProc1.indexOf(str)));
+		for(String str: cleanProc2)
+			cleanedString.put(str, Proc1.get(cleanProc2.indexOf(str)));
 		
 		sentences.addAll(Proc1);
 		sentences.addAll(Proc2);
@@ -90,6 +110,84 @@ public class Sentences {
 				simple = simpleMatchClosest(hm, cleanProc1 , cleanProc2 ,  INCLUDE_MANY_TO_ONE_MATCHES);
 		
 		
+		for(String str: simple.keySet()){
+			
+			if(!revCharMapping.containsKey(str)){
+				LinkedList<String> newStuff = new LinkedList<String>();
+				
+				String chr = "";
+				String alt = simple.get(str);
+				
+				if(revCharMapping.containsKey(alt))
+					chr = revCharMapping.get(alt);
+				else chr = RANDOM_RANGE[currentRange++];
+				
+				if(charMapping.containsKey(chr))
+					newStuff = charMapping.get(chr);
+				
+				newStuff.add(str);
+//				a.e.println("Testing " + str + " and " + alt + " " + chr);
+//				a.e.println(revCharMapping.toString());
+				charMapping.put(chr, newStuff);
+				revCharMapping.put(str, chr);
+				if(!revCharMapping.containsKey(alt)){
+					charMapping.get(chr).add(alt);
+					revCharMapping.put(alt, chr);
+				}
+			}else{
+				String alt = simple.get(str);
+				a.e.err("If you see this, I couldn't get this to work to test it - it is in Sentences.java");
+				if(!revCharMapping.containsKey(alt)){					
+					String chr = revCharMapping.get(str);
+					
+					charMapping.get(chr).add(alt);
+					revCharMapping.put(alt, chr);
+				}					
+			}
+		}
+		
+		// Add any left overs
+		for(String str:  cleanedString.keySet()){
+//			a.e.println("Testing " + str);
+			if(!revCharMapping.containsKey(str)){
+				LinkedList<String> newStuff = new LinkedList<String>();
+				String chr = RANDOM_RANGE[currentRange++];
+				
+				newStuff.add(str);
+				
+				revCharMapping.put(str, chr);
+				charMapping.put(chr, newStuff);
+			}
+		}
+		
+		
+		if(__DEBUG)
+		a.e.println("Char mapping  = " + charMapping.toString());
+		
+		// Create reverse sentences
+		String _result1 = "";
+		String _result2 = "";
+		for(String str: cleanProc1){
+			if(revCharMapping.containsKey(str))
+				_result1 += revCharMapping.get(str);
+			else{
+				a.e.err("Funny stuff in sentences.java " + str);
+			}
+		}
+		for(String str: cleanProc2){
+			if(revCharMapping.containsKey(str))
+				_result2 += revCharMapping.get(str);
+			else{
+				a.e.err("Funny stuff in sentences.java " + str);
+			}
+		}
+		if(__DEBUG){
+			a.e.println("Str : " + _result1);
+			a.e.println("Str : " + _result2);
+		}
+		
+		Pair<String, String> _result = new Pair<String,String>(_result1, _result2);
+		
 		if(__DEBUG){
 			for(String str : hm.keySet()){
 				System.out.println("Result " + str + "=" + hm.get(str));
@@ -103,8 +201,8 @@ public class Sentences {
 			a.e.decIndent();
 			
 		}
-		
-		return result;
+		_result.extra = currentRange;
+		return _result;
 	}
 	
 	public HashMap<String, LinkedList<SimSet>> fixTwoProcSimSet(HashMap<String, LinkedList<SimSet>> _in,
@@ -290,7 +388,7 @@ public class Sentences {
 		WordSim sim = new WordSim();
 		ArrayList<String> _aList = Tokenize(_a);
 		ArrayList<String> _bList = Tokenize(_b);
-		double words = ((_aList.size() > 0 ? _aList.size() : 1) + (_bList.size() > 0 ? _bList.size() : 1)) / 2;
+//		double words = ((_aList.size() > 0 ? _aList.size() : 1) + (_bList.size() > 0 ? _bList.size() : 1)) / 2;
 		for(String WFFL : _aList)	// Word from first list 
 			for(String WFSL : _bList){ // Word from second list
 				double currentBest = sim.getSim(WFFL,WFSL);
@@ -302,7 +400,7 @@ public class Sentences {
 //		a.e.println("Worst case " + cumulativeSim + " words " + words);
 		
 		
-		return cumulativeSim / IMPORTANCE_OF_SENTENCES ;
+		return cumulativeSim;// / IMPORTANCE_OF_SENTENCES ;
 	}
 	
 	public String Clean(String in){

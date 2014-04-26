@@ -35,7 +35,25 @@ public class e {
     static final int __DEFAULTDISPLAY = INFO;
     
     // NLP Settings
-    public static final double MIN_MATCH_REQUIRED = 0.01; // Min sentence similarity match to bother with. 
+    public static String RANDOM_RANGE[] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
+        "l", "m", "n","o","p","q","r","s","t","u","v","w","x","y","z",
+        "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+        "0","1","2","3","4","5","6","7","8","9"};
+    public static final double MIN_MATCH_REQUIRED = 0.01; // Min sentence similarity match to bother with.
+    public static enum WORD_MATCH_STRENGTH{
+    	EXACT(1), 
+    	STRONG(.75),
+    	MEDIUM(.4), 
+    	WEAK(.01);
+    	
+    	public double MATCH_NUMBER = 1;
+    	WORD_MATCH_STRENGTH(double in){
+    		MATCH_NUMBER = in;
+    	}
+    	
+    	
+    	
+    }
 
     // Process Model loading
     public static final int NO_FLAGS = 0;

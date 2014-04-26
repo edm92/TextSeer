@@ -7,19 +7,15 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import a.e.WORD_MATCH_STRENGTH;
 import be.fnord.util.functions.Poset.Pair;
-
 import edu.stanford.nlp.util.logging.RedwoodConfiguration;
 
 
 public class Sentences {
-	public static final double MIN_MATCH_SENTENCE_SCORE = a.e.MIN_MATCH_REQUIRED; //
 	public static final double IMPORTANCE_OF_SENTENCES = 1;	// Not used yet
 	public static final boolean __DEBUG = false;
-	public static String RANDOM_RANGE[] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
-        "l", "m", "n","o","p","q","r","s","t","u","v","w","x","y","z",
-        "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
-        "0","1","2","3","4","5","6","7","8","9"};
+	
 	public int currentRange = 0;
 	public enum ALG {
 		SIMPLE_COMPARE_ALG,
@@ -39,7 +35,7 @@ public class Sentences {
 		Sentences s = new Sentences();
 		
 		LinkedList<String> Proc1 = s.List(
-				"task one", "task two");
+				"task1", "task two");
 //				"My kingdom for a horse!", 
 //				"My kingdom for a cow", 
 //				"This is a first sentence.",
@@ -57,7 +53,9 @@ public class Sentences {
 //				);
 		
 		Pair<String,String> myNewSentences = 
-				s.CreateStringOfTwoSetsOfSentences(Proc1, Proc2, ALG.SIMPLE_COMPARE_ALG);
+				s.CreateStringOfTwoSetsOfSentences(Proc1, Proc2, 
+						ALG.SIMPLE_COMPARE_ALG, 
+						WORD_MATCH_STRENGTH.EXACT.MATCH_NUMBER);
 		a.e.println("Results: ");
 		a.e.incIndent();
 		a.e.println(myNewSentences.toString());
@@ -80,7 +78,8 @@ public class Sentences {
 			
 			LinkedList<String> Proc1, 
 			LinkedList<String> Proc2, 
-			ALG ALG_TO_RUN){
+			ALG ALG_TO_RUN, double fixNumber){
+		MIN_MATCH_SENTENCE_SCORE = fixNumber;
 //		HashMap<String, LinkedList<String>> result = new HashMap<String, LinkedList<String>> ();
 		
 		LinkedList<String> cleanProc1 = new LinkedList<String>();
@@ -120,7 +119,7 @@ public class Sentences {
 				
 				if(revCharMapping.containsKey(alt))
 					chr = revCharMapping.get(alt);
-				else chr = RANDOM_RANGE[currentRange++];
+				else chr = a.e.RANDOM_RANGE[currentRange++];
 				
 				if(charMapping.containsKey(chr))
 					newStuff = charMapping.get(chr);
@@ -151,7 +150,7 @@ public class Sentences {
 //			a.e.println("Testing " + str);
 			if(!revCharMapping.containsKey(str)){
 				LinkedList<String> newStuff = new LinkedList<String>();
-				String chr = RANDOM_RANGE[currentRange++];
+				String chr = a.e.RANDOM_RANGE[currentRange++];
 				
 				newStuff.add(str);
 				
@@ -393,7 +392,7 @@ public class Sentences {
 			for(String WFSL : _bList){ // Word from second list
 				double currentBest = sim.getSim(WFFL,WFSL);
 //				a.e.println("Result of " + WFFL + " vs. " + WFSL + " = " + currentBest);
-				if(currentBest > 0)
+				if(currentBest > MIN_MATCH_SENTENCE_SCORE)
 					cumulativeSim += currentBest;
 			}
 		
@@ -404,10 +403,39 @@ public class Sentences {
 	}
 	
 	public String Clean(String in){
+		
+		
+		
 		String _result = "";
+		
+		String[] words = in.split(" ");
+		in = "";
+		for(String str: words){
+			str = str.replaceAll("(\\b)(\\d)", "$2 ");
+			str = str.replaceAll("(\\d)(\\b)", " $1");
+			
+			str = str.replaceAll("1", "one");
+			str = str.replaceAll("2", "two");
+			str = str.replaceAll("3", "three");
+			str = str.replaceAll("4", "four");
+			str = str.replaceAll("5", "five");
+			str = str.replaceAll("6", "six");
+			str = str.replaceAll("7", "seven");
+			str = str.replaceAll("8", "eight");
+			str = str.replaceAll("9", "nine");
+			str = str.replaceAll("0", "zero");
+			str = str.trim();
+			in += str + " ";
+		}
+		in = in.trim();
+		
+		
 		for(String s : Tokenize(in))
 			_result += s + " ";
-		if(_result.length()>0) _result = _result.substring(0, _result.length() -1);
+		//if(_result.length()>0) _result = _result.substring(0, _result.length() -1);
+		_result = _result.trim();
+		
+
 		return _result;
 		
 	}
@@ -458,7 +486,7 @@ public class Sentences {
 		return out;
 	}
 
-
+	public double MIN_MATCH_SENTENCE_SCORE = WORD_MATCH_STRENGTH.EXACT.MATCH_NUMBER;
 	private static final boolean INCLUDE_MANY_TO_ONE_MATCHES = false;
 }
 

@@ -16,6 +16,8 @@ import java.util.TreeMap;
  */
 
 public class Trace extends Vertex {
+	
+	
     public boolean INCLUDE_EDGE = false;
     private static final long serialVersionUID = 1L;
 
@@ -40,7 +42,7 @@ public class Trace extends Vertex {
     //public LinkedList<String> subTraces = new LinkedList<String>(); // Defined in Graph
 
 
-    LinkedList<Vertex> nodes = new LinkedList<Vertex>();
+    public LinkedList<Vertex> nodes = new LinkedList<Vertex>();
 
     public LinkedList<Vertex> getNodes() {
         return nodes;
@@ -133,7 +135,9 @@ public class Trace extends Vertex {
 
     private Trace processSimpleSubTraces(LinkedList<Vertex> vertexArray) {
         Trace newTrace = new Trace(parentGraph);
-
+        newTrace.isAND = this.isAND;
+        newTrace.MY_ID = this.MY_ID;
+        
         this.addSubTrace(newTrace.name);
         newTrace.isSubTrace = true;
         Vertex previous = null;

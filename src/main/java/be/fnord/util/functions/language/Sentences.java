@@ -11,7 +11,13 @@ import a.e.WORD_MATCH_STRENGTH;
 import be.fnord.util.functions.Poset.Pair;
 import edu.stanford.nlp.util.logging.RedwoodConfiguration;
 
-
+/**
+ * 
+ * Functions for comparing a set of sentences (aka process traces)
+ * 
+ * @author edm92
+ *
+ */
 public class Sentences {
 	public static final double IMPORTANCE_OF_SENTENCES = 1;	// Not used yet
 	public static final boolean __DEBUG = false;
@@ -90,10 +96,13 @@ public class Sentences {
 		for(String str: Proc2)
 			cleanProc2.add(Clean(str));		
 		
+		
+		
 		for(String str: cleanProc1)
 			cleanedString.put(str, Proc1.get(cleanProc1.indexOf(str)));
-		for(String str: cleanProc2)
-			cleanedString.put(str, Proc1.get(cleanProc2.indexOf(str)));
+		for(String str: cleanProc2){
+			cleanedString.put(str, Proc2.get(cleanProc2.indexOf(str)));
+		}
 		
 		sentences.addAll(Proc1);
 		sentences.addAll(Proc2);

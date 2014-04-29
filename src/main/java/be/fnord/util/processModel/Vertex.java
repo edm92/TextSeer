@@ -209,6 +209,7 @@ public class Vertex extends Graph<Vertex, Edge> {
     public String toString() {
         String result = "";
         if (this.getWFF().getFormula().compareTo(a.e.EMPTY_EFFECT) != 0) {
+        	if(this.TO_STRING_WITH_WFFS)
             result += "{" + this.getWFF().getFormula() + "}";
         }
         if (isSubprocess) {

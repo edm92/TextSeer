@@ -48,6 +48,7 @@ public class GraphTransformer {
             currentNode = g.trueStart;
             __results.add(startTrace);
             createTrace(g, startTrace, currentNode, g.trueEnd);
+            
         }
 
         // Transform all traces into OCP's
@@ -81,6 +82,11 @@ public class GraphTransformer {
             Trace subTrace = new Trace(g);
             currentTrace.removeTraceNode(currentNode);
             currentTrace.addTraceNode(subTrace);
+            currentTrace.isAND = true;
+            subTrace.isAND = true;
+            currentTrace.MY_ID = currentNode.MY_ID;
+            subTrace.MY_ID = currentNode.MY_ID;
+            
             Vertex next = null;
             for (Edge e : g.outgoingEdgesOf(currentNode)) {
                 Vertex newNode = g.getEdgeTarget(e);
@@ -113,7 +119,7 @@ public class GraphTransformer {
 
         for (Trace g : duped) {
             String key = hashDecisionFreeGraph(g);
-
+            
             if (!hashedDecisionFreeGraphs.contains(key)) {
                 hashedDecisionFreeGraphs.add(key);
                 deDuped.add(g);

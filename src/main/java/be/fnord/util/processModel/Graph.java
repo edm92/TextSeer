@@ -15,6 +15,10 @@ import java.util.*;
 public class Graph<v extends Vertex, e extends Edge> extends DefaultDirectedGraph<Vertex, Edge> implements org.jgrapht.Graph<Vertex, Edge> {
     public static boolean __DEBUG = a.e.__DEBUG;
 
+	public static int _ID = 0;
+	public int MY_ID = ++_ID;
+
+    
     protected transient static Logger logger = Logger.getLogger("GraphClass");
     public static boolean SKIP_EMPTY_WFF_PATHS = true;
     public static final int MAX_PATH_LENGTH = 100; // Set higher if your graph isn't working out

@@ -15,6 +15,7 @@ public class JSONEFFECT {
 	
 	public String [] RESOURCE;
 	
+	
 	public String getEffect(){
 		String _result = "";
 		if(EFFECT != null && EFFECT.length > 0)

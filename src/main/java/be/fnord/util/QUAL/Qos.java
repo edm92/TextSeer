@@ -17,11 +17,13 @@ public class Qos {
 	public String COST;
 	public String TIME;
 	public String SKILL;
+	public String UTILITY; 
 	
 	public Qos(){
 		COST = "";
 		TIME = "";
 		SKILL = "";
+		UTILITY = "";
 	}
 	
 	public Qos copy(){
@@ -30,6 +32,7 @@ public class Qos {
 		_result.COST = COST;
 		_result.TIME = TIME;
 		_result.SKILL = SKILL;
+		_result.UTILITY = UTILITY;
 		
 		return _result;
 	}
@@ -66,11 +69,16 @@ public class Qos {
 		else
 			skillPref = new MAX_SKILL();
 		
-		
+				
+		// Handle Utility Accumulation
+		PREF_FUNC utilityPref = null;
+			utilityPref = new MAX_COST();
+				
 		
 		_result.COST = costPref.combine(source.COST, target.COST);
 		_result.TIME = timePref.combine(source.TIME, target.TIME);
 		_result.SKILL = skillPref.combine(source.SKILL, target.SKILL);
+		_result.UTILITY = utilityPref.compare(source.UTILITY, target.UTILITY) ? source.UTILITY : target.UTILITY;
 		
 		return _result;
 	}

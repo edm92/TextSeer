@@ -52,6 +52,7 @@ public class e {
     }
     // Similarity Measures		// In be.fnord.util.processModel.util.Distance
     public static double PENALTY_FOR_EXTRA_TRACE = 0.0; // Penalty when extra traces are found
+    public static double PENALTY_FOR_EXTRA_LETTER = 0.1;
     public static final boolean WHOLE_NUMBER = true;
     public static enum SIM_RESULT {
     	WHOLE_NUMBER(true),

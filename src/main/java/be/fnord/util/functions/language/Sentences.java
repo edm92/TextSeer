@@ -29,11 +29,11 @@ public class Sentences {
 		SIMPLE_COMPARE_WITH_MANYTOONE;
 	}
 	
-	LinkedList<String> sentences = new LinkedList<String>();
+//	LinkedList<String> sentences = new LinkedList<String>();
 	
 	@SuppressWarnings("unchecked")
 	public  <T> LinkedList<String> List(T... elements) {
-		sentences = (LinkedList<String>) new LinkedList<T>(Arrays.asList(elements));
+		LinkedList<String> sentences = (LinkedList<String>) new LinkedList<T>(Arrays.asList(elements));
 		return sentences; 
 	} 
 
@@ -121,9 +121,9 @@ public class Sentences {
 			cleanedString.put(str, Proc2.get(cleanProc2.indexOf(str)));
 		}
 		
-		sentences.addAll(Proc1);
-		sentences.addAll(Proc2);
-		a.e.println("Comparing " + cleanProc1 + " vs " + cleanProc2);
+//		sentences.addAll(Proc1);
+//		sentences.addAll(Proc2);
+//		a.e.println("Comparing " + cleanProc1 + " vs " + cleanProc2);
 		HashMap<String, LinkedList<SimSet>> hm = DoSimCheck(cleanProc1,cleanProc2, MIN_MATCH_SENTENCE_SCORE);
 		hm = fixTwoProcSimSet(hm, cleanProc1, cleanProc2);
 		

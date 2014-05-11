@@ -27,12 +27,11 @@ public class ProcessDistanceMeasureExample {
 		/////////////////////////////////////////
 		//// Real start of program below	/////
 		/////////////////////////////////////////
-		a.e.PENALTY_FOR_EXTRA_TRACE = 1;
+		a.e.PENALTY_FOR_EXTRA_TRACE = .1;
 		
 		
 		
 		ProcessDistanceMeasureExample pc = new ProcessDistanceMeasureExample();
-		Distance dc = new Distance();
 		String directory = "models/sim";
 		
 		File[] files = pc.finder(directory); // load the entire models root
@@ -42,10 +41,10 @@ public class ProcessDistanceMeasureExample {
 		
 		for(Pair<String,String> p : compare){
 //			a.e.err("Trying " + p.getFirst() + " and " + p.getSecond());
-			
+			Distance dc = new Distance();
 			double distance = dc.computeDistance(p.getFirst(), p.getSecond(),
-					ALG.SIMPLE_COMPARE_ALG,
-					WORD_MATCH_STRENGTH.WEAK,
+					ALG.SIMPLE_COMPARE_WITH_MANYTOONE,
+					WORD_MATCH_STRENGTH.EXACT,
 					SIM_RESULT.RATIO);
 			if(distance > best){
 				best = distance;

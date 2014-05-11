@@ -22,7 +22,7 @@ import be.fnord.util.processModel.Vertex;
 
 public class Distance {
 	
-	public static final boolean __DEBUG = true;
+	public static final boolean __DEBUG = false;
 	public static double PENALTY_FOR_EXTRA_TRACE = a.e.PENALTY_FOR_EXTRA_TRACE;
 	
 
@@ -134,12 +134,13 @@ public class Distance {
 								ALG_TYPE, 
 								MATCHSTRENGH.MATCH_NUMBER);
 				DamerauLevenshtein d = new DamerauLevenshtein(myNewSentences.getFirst(),myNewSentences.getSecond());
-				int numChar = myNewSentences.extra ;
+				double numChar = myNewSentences.extra ;
 				for(char i: myNewSentences.getFirst().toCharArray())
 					for(char j: myNewSentences.getSecond().toCharArray()){
 						if(i == j) numChar++;
+						else numChar -= a.e.PENALTY_FOR_EXTRA_LETTER;
 					}
-
+				if(numChar < 1) numChar = 1;
 				
 				
 				double sim = (double)d.getSimilarity();
@@ -201,10 +202,15 @@ public class Distance {
         //// Real start of program below	/////
         /////////////////////////////////////////
         Distance dc = new Distance();
-        double distance = dc.computeDistance("models/proc1.bpmn20.xml", "models/proc3.bpmn20.xml",
-        		ALG.SIMPLE_COMPARE_ALG, WORD_MATCH_STRENGTH.EXACT, SIM_RESULT.WHOLE_NUMBER);
+        double distance = 0;
+        distance = dc.computeDistance("models/Determine environmental health and safety impacts.bpmn20.xml", "models/proc3.bpmn20.xml",
+        		ALG.SIMPLE_COMPARE_ALG, WORD_MATCH_STRENGTH.EXACT, SIM_RESULT.RATIO);
         a.e.println("Distance between the two models is " + distance);
 
+        distance = dc.computeDistance("models/sim/proc3.bpmn20.xml", "models/sim/proc1.bpmn20.xml",
+        		ALG.SIMPLE_COMPARE_ALG, WORD_MATCH_STRENGTH.EXACT, SIM_RESULT.RATIO);
+        a.e.println("Distance between the two models is " + distance);
+        
 	}
 	
 	public double computeDistance(String file1, String file2, 

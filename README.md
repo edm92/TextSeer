@@ -13,6 +13,10 @@ Please note that the codebase has been updated substantially.
 Basic users:
     > TextSeer is currently a set of functions that can be used to develop systems that take advantage of semantic effect accumulation. In the SRC directory in the base directory there are a number of examples for use of the library functions.
 
+* **Process Similarity**
+> *Written by Evan Morrison, a new process similarity measure using Stanford NLP.*
+
+
 * **Abductive Example**
 > *Written by Evan Morrison, an abductive reasoner, will take in a knowledgebase, some possible actions effects (facts) and an observation. The reasoner will then find possible actions that could be performed together.*
 

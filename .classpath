@@ -59,5 +59,6 @@
 	<classpathentry kind="lib" path="lib/ws4j-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/wstx-asl-3.2.6.jar"/>
 	<classpathentry kind="lib" path="lib/yaoqiang-bpmn-editor-2.1.21.jar"/>
+	<classpathentry kind="lib" path="build/jar/TextSeer.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

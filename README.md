@@ -7,7 +7,7 @@
 
 Please note that the codebase has been updated substantially. 
 ```
-    mvn build? Need to test
+    include /build/jar/TextSeer-version.jar in your project. 
 ```
 
 Basic users:

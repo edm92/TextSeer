@@ -30,7 +30,7 @@
         "~A & B & C"
     ],
     "GOAL": [],
-
+	"RESOURCE": []
 }]]></documentation>
       <incoming>flow1</incoming>
       <outgoing>flow2</outgoing>

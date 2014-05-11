@@ -90,6 +90,7 @@ public class Vertex extends Graph<Vertex, Edge> {
     	if(_WFF.contains("_JSONEFFECT")){
     		_WFF = _WFF.replaceAll("_JSONEFFECT", "").trim();
     		Gson gson = new Gson();
+//    		a.e.println("Trying " + _WFF);
     		jsEFF = gson.fromJson(_WFF, JSONEFFECT.class); 
     		WFF = jsEFF.getEffect();
     	}else

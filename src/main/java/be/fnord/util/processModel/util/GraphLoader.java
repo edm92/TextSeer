@@ -324,7 +324,9 @@ public class GraphLoader {
             v.id = r.getId();
             v.isSubprocess = true;
             v.setWFF(documentation);
+            if(r.getBoundaryEventRefs() != null)
             for (BoundaryEvent e : r.getBoundaryEventRefs()) {
+            	if(e != null)
                 v.boundaryRefs.add(e.getId());
             }
             myNode.node = v;

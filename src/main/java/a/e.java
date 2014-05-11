@@ -41,19 +41,27 @@ public class e {
         "0","1","2","3","4","5","6","7","8","9"};
     public static final double MIN_MATCH_REQUIRED = 0.01; // Min sentence similarity match to bother with.
     public static enum WORD_MATCH_STRENGTH{
-    	EXACT(1), 
+    	EXACT(10), 
     	STRONG(.75),
     	MEDIUM(.4), 
-    	WEAK(.01);
-    	
+    	WEAK(.01);    	
     	public double MATCH_NUMBER = 1;
     	WORD_MATCH_STRENGTH(double in){
     		MATCH_NUMBER = in;
     	}
-    	
-    	
-    	
     }
+    // Similarity Measures		// In be.fnord.util.processModel.util.Distance
+    public static double PENALTY_FOR_EXTRA_TRACE = 0.0; // Penalty when extra traces are found
+    public static final boolean WHOLE_NUMBER = true;
+    public static enum SIM_RESULT {
+    	WHOLE_NUMBER(true),
+    	RATIO(false);
+    	public boolean TYPE;
+    	SIM_RESULT(boolean _type){
+    		TYPE = _type;
+    	}
+    }
+    
 
     // Process Model loading
     public static final int NO_FLAGS = 0;
@@ -64,7 +72,7 @@ public class e {
     public static final int FULL_TRACES = 1;            // Compute ALL traces.
 
     // Defaults
-    public static final int DEFAULT_TRACE_TYPE = SIMPLE_TRACES; // Change this to full on completion
+    public static int DEFAULT_TRACE_TYPE = SIMPLE_TRACES; // Change this to full on completion
 
 
     public static final int AGGRESSIVE_DEDUPING = 1;    // Don't consider edges, if you find that edges are being removed then change to simple

@@ -21,6 +21,7 @@ import edu.stanford.nlp.util.logging.RedwoodConfiguration;
 public class Sentences {
 	public static final double IMPORTANCE_OF_SENTENCES = 1;	// Not used yet
 	public static final boolean __DEBUG = false;
+	static boolean  RANGECALC = false; // Set to true to get a ratio from 0-1
 	
 	public int currentRange = 0;
 	public enum ALG {
@@ -69,7 +70,11 @@ public class Sentences {
 		
 		DamerauLevenshtein d = new DamerauLevenshtein(myNewSentences.getFirst(),myNewSentences.getSecond());
 		int numChar = myNewSentences.extra ;
-		double sim = 1 - ((double)d.getSimilarity() / (double)numChar);
+		double sim = (double)d.getSimilarity() ;
+		
+		if(RANGECALC)
+			sim = 1 - ( sim / (double)numChar);
+		
 		
 		a.e.println("Result : " + sim );
 		
@@ -85,7 +90,7 @@ public class Sentences {
 			LinkedList<String> Proc1, 
 			LinkedList<String> Proc2, 
 			ALG ALG_TO_RUN, double fixNumber){
-		MIN_MATCH_SENTENCE_SCORE = fixNumber;
+		double MIN_MATCH_SENTENCE_SCORE = fixNumber;
 //		HashMap<String, LinkedList<String>> result = new HashMap<String, LinkedList<String>> ();
 		
 		LinkedList<String> cleanProc1 = new LinkedList<String>();
@@ -107,7 +112,7 @@ public class Sentences {
 		sentences.addAll(Proc1);
 		sentences.addAll(Proc2);
 		
-		HashMap<String, LinkedList<SimSet>> hm = DoSimCheck(sentences);
+		HashMap<String, LinkedList<SimSet>> hm = DoSimCheck(sentences, MIN_MATCH_SENTENCE_SCORE);
 		hm = fixTwoProcSimSet(hm, cleanProc1, cleanProc2);
 		
 		HashMap<String, String> simple = null;
@@ -125,6 +130,8 @@ public class Sentences {
 				
 				String chr = "";
 				String alt = simple.get(str);
+				if(str.trim().length() < 1) break;
+				if(alt.trim().length() < 1) break;
 				
 				if(revCharMapping.containsKey(alt))
 					chr = revCharMapping.get(alt);
@@ -136,11 +143,13 @@ public class Sentences {
 				newStuff.add(str);
 //				a.e.println("Testing " + str + " and " + alt + " " + chr);
 //				a.e.println(revCharMapping.toString());
-				charMapping.put(chr, newStuff);
-				revCharMapping.put(str, chr);
-				if(!revCharMapping.containsKey(alt)){
-					charMapping.get(chr).add(alt);
-					revCharMapping.put(alt, chr);
+				if(newStuff.size() > 0){
+					charMapping.put(chr, newStuff);
+					revCharMapping.put(str, chr);
+					if(!revCharMapping.containsKey(alt)){
+						charMapping.get(chr).add(alt);
+						revCharMapping.put(alt, chr);
+					}
 				}
 			}else{
 				String alt = simple.get(str);
@@ -162,12 +171,22 @@ public class Sentences {
 				String chr = a.e.RANDOM_RANGE[currentRange++];
 				
 				newStuff.add(str);
-				
-				revCharMapping.put(str, chr);
-				charMapping.put(chr, newStuff);
+				if(newStuff.size() > 0){
+					revCharMapping.put(str, chr);
+					charMapping.put(chr, newStuff);
+				}
 			}
 		}
 		
+		LinkedList<String> removeList = new LinkedList<String>();
+		for(String s: charMapping.keySet()){
+			if(charMapping.containsKey(s) && charMapping.get(s).size() < 1)
+				removeList.add(s);
+		}	for(String s: removeList) {
+			a.e.println("Trying like hell to remove : " + s);
+			charMapping.remove(s);
+		}
+				
 		
 		if(__DEBUG)
 		a.e.println("Char mapping  = " + charMapping.toString());
@@ -195,20 +214,26 @@ public class Sentences {
 		}
 		
 		Pair<String, String> _result = new Pair<String,String>(_result1, _result2);
-		
+//		LinkedList<String> removeList = new LinkedList<String>();
+//		for(String str : simple.keySet()){
+//			if(simple.get(str).trim().length() < 2) removeList.add(str);
+//		}
+//		for(String s : removeList) simple.remove(s);
+			
 		if(__DEBUG){
 			for(String str : hm.keySet()){
 				System.out.println("Result " + str + "=" + hm.get(str));
 			}
-			a.e.println("Applying similarity algorithms");
-			a.e.incIndent();  
-			
-			for(String str : simple.keySet()){
-				a.e.println(str + " ~~ " + simple.get(str));
-			}
-			a.e.decIndent();
-			
-		}
+//			a.e.println("Applying similarity algorithms");
+//			a.e.incIndent();			
+//			for(String str : simple.keySet()){
+//				a.e.println(str + " ~~ " + simple.get(str));
+//			}		
+//			a.e.decIndent();
+//			a.e.println(_result.toString());
+		};
+		
+		
 		_result.extra = currentRange;
 		return _result;
 	}
@@ -265,10 +290,13 @@ public class Sentences {
 		HashMap<String,String> _result = new HashMap<String,String>();
 		HashMap<String,Double> _dresult = new HashMap<String,Double>();
 		HashMap<String,String> _Bresult =  new HashMap<String,String>();
+		
+		LinkedList<String> taken = new LinkedList<String>();
 		for(String key : _in.keySet()){
 			double dBest = 0;
 			String sBest = "";
 			for(SimSet compared : _in.get(key)){
+				if(!MANYTOONE && !taken.contains(compared.sent2))
 				if(compared.score > dBest){
 					dBest = compared.score;
 					sBest = compared.sent2;
@@ -276,14 +304,17 @@ public class Sentences {
 			}
 			if(_result.containsKey(key) || _result.containsKey(sBest)){
 //				a.e.println("Found overlap " + key + " " + sBest); // todo Fix here
+				taken.add(sBest);
 				_Bresult.put(key, sBest);
 			}else{
+				taken.add(sBest);
 				_result.put(key, sBest);
 				_dresult.put(key, dBest);
 			}
 		}
 		if(MANYTOONE)		
 			return _Bresult;
+		
 		
 		LinkedList<String> remove = new LinkedList<String>();
 		HashMap<String, String> add = new HashMap<String, String>();
@@ -315,6 +346,14 @@ public class Sentences {
 		for(String s: remove)
 			_result.remove(s);
 		
+		remove = new LinkedList<String>();
+		for(String s: _result.keySet()){
+			if(s.trim().length() < 2) remove.add(s);
+			if(_result.get(s).trim().length() < 2) remove.add(s);
+		}
+		for(String s: remove)
+			_result.remove(s);
+		
 		
 		return _result;
 		
@@ -333,7 +372,7 @@ public class Sentences {
 		}
 	}
 	
-	public HashMap<String, LinkedList<SimSet>> DoSimCheck(LinkedList<String> _sentences){
+	public HashMap<String, LinkedList<SimSet>> DoSimCheck(LinkedList<String> _sentences, Double MATCH_SCORE){
 		sentences = _sentences;
 		HashMap<String, LinkedList<SimSet>> SimSents = new HashMap<String, LinkedList<SimSet>>();
 
@@ -355,8 +394,8 @@ public class Sentences {
 
 		    
 		    //a.e.println("__a = " + __a + " ; b = " + __b);
-		    double result = SentenceSim(__a, __b);
-		    if(result >= MIN_MATCH_SENTENCE_SCORE){ // Save
+		    double result = SentenceSim(__a, __b, MATCH_SCORE);
+		    if(result >= MATCH_SCORE){ // Save
 		    	SimSet ss = new SimSet();
 		    	ss.sent1 = __a; ss.sent2 = __b;
 		    	ss.score = result;
@@ -389,7 +428,7 @@ public class Sentences {
 	 * @param _b
 	 * @return
 	 */
-	public double SentenceSim(String _a, String _b){
+	public double SentenceSim(String _a, String _b, double MATCH_SCORE){
 //		a.e.println("Comparing " + _a + " and " + _b);
 		double cumulativeSim = 0;
 		
@@ -401,7 +440,7 @@ public class Sentences {
 			for(String WFSL : _bList){ // Word from second list
 				double currentBest = sim.getSim(WFFL,WFSL);
 //				a.e.println("Result of " + WFFL + " vs. " + WFSL + " = " + currentBest);
-				if(currentBest > MIN_MATCH_SENTENCE_SCORE)
+				if(currentBest > MATCH_SCORE)
 					cumulativeSim += currentBest;
 			}
 		
@@ -414,6 +453,18 @@ public class Sentences {
 	public String Clean(String in){
 		
 		
+		// Remove first section
+		if(in.contains("_")){
+			in = in.trim();
+			in = in.substring(in.indexOf("_") +1, in.length());
+			in = in.trim();
+			if(in.substring(0,1).matches("[0-9]")) in = in.substring(1, in.length());
+			if(in.length() > 0)
+			if(in.substring(0,1).matches("[0-9]")) in = in.substring(1, in.length());
+			if(in.length() > 0)
+			if(in.substring(0,1).matches("[0-9]")) in = in.substring(1, in.length());
+			in = in.trim();
+		}
 		
 		String _result = "";
 		
@@ -423,16 +474,17 @@ public class Sentences {
 			str = str.replaceAll("(\\b)(\\d)", "$2 ");
 			str = str.replaceAll("(\\d)(\\b)", " $1");
 			
-			str = str.replaceAll("1", "one");
-			str = str.replaceAll("2", "two");
-			str = str.replaceAll("3", "three");
-			str = str.replaceAll("4", "four");
-			str = str.replaceAll("5", "five");
-			str = str.replaceAll("6", "six");
-			str = str.replaceAll("7", "seven");
-			str = str.replaceAll("8", "eight");
-			str = str.replaceAll("9", "nine");
-			str = str.replaceAll("0", "zero");
+			str = str.replaceAll("1", " one ");
+			str = str.replaceAll("2", " two ");
+			str = str.replaceAll("3", " three ");
+			str = str.replaceAll("4", " four ");
+			str = str.replaceAll("5", " five ");
+			str = str.replaceAll("6", " six ");
+			str = str.replaceAll("7", " seven ");
+			str = str.replaceAll("8", " eight ");
+			str = str.replaceAll("9", " nine ");
+			str = str.replaceAll("0", " zero ");
+			str = str.replaceAll("  ", " ");
 			str = str.trim();
 			in += str + " ";
 		}
@@ -495,7 +547,7 @@ public class Sentences {
 		return out;
 	}
 
-	public double MIN_MATCH_SENTENCE_SCORE = WORD_MATCH_STRENGTH.EXACT.MATCH_NUMBER;
+//	public double MIN_MATCH_SENTENCE_SCORE = WORD_MATCH_STRENGTH.EXACT.MATCH_NUMBER;
 	private static final boolean INCLUDE_MANY_TO_ONE_MATCHES = false;
 }
 

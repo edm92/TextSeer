@@ -8,8 +8,11 @@ public class DamerauLevenshtein
 	private Boolean calculated = false;
 	
 	public static void main (String [] args){
-		String _a = "browncow";
-		String _b = "Bwroncwo";
+		//  fcdanmabio and pehagqaklj
+		
+		String _a = "fcdanmabio"; //"browncow";
+		String _b = "pehagqaklj";//"Bwroncwo";
+		
 		
 		a.e.println("Testing " + _a + " vs. "+_b);
 		DamerauLevenshtein d = new DamerauLevenshtein(_a,_b);

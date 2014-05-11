@@ -169,6 +169,7 @@ public class GraphTransformer {
         String result = "";
         TreeSet<String> vertices = new TreeSet<String>();
         TreeSet<String> edges = new TreeSet<String>();
+        if(in == null) return "NULLLLLLLLLED";
         for (Vertex v : in.vertexSet()) {
             vertices.add((v.toString().length() > 3 ? v.toString().substring(0, v.toString().length()) : v.toString().substring(0, 4)).trim());
         }

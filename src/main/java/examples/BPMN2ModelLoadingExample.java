@@ -22,7 +22,7 @@ public class BPMN2ModelLoadingExample {
         //// Real start of program below	/////
         /////////////////////////////////////////
         GraphLoader gLoader = new GraphLoader();
-        Graph<Vertex, Edge> g1 = gLoader.loadModel("models/Benefits Administration - Ongoing.bpmn20.xml");
+        Graph<Vertex, Edge> g1 = gLoader.loadModel("models/Accounting Services.bpmn20.xml");
         System.out.println("G1-" + g1);
         GraphChecker g1Checker = new GraphChecker();
         System.out.println("G1 Test: " + g1Checker.CheckGraph(g1));

@@ -45,7 +45,7 @@ public class ProcessDistanceMeasureExample {
 			
 			double distance = dc.computeDistance(p.getFirst(), p.getSecond(),
 					ALG.SIMPLE_COMPARE_ALG,
-					WORD_MATCH_STRENGTH.EXACT,
+					WORD_MATCH_STRENGTH.WEAK,
 					SIM_RESULT.RATIO);
 			if(distance > best){
 				best = distance;

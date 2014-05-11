@@ -63,20 +63,26 @@ public class Sentences {
 				s.CreateStringOfTwoSetsOfSentences(Proc1, Proc2, 
 						ALG.SIMPLE_COMPARE_ALG, 
 						WORD_MATCH_STRENGTH.EXACT.MATCH_NUMBER);
-		a.e.println("Results: ");
+//		a.e.println("Results: ");
 		a.e.incIndent();
-		a.e.println(myNewSentences.toString());
+//		a.e.println(myNewSentences.toString());
 		a.e.decIndent();
 		
-		DamerauLevenshtein d = new DamerauLevenshtein(myNewSentences.getFirst(),myNewSentences.getSecond());
 		int numChar = myNewSentences.extra ;
+		
+		for(char i: myNewSentences.getFirst().toCharArray())
+			for(char j: myNewSentences.getSecond().toCharArray()){
+				if(i == j) numChar--;
+			}
+		if(numChar < 1) numChar = 1;
+		DamerauLevenshtein d = new DamerauLevenshtein(myNewSentences.getFirst(),myNewSentences.getSecond());
 		double sim = (double)d.getSimilarity() ;
 		
 		if(RANGECALC)
 			sim = 1 - ( sim / (double)numChar);
 		
 		
-		a.e.println("Result : " + sim );
+//		a.e.println("Result : " + sim );
 		
 			
 	}
@@ -96,10 +102,16 @@ public class Sentences {
 		LinkedList<String> cleanProc1 = new LinkedList<String>();
 		LinkedList<String> cleanProc2 = new LinkedList<String>();
 		
-		for(String str: Proc1)
-			cleanProc1.add(Clean(str));
-		for(String str: Proc2)
-			cleanProc2.add(Clean(str));		
+		for(String str: Proc1){
+			String cleaned = Clean(str);
+			cleanProc1.add(cleaned);
+		};
+		for(String str: Proc2){
+			String cleaned = Clean(str);
+			cleanProc2.add(cleaned);		
+//			a.e.println(cleaned);
+		}
+			
 		
 		
 		
@@ -111,8 +123,8 @@ public class Sentences {
 		
 		sentences.addAll(Proc1);
 		sentences.addAll(Proc2);
-		
-		HashMap<String, LinkedList<SimSet>> hm = DoSimCheck(sentences, MIN_MATCH_SENTENCE_SCORE);
+		a.e.println("Comparing " + cleanProc1 + " vs " + cleanProc2);
+		HashMap<String, LinkedList<SimSet>> hm = DoSimCheck(cleanProc1,cleanProc2, MIN_MATCH_SENTENCE_SCORE);
 		hm = fixTwoProcSimSet(hm, cleanProc1, cleanProc2);
 		
 		HashMap<String, String> simple = null;
@@ -209,8 +221,8 @@ public class Sentences {
 			}
 		}
 		if(__DEBUG){
-			a.e.println("Str : " + _result1);
-			a.e.println("Str : " + _result2);
+//			a.e.println("Str : " + _result1);
+//			a.e.println("Str : " + _result2);
 		}
 		
 		Pair<String, String> _result = new Pair<String,String>(_result1, _result2);
@@ -372,14 +384,16 @@ public class Sentences {
 		}
 	}
 	
-	public HashMap<String, LinkedList<SimSet>> DoSimCheck(LinkedList<String> _sentences, Double MATCH_SCORE){
-		sentences = _sentences;
+	public HashMap<String, LinkedList<SimSet>> DoSimCheck(LinkedList<String> _sentencesA, LinkedList<String> _sentencesB, Double MATCH_SCORE){
+//		sentences = new LinkedList<String>();
+//		sentences.addAll(_sentencesA);
+		
 		HashMap<String, LinkedList<SimSet>> SimSents = new HashMap<String, LinkedList<SimSet>>();
 
 		String _a = "";
-		for(String __str : sentences){
+		for(String __str : _sentencesA){
 			_a = Clean(__str);
-	    for(String _str : sentences){
+	    for(String _str : _sentencesB){
 	    	if(__str.compareToIgnoreCase(_str) == 0) continue;
 	    	//if(!started && _a.length() < 1) { _a = _str ; started = true; continue;};
 	    	String _b = _str;
@@ -393,8 +407,9 @@ public class Sentences {
 	    		SimSents.put(__a, new LinkedList<SimSet>());
 
 		    
-		    //a.e.println("__a = " + __a + " ; b = " + __b);
+
 		    double result = SentenceSim(__a, __b, MATCH_SCORE);
+//		    a.e.println("__a = " + __a + " ; b = " + __b + " = " + result);
 		    if(result >= MATCH_SCORE){ // Save
 		    	SimSet ss = new SimSet();
 		    	ss.sent1 = __a; ss.sent2 = __b;
@@ -417,6 +432,11 @@ public class Sentences {
 		    //_a = __b;
 	    }};
 	    
+	    LinkedList<String> remove = new LinkedList<String>();
+	    for(String s: SimSents.keySet()){
+	    	if(SimSents.get(s) == null || SimSents.get(s).size() <1)
+	    		remove.add(s);
+	    }for(String s: remove) SimSents.remove(s);
 	    
 	    return SimSents;
 	}
@@ -440,6 +460,7 @@ public class Sentences {
 			for(String WFSL : _bList){ // Word from second list
 				double currentBest = sim.getSim(WFFL,WFSL);
 //				a.e.println("Result of " + WFFL + " vs. " + WFSL + " = " + currentBest);
+//				a.e.println("Match score = " + MATCH_SCORE);
 				if(currentBest > MATCH_SCORE)
 					cumulativeSim += currentBest;
 			}

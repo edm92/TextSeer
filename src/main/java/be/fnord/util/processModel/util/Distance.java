@@ -135,13 +135,18 @@ public class Distance {
 								MATCHSTRENGH.MATCH_NUMBER);
 				DamerauLevenshtein d = new DamerauLevenshtein(myNewSentences.getFirst(),myNewSentences.getSecond());
 				int numChar = myNewSentences.extra ;
-				
+				for(char i: myNewSentences.getFirst().toCharArray())
+					for(char j: myNewSentences.getSecond().toCharArray()){
+						if(i == j) numChar++;
+					}
+
 				
 				
 				double sim = (double)d.getSimilarity();
+				sim = Math.abs(sim);
 				double oldSim = sim;
 				if(!RAT_OR_WHO.TYPE)
-					sim = 1 - (sim / (double)numChar);
+					sim = 1 - Math.abs(sim / (double)numChar);
 				if(sim > sp.simScore){
 					sp.first = _fsentences;
 					sp.second = _ssentences;

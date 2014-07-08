@@ -22,7 +22,6 @@ public class myConnection implements intConnection {
 	ResultSet resultSet = null;
 	Statement statement = null;
 
-	@Override
 	public boolean closeConnection() {
 		try {
 			if (resultSet != null) {
@@ -42,7 +41,6 @@ public class myConnection implements intConnection {
 		return true;
 	}
 
-	@Override
 	public PreparedStatement createPreparedStatement(String query) {
 		try {
 			preparedStatement = connect.prepareStatement(query);
@@ -53,7 +51,6 @@ public class myConnection implements intConnection {
 		return preparedStatement;
 	}
 
-	@Override
 	public ResultSet executeQuery(String query) {
 		try {
 			statement = connect.createStatement();
@@ -67,7 +64,6 @@ public class myConnection implements intConnection {
 		return resultSet;
 	}
 
-	@Override
 	public TreeMap<String, List<Object>> getDataResults(ResultSet _results) {
 		TreeMap<String, List<Object>> returnedResults = new TreeMap<String, List<Object>>();
 		List<String[]> headers = getMetaDataResults(_results);
@@ -100,7 +96,6 @@ public class myConnection implements intConnection {
 		return returnedResults;
 	}
 
-	@Override
 	public List<String[]> getMetaDataResults(ResultSet results) {
 		LinkedList<String[]> returnedResults = new LinkedList<String[]>();
 		try {
@@ -126,7 +121,6 @@ public class myConnection implements intConnection {
 				properties.databaseUser, properties.databasePass);
 	}
 
-	@Override
 	public boolean makeConnection(String database, String userName,
 			String password) {
 
@@ -134,7 +128,6 @@ public class myConnection implements intConnection {
 				properties.databaseServer, database, userName, password);
 	}
 
-	@Override
 	public boolean makeConnection(String driver, String serverName,
 			String database, String userName, String password) {
 		try {

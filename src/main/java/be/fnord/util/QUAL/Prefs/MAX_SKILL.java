@@ -63,7 +63,6 @@ public class MAX_SKILL extends Preferences<Object> implements PREF_FUNC {
 		setup();
 	}
 
-	@Override
 	public <T> String combine(T a, T b) {
 		if (hmlSet.leq(a, b)) {
 			return a.toString();
@@ -72,12 +71,10 @@ public class MAX_SKILL extends Preferences<Object> implements PREF_FUNC {
 		}
 	}
 
-	@Override
 	public <T> boolean compare(T a, T b) {
 		return hmlSet.leq(a, b);
 	}
 
-	@Override
 	@SuppressWarnings("unchecked")
 	public void setup() {
 		TreeSet<String> s = new TreeSet<String>();

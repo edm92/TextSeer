@@ -37,7 +37,6 @@ public class MIN_TIME extends Preferences<Float> implements PREF_FUNC {
 		super();
 	}
 
-	@Override
 	public <T> String combine(T aa, T bb) {
 		if (aa == null || bb == null) {
 			return "";
@@ -56,7 +55,6 @@ public class MIN_TIME extends Preferences<Float> implements PREF_FUNC {
 		return result.toString();
 	}
 
-	@Override
 	public <T> boolean compare(T aa, T bb) {
 		if (aa == null || bb == null) {
 			return false;

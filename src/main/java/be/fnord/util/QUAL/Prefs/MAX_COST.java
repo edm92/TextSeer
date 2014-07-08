@@ -25,7 +25,6 @@ public class MAX_COST extends Preferences<Float> implements PREF_FUNC {
 		super();
 	}
 
-	@Override
 	public <T> String combine(T aa, T bb) {
 		double _a = 0;
 		double _b = 0;
@@ -64,7 +63,6 @@ public class MAX_COST extends Preferences<Float> implements PREF_FUNC {
 		return (_a + _b) % top + "";
 	}
 
-	@Override
 	public <T> boolean compare(T aa, T bb) {
 		double _a = 0;
 		double _b = 0;

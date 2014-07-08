@@ -68,7 +68,6 @@ public class ProcessDistanceMeasureExample {
 		File dir = new File(dirName);
 
 		return dir.listFiles(new FilenameFilter() {
-			@Override
 			public boolean accept(File dir, String filename) {
 				return filename.endsWith(".bpmn20.xml");
 			}

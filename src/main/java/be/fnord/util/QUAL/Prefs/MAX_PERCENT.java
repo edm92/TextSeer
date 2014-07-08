@@ -25,7 +25,6 @@ public class MAX_PERCENT extends Preferences<Float> implements PREF_FUNC {
 		super();
 	}
 
-	@Override
 	public <T> String combine(T aa, T bb) {
 		double _a = 0;
 		double _b = 0;
@@ -50,7 +49,6 @@ public class MAX_PERCENT extends Preferences<Float> implements PREF_FUNC {
 		return _com % top + "";
 	}
 
-	@Override
 	public <T> boolean compare(T aa, T bb) {
 		double _a = 0;
 		double _b = 0;

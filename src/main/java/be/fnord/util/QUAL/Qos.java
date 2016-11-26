@@ -139,4 +139,16 @@ public class Qos {
 	public String toString() {
 		return "Cost = " + COST + "; TIME = " + TIME + "; SKILL = " + SKILL;
 	}
+
+	public boolean isEmpty() {
+		if(COST != null && COST.length() > 0)
+			return false;
+		if(TIME != null && TIME.length() > 0)
+			return false;
+		if(SKILL != null && SKILL.length() > 0)
+			return false;
+		if(UTILITY != null && UTILITY.length() > 0)
+			return false;
+		return true;
+	}
 }

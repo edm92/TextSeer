@@ -2,6 +2,8 @@ package be.fnord.util.QUAL;
 
 import java.util.LinkedHashSet;
 
+import com.google.gson.Gson;
+
 public class JSONEFFECT {
 	public String[] CONSTRAINT;
 	public String[] EFFECT;
@@ -15,7 +17,29 @@ public class JSONEFFECT {
 
 	public String Type = "";
 
+	
+	
+	public JSONEFFECT(String _incoming){
+		Gson gson = new Gson();
+		String json = gson.toJson(_incoming);
+		if(_incoming.compareTo(a.e.EMPTY_EFFECT) == 0) { empty(); return; };
+//		a.e.err(_incoming);
+		
+		JSONEFFECT e = gson.fromJson(_incoming, JSONEFFECT.class);
+		this.CONSTRAINT = e.CONSTRAINT;
+		this.EFFECT = e.EFFECT;
+		this.GOAL = e.GOAL;
+		this.Name = e.Name;
+		this.QOS = e.QOS;
+		this.Type = e.Type;
+		
+			
+	}
+	
 	public JSONEFFECT() {
+		empty();
+	}
+	public void empty(){
 		Name = "";
 		Type = "";
 		QOS = new Qos();
@@ -23,7 +47,6 @@ public class JSONEFFECT {
 		CONSTRAINT = new String[] {};
 		GOAL = new String[] {};
 		RESOURCE = new String[] {};
-
 	}
 
 	public String[] _cpStrArr(String[] input) {
@@ -72,8 +95,8 @@ public class JSONEFFECT {
 		if (Name.length() > 0 && Type.length() > 0) {
 			return false;
 		}
-
-		return true;
+		
+		return QOS.isEmpty();
 	}
 
 	// Accumulate
